@@ -1,0 +1,79 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    /* Header */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon-img {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+
+    .logo {
+      font-size: 34px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .icons i {
+      margin-left: 20px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Menu Bar */
+    .menu-bar {
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    .menu-bar a {
+      text-decoration: none;
+      color: #000;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+
+    /* icons css */
+    .icon-circle {
+  width: 55px;
+  height: 55px;
+  background: #e8f7f3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.icon-circle img {
+  width: 28px;
+  height: 28px;
+}
