@@ -2,37 +2,27 @@
 
   <!-- </nav>
 </header> -->
-<div class="top-header">
-  <!--<div class="menu-icon">☰</div> -->
+<!-- <header class="top-header" [class.scrolled]="isScrolled"> -->
+<header class="main-header" [class.scrolled]="isScrolled">
 
-  <div class="logo">classes</div>
+  <div class="top-header">
+    <div class="logo">
+      <img src="header logo.png" alt="Bright Classes Logo">
+    </div>
 
-  <div class="icons">
-  <a href="">
-    <img src="images/wishlist.png" class="icon-img" alt="Wishlist">
-  </a>
+    <div class="icons">
+      <a routerLink="/student/stud-sign-in" class="btn signin-btn">Sign In</a>
+      <a routerLink="/student/stud-registration" class="btn register-btn">Register</a>
+    </div>
+  </div>
 
-  <a href="">
-    <img src="images/contact.png" class="icon-img" alt="User">
-  </a>
+  <div class="menu-bar">
+    <a routerLink="/student/stud-home">Home</a>
+    <a routerLink="/student/about">About</a>
+    <a routerLink="/student/contact">Contact Us</a>
+  </div>
 
-  <a href="">
-    <img src="images/search.png" class="icon-img" alt="Search">
-  </a>
-
-  <a href="">
-    <img src="images/shopping-cart.png" class="icon-img" alt="Cart">
-  </a>
-</div>
-
-</div>
-<!-- Navigation Menu -->
-<div class="menu-bar">
-  <a routerLink="/student/stud-home">Home</a>
-  <a routerLink="/student/about">About</a> 
-  <a routerLink="/student/contact">Contact Us</a>
-</div>
-
-
+</header>
+<!-- </header> -->
 
 

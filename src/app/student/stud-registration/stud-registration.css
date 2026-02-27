@@ -1,0 +1,235 @@
+.contact-header {
+  text-align: center;
+  padding: 215px 20px;
+  background: linear-gradient(to right, #ebdfe8, #dbecf1);
+  color: #000000;
+}
+
+/* Gradient Header */
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #e6dada, #274046);
+  display: flex;
+  align-items: flex-start;   /* upar thi lavva mate */
+  justify-content: center;
+  text-align: center;
+  padding-top: 80px;         /* get in touch upar */
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.breadcrumb {
+  font-size: 1rem;
+  font-weight: bold;
+  padding-left: 81px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: rgb(2, 2, 2);
+}
+
+/* Form Section */
+.contact-form-section {
+  display: flex;
+  justify-content: center;
+  margin-top: -100px;   /* card ne header upar overlap karva */
+  padding-bottom: 80px;
+}
+
+.contact-card {
+  width: 70%;
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.contact-card h2 {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+input, textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border-bottom: 2px solid #00b894;
+}
+
+/* Email + Phone row */
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.row .form-group {
+  flex: 1;
+}
+
+/* Button */
+.submit-btn {
+  background: #00b894;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #019875;
+}
+
+
+/* form style */
+/* ===== STEP ANIMATION ===== */
+
+.form-step {
+  animation: slideFade 0.5s ease;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* ===== FORM STYLING ===== */
+
+h2 {
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1abc9c;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,188,156,0.15);
+}
+
+
+/* ===== BUTTONS ===== */
+
+.btn-next,
+.btn-back,
+.btn-submit {
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 15px;
+}
+
+/* Next Button */
+.btn-next {
+  background: #1abc9c;
+  color: white;
+}
+
+.btn-next:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+/* Back Button */
+.btn-back {
+  background: #ddd;
+  margin-right: 10px;
+}
+
+.btn-back:hover {
+  background: #ccc;
+}
+
+/* Submit Button */
+.btn-submit {
+  background: #1abc9c;
+  color: white;
+}
+
+.btn-submit:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+
+/* ===== CARD ENTRY ANIMATION ===== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 30px 20px;
+  }
+
+  .contact-header h1 {
+    font-size: 32px;
+  }
+}
