@@ -2,10 +2,9 @@
 
 export enum FirebaseCollections {
   Users = 'users',
-  Application = 'applications',
+  Applications = 'applications',
   Courses = 'courses',
   Payments = 'payments',
-  Test='test_collection',
-  Students='student',
-  Teachers='teacher'
+  Students = 'students',
+  Teachers = 'teachers'
 }

@@ -4,22 +4,25 @@ import { About } from './student/about/about';
 import { StudHome } from './student/stud-home/stud-home';
 import { AdminLogin } from './admin/admin-login/admin-login';
 import { AdminDashboard } from './admin/admin-dashboard/admin-dashboard';
+import { AdminSidebar } from './admin/admin-sidebar/admin-sidebar';
+
 
 export const routes: Routes = [
 
-    // Default page
-    { path: '', redirectTo: 'student/stud-home', pathMatch: 'full' },
+  // Default page
+  { path: '', redirectTo: 'student/stud-home', pathMatch: 'full' },
 
-    // ================= STUDENT =================
-    { path: 'student/student-header', component: StudentHeader },
-    { path: 'student/about', component: About },
-    {path:'student/stud-home',component:StudHome},
+  // ================= STUDENT =================
+  { path: 'student/student-header', component: StudentHeader },
+  { path: 'student/about', component: About },
+  { path: 'student/stud-home', component: StudHome },
 
   // ================= ADMIN =================
   { path: 'admin/admin-login', component: AdminLogin },
-    { path: 'admin/admin-dashboard', component: AdminDashboard },
+  { path: 'admin/admin-dashboard', component: AdminDashboard },
+  { path: 'admin/admin-sidebar', component: AdminSidebar },
 
-    // Fallback
-    { path: '**', redirectTo: 'student/stud-home' }
+  // Fallback
+  { path: '**', redirectTo: 'student/stud-home' }
 
 ];

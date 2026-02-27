@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-=======
 import { Component, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
->>>>>>> 1e7b33151efec384c301036aed8dce1c5bd6c1ab
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-student-header',
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink],
   templateUrl: './student-header.html',
   styleUrl: './student-header.css',
 })

@@ -20,8 +20,7 @@ import {
 import { Observable, from, map } from 'rxjs';
 import { FirebaseCollections } from '../firebase-service/firebase-enum';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Application } from '../interface/application'; // ✅ check path properly
-
+import { Application } from '../admin/application/application';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,7 +31,7 @@ export class FirebaseService {
   // ✅ FIXED METHOD
   getApplicationById(appId: string): Observable<Application | undefined> {
     return this.getDocument<Application>(
-      FirebaseCollections.Application,
+      FirebaseCollections.Applications,
       appId
     );
   }

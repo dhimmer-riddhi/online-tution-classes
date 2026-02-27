@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { AdminSidebar } from "../admin-sidebar/admin-sidebar";
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminSidebar],
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.css']
 })
