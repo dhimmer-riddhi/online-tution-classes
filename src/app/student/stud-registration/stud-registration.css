@@ -221,7 +221,20 @@ h2 {
   }
 }
 
+.contact-form-section img {
+    position: absolute;
+    right: 100%;
+    bottom: -525px;
+    margin-right: -240px;
+    z-index: -1;
+    width: 150px;
+}
 
+img {
+    border: none;
+    outline: none;
+    max-width: 100%;
+}
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 768px) {
