@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Application } from '../../interface/application';
+// import { Application } from '../../interface/application';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { CommonModule } from '@angular/common';
@@ -31,7 +31,7 @@ export class AdminDashboard implements OnInit {
     this.totalStudents$ = this.firebaseService.getCollection(FirebaseCollections.Students).pipe(map(c => c.length));
     this.totalTeachers$ = this.firebaseService.getCollection(FirebaseCollections.Teachers).pipe(map(c => c.length));
     this.pendingApps$ = this.firebaseService
-      .getCollection(FirebaseCollections.Application)
+      .getCollection(FirebaseCollections.Applications)
       .pipe(
         map(apps => apps.filter((a: any) =>
           a.status && a.status.toLowerCase() === 'pending'
@@ -39,6 +39,6 @@ export class AdminDashboard implements OnInit {
       );
 
     // Get the actual list for the table
-    this.recentApplications$ = this.firebaseService.getCollection(FirebaseCollections.Application);
+    this.recentApplications$ = this.firebaseService.getCollection(FirebaseCollections.Applications);
   }
 }

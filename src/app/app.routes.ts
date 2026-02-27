@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'student/student-header', component: StudentHeader },
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
+    
 
   // ================= ADMIN =================
   { path: 'admin/admin-login', component: AdminLogin },
