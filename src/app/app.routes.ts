@@ -27,5 +27,10 @@ export const routes: Routes = [
     {
         path:'student/about',
         component: About
+    },
+    {
+         path: '',
+         redirectTo: 'student/stud-home',
+         pathMatch: 'full'
     }
 ];
