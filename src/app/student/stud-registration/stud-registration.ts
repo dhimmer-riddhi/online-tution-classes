@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { StudentHeader } from "../student-header/student-header";
 
 
 @Component({
   selector: 'app-stud-registration',
-  imports: [FormsModule,ReactiveFormsModule,CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader],
   templateUrl: './stud-registration.html',
   styleUrl: './stud-registration.css',
 })

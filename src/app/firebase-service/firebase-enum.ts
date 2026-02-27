@@ -7,4 +7,5 @@ export enum FirebaseCollections {
   Payments = 'payments',
   Students = 'students',
   Teachers = 'teachers'
+  
 }

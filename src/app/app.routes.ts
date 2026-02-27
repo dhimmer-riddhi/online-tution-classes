@@ -15,6 +15,8 @@ export const routes: Routes = [
 
   // ================= STUDENT =================
   { path: 'student/student-header', component: StudentHeader },
+  { path: 'student/stud-registration', component: StudRegistration},
+  { path: 'student/stud-sign-in', component: StudSignIn},
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
     
@@ -24,54 +26,5 @@ export const routes: Routes = [
   { path: 'admin/admin-dashboard', component: AdminDashboard },
   { path: 'admin/admin-sidebar', component: AdminSidebar },
 
-  // Fallback
-  { path: '**', redirectTo: 'student/stud-home' },
 
-
-
-  {
-    path: 'student/student-header',
-    component: StudentHeader
-  },
-  {
-    path: 'student/stud-registration',
-    component: StudRegistration
-  },
-  {
-    path: 'student/stud-sign-in',
-    component: StudSignIn
-  },
-  {
-    path: 'student/stud-home',
-    component: StudHome
-  },
-  {
-    path: 'student/about',
-    component: About
-  }
-    {
-        path:'student/student-header',
-        component: StudentHeader
-    },
-    {
-        path:'student/stud-registration',
-        component: StudRegistration
-    },
-    {
-        path:'student/stud-sign-in',
-        component: StudSignIn
-    },
-    {
-        path:'student/stud-home',
-        component: StudHome
-    },
-    {
-        path:'student/about',
-        component: About
-    },
-    {
-         path: '',
-         redirectTo: 'student/stud-home',
-         pathMatch: 'full'
-    }
 ];
