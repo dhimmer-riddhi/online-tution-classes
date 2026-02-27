@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FirebaseService } from '../../firebase-service/firebase-service';
+import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+
 
 @Component({
   selector: 'app-stud-registration',
@@ -12,7 +15,7 @@ export class StudRegistration {
    registerForm!: FormGroup;
   step = 1;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

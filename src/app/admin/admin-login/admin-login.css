@@ -1,0 +1,83 @@
+
+/* Card Styling */
+.card {
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Card Hover Effect */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Input Styling */
+.form-control {
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 8px #198754;
+  border-color: #198754;
+}
+
+/* Button Styling */
+.btn-success {
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  transform: scale(1.03);
+}
+
+/* Alert Styling */
+.alert {
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Label Styling */
+.form-label {
+  font-size: 14px;
+}
+
+/* Responsive Improvement */
+@media (max-width: 576px) {
+  .card {
+    padding: 10px;
+  }
+}
+
+.login-card {
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  transition: 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.form-control {
+  border-radius: 12px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 8px #198754;
+  border-color: #198754;
+}
+
+.btn-success {
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  transform: scale(1.03);
+}
