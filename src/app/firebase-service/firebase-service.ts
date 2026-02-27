@@ -1,0 +1,143 @@
+import { Injectable } from '@angular/core';
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentReference,
+  Firestore,
+  Query,
+  UpdateData,
+  addDoc,
+  collection,
+  collectionData,
+  deleteDoc,
+  doc,
+  docData,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+} from '@angular/fire/firestore';
+import { Observable, from, map } from 'rxjs';
+import { FirebaseCollections } from '../firebase-service/firebase-enum';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { Application } from '../interface/application'; // ✅ check path properly
+
+@Injectable({
+  providedIn: 'root',
+})
+export class FirebaseService {
+
+  constructor(private readonly firestore: Firestore) {}
+
+  // ✅ FIXED METHOD
+  getApplicationById(appId: string): Observable<Application | undefined> {
+    return this.getDocument<Application>(
+      FirebaseCollections.Application,
+      appId
+    );
+  }
+
+  // ===============================
+  // GET COLLECTION
+  // ===============================
+  public getCollection<T extends DocumentData>(
+    collectionName: FirebaseCollections
+  ): Observable<T[]> {
+    const collectionRef = collection(this.firestore, collectionName);
+    const collectionQuery = query(collectionRef);
+    return from(getDocs(collectionQuery)).pipe(
+      map((snapshot) => {
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as unknown as T[];
+      })
+    );
+  }
+
+  // ===============================
+  // GET DOCUMENT
+  // ===============================
+  public getDocument<T extends DocumentData>(
+    collectionName: FirebaseCollections,
+    documentId: string
+  ): Observable<T | undefined> {
+
+    const collectionRef = collection(this.firestore, collectionName);
+    const docRef = doc(collectionRef, documentId);
+
+    return from(getDoc(docRef)).pipe(
+      map((snapshot) => {
+        if (!snapshot.exists()) {
+          return undefined;
+        }
+        return {
+          id: snapshot.id,
+          ...snapshot.data(),
+        } as unknown as T;
+      })
+    );
+  }
+
+  // ===============================
+  // ADD DOCUMENT
+  // ===============================
+  public addDocument<T extends DocumentData>(
+    collectionName: FirebaseCollections,
+    document: T
+  ): Promise<DocumentReference<T>> {
+    const collectionRef = collection(
+      this.firestore,
+      collectionName
+    ) as CollectionReference<T, DocumentData>;
+
+    return addDoc<T, DocumentData>(collectionRef, document);
+  }
+
+  // ===============================
+  // UPDATE DOCUMENT
+  // ===============================
+  public updateDocument<T extends DocumentData>(
+    collectionName: FirebaseCollections,
+    documentId: string,
+    document: UpdateData<T>
+  ): Promise<void> {
+    const collectionRef = collection(this.firestore, collectionName);
+    const docRef = doc(
+      collectionRef,
+      documentId
+    ) as DocumentReference<T, DocumentData>;
+
+    return updateDoc(docRef, document);
+  }
+
+  // ===============================
+  // DELETE DOCUMENT
+  // ===============================
+  public deleteDocument<T extends DocumentData>(
+    collectionName: FirebaseCollections,
+    documentId: string
+  ): Promise<void> {
+    const collectionRef = collection(this.firestore, collectionName);
+    const docRef = doc(
+      collectionRef,
+      documentId
+    ) as DocumentReference<T, DocumentData>;
+
+    return deleteDoc(docRef);
+  }
+
+  // ===============================
+  // FILE UPLOAD
+  // ===============================
+  async uploadFile(path: string, file: File) {
+    const storage = getStorage();
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+
+    return { downloadURL };
+  }
+
+}
