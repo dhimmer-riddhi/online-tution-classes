@@ -1,0 +1,50 @@
+<div class="header-container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="logo">
+      📚 Online Tuition
+    </div>
+
+    <nav class="nav-links">
+      <a routerLink="/teacher/dashboard" routerLinkActive="active">🏠 Dashboard</a>
+      <a routerLink="/teacher/students" routerLinkActive="active">👩‍🎓 Students</a>
+      <a routerLink="/teacher/attendance" routerLinkActive="active">📅 Attendance</a>
+      <a routerLink="/teacher/courses" routerLinkActive="active">📖 Courses</a>
+      <a routerLink="/teacher/assignments" routerLinkActive="active">📝 Assignments</a>
+      <a routerLink="/teacher/reports" routerLinkActive="active">📊 Reports</a>
+    </nav>
+
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="main-content">
+
+    <!-- TOP PROFILE BAR -->
+    <div class="top-bar" *ngIf="teacherData">
+
+      <div class="profile-card">
+        <img
+          [src]="teacherData.profileImage || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"
+          class="profile-img"
+        />
+
+        <div class="profile-info">
+          <h4>{{ teacherData.name }}</h4>
+          <p>{{ teacherData.email }}</p>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+
+    </div>
+
+    <!-- ROUTER CONTENT -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

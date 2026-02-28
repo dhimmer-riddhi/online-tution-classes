@@ -1,61 +1,169 @@
-.register-container {
-  height: 100vh;
+/* ================= HEADER ================= */
+
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #e6dada, #274046);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  padding-top: 80px;
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.breadcrumb {
+  font-size: 1rem;
+  font-weight: bold;
+  padding-left: 81px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* ================= FORM SECTION ================= */
+
+.contact-form-section {
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right, #2193b0, #6dd5ed);
-  font-family: Arial, Helvetica, sans-serif;
+  margin-top: -100px;
+  padding-bottom: 80px;
 }
 
-.register-card {
+.contact-card {
+  width: 70%;
   background: #fff;
   padding: 40px;
-  border-radius: 12px;
-  width: 400px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.6s ease;
 }
 
-.register-card h2 {
-  margin-bottom: 20px;
+.contact-card h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+/* ================= FORM STYLE ================= */
+
+.form-step {
+  animation: slideFade 0.5s ease;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .form-group {
-  margin-bottom: 15px;
-  text-align: left;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  font-weight: 500;
+  margin-bottom: 6px;
   font-size: 14px;
+  color: #555;
 }
 
-.btn-register {
+.form-group input,
+.form-group select {
   width: 100%;
-  padding: 10px 0;
-  background-color: #28a745;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1abc9c;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,188,156,0.15);
+}
+
+/* ================= BUTTONS ================= */
+
+.btn-next,
+.btn-back,
+.btn-submit {
+  padding: 12px 30px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
   transition: 0.3s ease;
-}
-
-.btn-register:hover {
-  background-color: #218838;
-}
-
-.login-link {
   margin-top: 15px;
-  font-size: 14px;
+}
+
+.btn-next {
+  background: #1abc9c;
+  color: white;
+}
+
+.btn-next:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+.btn-back {
+  background: #ddd;
+  margin-right: 10px;
+}
+
+.btn-back:hover {
+  background: #ccc;
+}
+
+.btn-submit {
+  background: #1abc9c;
+  color: white;
+}
+
+.btn-submit:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+/* ================= CARD ANIMATION ================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 30px 20px;
+  }
+
+  .contact-header h1 {
+    font-size: 32px;
+  }
 }

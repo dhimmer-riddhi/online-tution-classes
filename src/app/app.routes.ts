@@ -28,8 +28,7 @@ export const routes: Routes = [
   { path: 'admin/admin-sidebar', component: AdminSidebar },
 
   //Teacher routes
-  { path: 'teacher-portal', component: TeacherPortal },
-    {
+   {
     path: 'teacher',
     loadChildren: () =>
       import('./teacher/teacher.routes').then(m => m.TEACHER_ROUTES)

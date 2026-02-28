@@ -1,33 +1,94 @@
-<div class="register-container">
-  <div class="register-card">
-    <h2>👩‍🏫 Teacher Registration</h2>
+<!-- Gradient Header Section -->
+<section class="contact-header">
+  <div class="contact-content">
+    <h1>Teacher Registration</h1>
 
-    <form (ngSubmit)="registerTeacher()">
-      <div class="form-group">
-        <label>Teacher Name</label>
-        <input type="text" [(ngModel)]="teacher.teacherName" name="teacherName" required />
+    <div class="breadcrumb">
+      <a routerLink="/teacher/teacher-portal">🏠 Home</a> >
+      <span>Register</span>
+    </div>
+  </div>
+</section>
+
+<!-- Registration Form Section -->
+<section class="contact-form-section">
+  <div class="contact-card">
+
+    <form [formGroup]="registerForm" (ngSubmit)="registerTeacher()">
+
+      <!-- 🔵 STEP 1 - Personal Details -->
+      <div *ngIf="step === 1" class="form-step">
+
+        <h2>Personal Details</h2>
+
+        <div class="form-group">
+          <label>Teacher Name</label>
+          <input type="text" formControlName="teacherName">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email">
+        </div>
+
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="text" formControlName="mobile">
+        </div>
+
+        <div class="form-group">
+          <label>Gender</label>
+          <select formControlName="gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <button type="button" (click)="nextStep()" class="btn-next">
+          Next
+        </button>
+
       </div>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" [(ngModel)]="teacher.email" name="email" required />
+
+      <!-- 🔵 STEP 2 - Professional Details -->
+      <div *ngIf="step === 2" class="form-step">
+
+        <h2>Professional Details</h2>
+
+        <div class="form-group">
+          <label>Teacher ID</label>
+          <input type="text" formControlName="teacherId">
+        </div>
+
+        <div class="form-group">
+          <label>Subject Expertise</label>
+          <input type="text" formControlName="subjects">
+        </div>
+
+        <div class="form-group">
+          <label>Experience (Years)</label>
+          <input type="number" formControlName="experience">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password">
+        </div>
+
+        <button type="button" (click)="previousStep()" class="btn-back">
+          Back
+        </button>
+
+        <button type="submit" class="btn-submit">
+          Register ✅
+        </button>
+
       </div>
 
-      <div class="form-group">
-        <label>Teacher ID</label>
-        <input type="text" [(ngModel)]="teacher.teacherId" name="teacherId" required />
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" [(ngModel)]="teacher.password" name="password" required />
-      </div>
-
-      <button type="submit" class="btn-register">Register ✅</button>
     </form>
 
-    <p class="login-link">
-      Already Registered? <a routerLink="/teacher/teacher-login">Login Here</a> 🔐
-    </p> 
   </div>
-</div>
+</section>
