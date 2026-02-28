@@ -7,6 +7,9 @@ import { AdminDashboard } from './admin/admin-dashboard/admin-dashboard';
 import { AdminSidebar } from './admin/admin-sidebar/admin-sidebar';
 import { StudRegistration } from './student/stud-registration/stud-registration';
 import { StudSignIn } from './student/stud-sign-in/stud-sign-in';
+import { TeacherPortal } from './teacher/teacher-portal/teacher-portal';
+import { TeacherLogin } from './teacher/teacher-login/teacher-login';
+import { TeacherRegistration } from './teacher/teacher-registration/teacher-registration';
 
 export const routes: Routes = [
 
@@ -24,10 +27,15 @@ export const routes: Routes = [
   { path: 'admin/admin-dashboard', component: AdminDashboard },
   { path: 'admin/admin-sidebar', component: AdminSidebar },
 
+  //Teacher routes
+  { path: 'teacher-portal', component: TeacherPortal },
+    {
+    path: 'teacher',
+    loadChildren: () =>
+      import('./teacher/teacher.routes').then(m => m.TEACHER_ROUTES)
+  },
   // Fallback
-  { path: '**', redirectTo: 'student/stud-home' },
-
-
+ // { path: '**', redirectTo: 'student/stud-home' },
 
   {
     path: 'student/student-header',
@@ -48,11 +56,11 @@ export const routes: Routes = [
   {
     path: 'student/about',
     component: About
-  }
-    {
+  },
+  {
         path:'student/student-header',
         component: StudentHeader
-    },
+  },
     {
         path:'student/stud-registration',
         component: StudRegistration
@@ -73,5 +81,7 @@ export const routes: Routes = [
          path: '',
          redirectTo: 'student/stud-home',
          pathMatch: 'full'
-    }
+    },
+
+    
 ];
