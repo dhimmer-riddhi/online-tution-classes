@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { AdminSidebar } from "../admin-sidebar/admin-sidebar";
+import { Application } from '../../interface/application';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,31 +15,33 @@ import { AdminSidebar } from "../admin-sidebar/admin-sidebar";
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.css']
 })
-export class AdminDashboard implements OnInit {
-  today: Date = new Date();
+export class AdminDashboard {
+  today = new Date();
+
   totalStudents$!: Observable<number>;
   totalTeachers$!: Observable<number>;
-  pendingApps$!: Observable<number>;
-  totalPrograms$!: Observable<number>;
   pendingAdmissions$!: Observable<number>;
-  activeCourses$!: Observable<number>;
-  recentApplications$!: Observable<any[]>;
 
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firebaseService: FirebaseService) {
 
-  ngOnInit(): void {
-    // Mapping collections to lengths for the stats cards
-    this.totalStudents$ = this.firebaseService.getCollection(FirebaseCollections.Students).pipe(map(c => c.length));
-    this.totalTeachers$ = this.firebaseService.getCollection(FirebaseCollections.Teachers).pipe(map(c => c.length));
-    this.pendingApps$ = this.firebaseService
-      .getCollection(FirebaseCollections.Applications)
+    // ✅ TOTAL APPROVED STUDENTS COUNT
+    this.totalStudents$ = this.firebaseService
+      .getCollection<Application>(FirebaseCollections.Applications)
       .pipe(
-        map(apps => apps.filter((a: any) =>
-          a.status && a.status.toLowerCase() === 'pending'
-        ).length)
+        map(applications => applications.length)
+      );
+    // ✅ AUTO TEACHER COUNT
+    this.totalTeachers$ = this.firebaseService
+      .getCollection<any>(FirebaseCollections.Teachers)
+      .pipe(
+        map(teachers => teachers.length)
       );
 
-    // Get the actual list for the table
-    this.recentApplications$ = this.firebaseService.getCollection(FirebaseCollections.Applications);
+    // ✅ PENDING REGISTRATIONS COUNT
+    this.pendingAdmissions$ = this.firebaseService
+      .getCollection<any>(FirebaseCollections.StudentRegistrations)
+      .pipe(
+        map(data => data.filter(r => r.status === 'pending').length)
+      );
   }
 }

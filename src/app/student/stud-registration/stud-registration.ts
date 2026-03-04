@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { StudentRegistration, StudentRegistrationStatus } from '../../interface/student-regisation';
+// import { StudentRegistration, StudentRegistrationStatus } from '../../interface/studentregisation';
 
 
 @Component({
@@ -59,12 +61,73 @@ export class StudRegistration {
     this.step = 1;
   }
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      alert("Registration Successful!");
-    } else {
-      alert("Please fill all required fields.");
-    }
+  // onSubmit() {
+  //   if (this.registerForm.valid) {
+  //     console.log(this.registerForm.value);
+  //     alert("Registration Successful!");
+  //   } else {
+  //     alert("Please fill all required fields.");
+  //   }
+  // }
+// onSubmit() {
+//   if (this.registerForm.valid) {
+
+//     const formData: StudentRegistration = {
+//       ...this.registerForm.value,
+//       status: StudentRegistrationStatus.Pending,  // ✅ ENUM
+//       createdAt: new Date()
+//     };
+
+//     this.firebaseService.addDocument(
+//       FirebaseCollections.StudentRegistrations,
+//       formData
+//     ).then(() => {
+//       alert("Registration Successful!");
+//       this.registerForm.reset();
+//       this.step = 1;
+//     });
+
+//   } else {
+//     alert("Please fill all required fields.");
+//   }
+// }
+// async onSubmit() {
+//   if (this.registerForm.valid) {
+
+//     const data: StudentRegistration = {
+//       ...this.registerForm.value,
+//       status: 'pending',
+//       createdAt: new Date()
+//     };
+
+//     await this.firebaseService.addDocument(
+//       FirebaseCollections.Students,
+//       data
+//     );
+
+//     alert("Registration Successful!");
+//   }
+// }
+async onSubmit() {
+  if (this.registerForm.valid) {
+
+    const formData: StudentRegistration = {
+      ...this.registerForm.value,
+      status: StudentRegistrationStatus.Pending,
+      createdAt: new Date()
+    };
+
+    await this.firebaseService.addDocument(
+      FirebaseCollections.StudentRegistrations,
+      formData
+    );
+
+    alert("Registration Successful!");
+    this.registerForm.reset();
+    this.step = 1;
+
+  } else {
+    alert("Please fill all required fields.");
   }
+}
 }

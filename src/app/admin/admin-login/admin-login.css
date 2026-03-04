@@ -1,83 +1,81 @@
-
-/* Card Styling */
-.card {
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  transition: all 0.3s ease-in-out;
+/* Wrapper */
+.login-wrapper {
+  background: #f4f6f9;
 }
 
-/* Card Hover Effect */
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+/* Left Panel */
+.left-panel {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  position: relative;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Input Styling */
-.form-control {
-  border-radius: 12px;
-  transition: 0.3s ease;
+.overlay-text {
+  text-align: center;
+  padding: 40px;
 }
 
-.form-control:focus {
-  box-shadow: 0 0 8px #198754;
-  border-color: #198754;
+.overlay-text h1 {
+  font-size: 40px;
+  font-weight: bold;
 }
 
-/* Button Styling */
-.btn-success {
-  border-radius: 12px;
-  transition: 0.3s ease;
+.overlay-text p {
+  font-size: 18px;
+  opacity: 0.9;
 }
 
-.btn-success:hover {
-  background-color: #157347;
-  transform: scale(1.03);
+/* Login Box */
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.7s ease;
 }
 
-/* Alert Styling */
-.alert {
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-/* Label Styling */
-.form-label {
-  font-size: 14px;
-}
-
-/* Responsive Improvement */
-@media (max-width: 576px) {
-  .card {
-    padding: 10px;
-  }
-}
-
-.login-card {
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  transition: 0.3s ease;
-}
-
-.login-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-.form-control {
-  border-radius: 12px;
-}
-
-.form-control:focus {
-  box-shadow: 0 0 8px #198754;
-  border-color: #198754;
-}
-
-.btn-success {
-  border-radius: 12px;
+/* Inputs */
+.custom-input {
+  border-radius: 10px;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
   transition: 0.3s;
 }
 
-.btn-success:hover {
-  background-color: #157347;
-  transform: scale(1.03);
+.custom-input:focus {
+  border-color: #0072ff;
+  box-shadow: 0 0 8px rgba(0, 114, 255, 0.3);
+}
+
+/* Button */
+.custom-btn {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+}
+
+/* Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

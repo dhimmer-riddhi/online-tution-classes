@@ -20,13 +20,14 @@ import {
 import { Observable, from, map } from 'rxjs';
 import { FirebaseCollections } from '../firebase-service/firebase-enum';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Application } from '../admin/application/application';
+import { ManageApplication } from '../admin/manage-application/manage-application';
+import { Application } from '../interface/application';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
 
-  constructor(private readonly firestore: Firestore) {}
+  constructor(private readonly firestore: Firestore) { }
 
   // ✅ FIXED METHOD
   getApplicationById(appId: string): Observable<Application | undefined> {

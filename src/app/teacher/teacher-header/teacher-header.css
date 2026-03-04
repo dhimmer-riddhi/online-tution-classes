@@ -1,0 +1,85 @@
+.header-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: #1abc9c;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Sidebar Profile */
+.sidebar-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* LOGOUT */
+.sidebar-logout {
+  margin-top: 20px;
+}
+
+.sidebar-logout button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #ff4b6e;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-logout button:hover {
+  background: #e43a5d;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  background: #f8f9fa;
+  overflow-y: auto;
+}
+
+.page-content {
+  padding: 30px;
+}
