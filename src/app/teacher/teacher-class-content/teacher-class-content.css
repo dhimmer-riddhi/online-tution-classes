@@ -1,0 +1,279 @@
+/* ---------- GENERAL ---------- */
+.dashboard-container {
+  display: flex;
+  background: #f4f6f8;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-container {
+  flex: 1;
+  padding: 30px;
+}
+
+/* ---------- TOP BANNER ---------- */
+.top-banner {
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: #fff;
+  text-align: center;
+  padding: 50px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+/* ---------- CONTENT VIEW ---------- */
+.content-view {
+  margin-top: 30px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* BACK BUTTON */
+.back-btn {
+  background: #6b7280;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.back-btn:hover {
+  background: #4b5563;
+}
+
+/* ADD CHAPTER & SMALL BUTTONS */
+.add-chapter-btn,
+.small-btn {
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.add-chapter-btn {
+  background: #10b981;
+  color: #fff;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.add-chapter-btn:hover {
+  background: #059669;
+}
+
+.small-btn {
+  background: #3b82f6;
+  color: #fff;
+  padding: 6px 14px;
+}
+
+.small-btn:hover {
+  background: #2563eb;
+}
+
+/* ---------- CHAPTER BOX ---------- */
+.chapter-box {
+  background: #f3f4f6;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+/* CHAPTER HEADER */
+.chapter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* CONCEPT BOX WITH FLEX LAYOUT */
+.concept-box {
+  background: #e5e7eb;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* LEFT SIDE: Chapter & Concept Info */
+.concept-info {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* RIGHT SIDE: Video Upload */
+.video-upload {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #dbeafe;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* INPUTS & TEXTAREAS */
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #9ca3af;
+  font-size: 14px;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* CONTENT BLOCKS */
+.content-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* VIDEO BOX */
+.video-box {
+  background: #bfdbfe;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.video-box video {
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* ACTION BUTTONS */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.save-btn {
+  background: #10b981;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: 0.3s;
+}
+
+.save-btn:hover {
+  background: #059669;
+}
+/* ---------- TABLE ---------- */
+.table-section {
+  margin-top: 40px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #3b82f6;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 14px 10px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #f3f4f6;
+}
+
+.chapter-name p {
+  margin: 0;
+  font-weight: 400;
+  font-size:medium;
+}
+.chapter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.chapter-tabs button {
+  padding: 8px 20px;
+  border-radius: 25px;
+  border: 2px solid #3b82f6;
+  background: #fff;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.chapter-tabs button.active {
+  background: #3b82f6;
+  color: #fff;
+}
+/* ---------- CLASS / CATEGORY / SUBJECT HEADER ---------- */
+.content-view h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937; /* dark gray */
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #e0f2fe; /* light blue highlight */
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.content-view h2 span {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2563eb; /* primary blue */
+  background: #dbeafe; /* lighter blue */
+  padding: 5px 12px;
+  border-radius: 8px;
+  margin-left: 5px;
+}

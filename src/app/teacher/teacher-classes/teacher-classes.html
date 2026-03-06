@@ -1,0 +1,96 @@
+<div class="dashboard-container">
+
+  <!-- Sidebar -->
+<app-teacher-header></app-teacher-header>
+<div class="container">
+
+  <h2 class="manage-title">Manage Classes</h2>
+
+  <div class="standard-buttons">
+    <button class="standard-btn" (click)="selectStandard('9')">Class 9</button>
+    <button class="standard-btn" (click)="selectStandard('10')">Class 10</button>
+    <button class="standard-btn" (click)="selectStandard('11')">Class 11</button>
+    <button class="standard-btn" (click)="selectStandard('12')">Class 12</button>
+  </div>
+
+  @if (selectedStandard) {
+    <div class="contact-form-section">
+      <div class="portal-card contact-card">
+        <h3>Add Subject - Class {{ selectedStandard }}</h3>
+
+        <form [formGroup]="courseForm" (ngSubmit)="submitForm()">
+
+          @if (categories.length > 0) {
+            <div style="margin-bottom:25px;">
+              <label style="font-weight:600; display:block; margin-bottom:8px;">
+                Select Category
+              </label>
+
+              <select formControlName="category"
+                      style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
+                <option value="">Select Category</option>
+                @for (cat of categories; track cat) {
+                  <option [value]="cat">{{ cat }}</option>
+                }
+              </select>
+            </div>
+          }
+
+          <div style="margin-bottom:30px;">
+            <label style="font-weight:600; display:block; margin-bottom:8px;">
+              Subject Name
+            </label>
+            <input type="text"
+                   formControlName="subject"
+                   placeholder="Enter Subject Name"
+                   style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;" />
+          </div>
+
+          <button type="submit" class="big-btn" [disabled]="courseForm.invalid">
+            {{ editMode ? 'Update Subject' : 'Save Subject' }}
+          </button>
+
+        </form>
+
+        <div style="margin-top:50px;">
+          @if (subjects.length > 0) {
+            <h4>Added Subjects - Class {{ selectedStandard }}</h4>
+
+            <table class="custom-table">
+              <tr>
+                <th>Subject</th>
+                @if (categories.length > 0) {
+                  <th>Category</th>
+                }
+                <th>Actions</th>
+              </tr>
+
+              @for (sub of subjects; track sub.subject) {
+                <tr>
+                  <td>{{ sub.subject }}</td>
+                  @if (categories.length > 0) {
+                    <td>{{ sub.category }}</td>
+                  }
+                  <td>
+                    <button class="edit-btn" (click)="editSubject(sub)">Edit</button>
+                    <button class="delete-btn" (click)="deleteSubject(sub)">Delete</button>
+                  </td>
+                </tr>
+              }
+            </table>
+          } @else {
+            <p style="margin-top:20px;">No subjects added yet.</p>
+          }
+        </div>
+
+        <div style="text-align:center; margin-top:40px;">
+          <button class="big-btn" (click)="backToStandards()">
+            ⬅ Back
+          </button>
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>

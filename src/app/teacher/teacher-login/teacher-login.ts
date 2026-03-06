@@ -1,0 +1,68 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FirebaseService } from '../../firebase-service/firebase-service';
+import { Router, RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { email } from '@angular/forms/signals';
+
+@Component({
+  selector: 'app-teacher-login',
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './teacher-login.html',
+  styleUrl: './teacher-login.css',
+})
+export class TeacherLogin {
+  loginForm!: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private firebaseService: FirebaseService,
+    private router: Router
+  ) {
+
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  async loginTeacher() {
+
+    if (!this.loginForm.valid) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+
+      const teachers = await firstValueFrom(
+        this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
+      );
+
+      const teacher = teachers.find(
+        t =>
+          t.teacherId === this.loginForm.value.teacherId &&
+          t.password === this.loginForm.value.password
+      );
+
+      if (!teacher) {
+        alert("Invalid Credentials");
+        return;
+      }
+
+      // ✅ Save Logged In Teacher Firestore Document ID
+      localStorage.setItem('teacherId', teacher.id);
+
+      alert("Login Successful!");
+
+      // ✅ Redirect to Dashboard
+      this.router.navigate(['/teacher/teacher-header']);
+
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong!");
+    }
+  }
+}

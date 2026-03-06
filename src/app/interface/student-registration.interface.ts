@@ -1,4 +1,7 @@
 export interface StudentRegistration {
+
+  id?: string;
+
   fullName: string;
   email: string;
   mobile: string;
@@ -11,7 +14,10 @@ export interface StudentRegistration {
   board: string;
   stream: string;
   scienceGroup?: string;
-  subjects: string;
+
+  subjects: string[];
+
+  status: 'pending' | 'approved' | 'rejected';
 
   createdAt: Date;
 }
