@@ -7,97 +7,106 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Gmail Transporter (App Password without spaces)
+// Gmail transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'devanshipatel2824@gmail.com',
-    pass: 'qnoq nnfo dcsy movf' // remove spaces
+    pass: 'qnoqnnfodcsymovf'
   }
 });
 
-// ✅ Check Gmail Connection on Server Start
-transporter.verify(function (error, success) {
+// Check connection
+transporter.verify((error, success) => {
   if (error) {
-    console.log("❌ Gmail Connection Error:", error);
+    console.log("❌ Gmail Error:", error);
   } else {
     console.log("✅ Gmail Server Ready");
   }
 });
 
-// TEST ROUTE
-app.get('/', (req, res) => {
-  res.send('Email Server is Running!');
-});
+// ===============================
+// APPROVAL EMAIL
+// ===============================
 
-
-// ==========================================
-// ✅ ADMIN APPROVES TEACHER → PASSWORD EMAIL
-// ==========================================
-app.post('/send-teacher-approval', (req, res) => {
+app.post('/send-teacher-approval', async (req, res) => {
 
   const { to, name, password } = req.body;
 
   const mailOptions = {
-    from: '"Online Tution Classes" <devanshipatel2824@gmail.com>',
+    from: '"Online Tuition Classes" <devanshipatel2824@gmail.com>',
     to: to,
     subject: 'Your Account Has Been Approved',
     html: `
-      <div style="font-family: Arial; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        <h2 style="color: #28a745;">Congratulations ${name} 🎉</h2>
-        <p>Your teacher registration has been approved by Admin.</p>
-        <hr>
-        <h3>Your Login Credentials:</h3>
+      <div style="font-family: Arial; padding:20px">
+        <h2 style="color:green">Hello ${name}</h2>
+        <p>Your registration has been approved.</p>
+
+        <h3>Login Details</h3>
+
         <p><b>Email:</b> ${to}</p>
         <p><b>Password:</b> ${password}</p>
+
         <br>
+        <p>You can login to the Online Tuition portal.</p>
       </div>
     `
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log("❌ Email Error:", error);
-      return res.status(500).send(error.toString());
-    }
-    console.log("✅ Approval Email Sent:", info.response);
-    res.status(200).send({ success: true, message: 'Approval email sent!' });
-  });
+  try {
+
+    await transporter.sendMail(mailOptions);
+
+    console.log("Email Sent");
+    res.send({ success: true });
+
+  } catch (error) {
+
+    console.log("Email Error:", error);
+    res.status(500).send(error);
+
+  }
+
 });
 
 
-// ==========================================
-// ❌ ADMIN REJECTS TEACHER
-// ==========================================
-app.post('/send-teacher-rejection', (req, res) => {
+// ===============================
+// REJECTION EMAIL
+// ===============================
+
+app.post('/send-teacher-rejection', async (req, res) => {
 
   const { to, name } = req.body;
 
   const mailOptions = {
-    from: '"Online Tution Classes" <devanshipatel2824@gmail.com>',
+    from: '"Online Tuition Classes" <devanshipatel2824@gmail.com>',
     to: to,
-    subject: 'Application Status Update',
+    subject: 'Application Status',
     html: `
-      <div style="font-family: Arial; padding: 20px;">
-        <h2 style="color: #dc3545;">Hello ${name},</h2>
-        <p>We regret to inform you that your teacher registration was not approved.</p>
-        <p>Thank you for your interest.</p>
+      <div style="font-family: Arial">
+        <h2>Hello ${name}</h2>
+        <p>Your application has been rejected.</p>
+        <p>Thank you for applying.</p>
       </div>
     `
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log("❌ Rejection Email Error:", error);
-      return res.status(500).send(error.toString());
-    }
-    console.log("✅ Rejection Email Sent:", info.response);
-    res.status(200).send({ success: true, message: 'Rejection email sent!' });
-  });
+  try {
+
+    await transporter.sendMail(mailOptions);
+
+    console.log("Rejection Email Sent");
+    res.send({ success: true });
+
+  } catch (error) {
+
+    console.log(error);
+    res.status(500).send(error);
+
+  }
+
 });
 
-
-// START SERVER
 app.listen(3000, () => {
-  console.log('🚀 Email server running on port 3000');
+  console.log("🚀 Email Server Running On Port 3000");
 });

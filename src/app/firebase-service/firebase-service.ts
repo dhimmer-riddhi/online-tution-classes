@@ -26,6 +26,9 @@ import { Application } from '../interface/application';
   providedIn: 'root',
 })
 export class FirebaseService {
+  uploadVideo(file: any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private readonly firestore: Firestore) { }
 

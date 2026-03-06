@@ -12,7 +12,7 @@ import { AdminSidebar } from "../admin-sidebar/admin-sidebar";
   imports: [CommonModule, AdminSidebar],
   templateUrl: './manage-application.html',
   styleUrl: './manage-application.css',
-  changeDetection: ChangeDetectionStrategy.OnPush   // 🔥 Important
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageApplication implements OnInit {
 
@@ -21,7 +21,7 @@ export class ManageApplication implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    private cdr: ChangeDetectorRef   // 🔥 detect change
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -44,18 +44,35 @@ export class ManageApplication implements OnInit {
                r.status === StudentRegistrationStatus.Rejected
         );
 
-        this.cdr.markForCheck();  // 🔥 Force UI update instantly
+        this.cdr.markForCheck();
       });
+  }
+
+  // 🔥 PASSWORD GENERATOR
+  generatePassword(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let password = '';
+    for (let i = 0; i < 8; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
   }
 
   async approve(student: StudentRegistration) {
 
+    const password = this.generatePassword();
+
+    // 1️⃣ Update Firebase Status
     await this.firebaseService.updateDocument(
       FirebaseCollections.StudentRegistrations,
       student.id!,
-      { status: StudentRegistrationStatus.Approved }
+      {
+        status: StudentRegistrationStatus.Approved,
+        password: password
+      }
     );
 
+    // 2️⃣ Save Application Record
     const applicationData: Application = {
       studentId: student.id!,
       fullName: student.fullName,
@@ -72,7 +89,27 @@ export class ManageApplication implements OnInit {
       applicationData
     );
 
-    // No reload needed (Realtime)
+    // 3️⃣ SEND EMAIL
+    try {
+
+      await fetch('http://localhost:3000/send-teacher-approval', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          to: student.email,
+          name: student.fullName,
+          password: password
+        })
+      });
+
+      alert("Student Approved & Email Sent");
+
+    } catch (error) {
+      console.error("Email Error", error);
+    }
+
   }
 
   async reject(student: StudentRegistration) {
@@ -82,5 +119,21 @@ export class ManageApplication implements OnInit {
       student.id!,
       { status: StudentRegistrationStatus.Rejected }
     );
+
+    // Send rejection email
+    await fetch('http://localhost:3000/send-teacher-rejection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: student.email,
+        name: student.fullName
+      })
+    });
+
+    alert("Student Rejected");
+
   }
+
 }
