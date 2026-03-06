@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { StudentRegistration, StudentRegistrationStatus } from '../../interface/student-regisation';
+import { StudentRegistration } from '../../interface/student-registration.interface';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { Application } from '../../interface/application';
@@ -22,7 +22,7 @@ export class ManageApplication implements OnInit {
   constructor(
     private firebaseService: FirebaseService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadRegistrations();
@@ -34,14 +34,13 @@ export class ManageApplication implements OnInit {
         FirebaseCollections.StudentRegistrations
       )
       .subscribe(data => {
-
         this.registrations = data.filter(
-          r => r.status === StudentRegistrationStatus.Pending
+          r => r.status === 'pending'
         );
 
         this.processedStudents = data.filter(
-          r => r.status === StudentRegistrationStatus.Approved ||
-               r.status === StudentRegistrationStatus.Rejected
+          r => r.status === 'approved' ||
+            r.status === 'rejected'
         );
 
         this.cdr.markForCheck();
@@ -67,7 +66,7 @@ export class ManageApplication implements OnInit {
       FirebaseCollections.StudentRegistrations,
       student.id!,
       {
-        status: StudentRegistrationStatus.Approved,
+        status: 'approved',
         password: password
       }
     );
@@ -117,7 +116,7 @@ export class ManageApplication implements OnInit {
     await this.firebaseService.updateDocument(
       FirebaseCollections.StudentRegistrations,
       student.id!,
-      { status: StudentRegistrationStatus.Rejected }
+      { status: 'rejected' }
     );
 
     // Send rejection email

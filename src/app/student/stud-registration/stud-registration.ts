@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
-FormBuilder,
-FormGroup,
-FormsModule,
-ReactiveFormsModule,
-Validators
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 
 import { FirebaseService } from '../../firebase-service/firebase-service';
@@ -13,224 +13,225 @@ import { StudentRegistration } from '../../interface/student-registration.interf
 import { StudentHeader } from "../student-header/student-header";
 import { StudFooter } from "../stud-footer/stud-footer";
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
-// import { StudentRegistration, StudentRegistrationStatus } from '../../interface/student-regisation';
-// import { StudentRegistration, StudentRegistrationStatus } from '../../interface/studentregisation';
+import { Router } from '@angular/router';
+
 
 @Component({
-selector: 'app-stud-registration',
-standalone: true,
-imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter],
-templateUrl: './stud-registration.html',
-styleUrl: './stud-registration.css',
+  selector: 'app-stud-registration',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter],
+  templateUrl: './stud-registration.html',
+  styleUrl: './stud-registration.css',
 })
 
 export class StudRegistration implements OnInit {
 
-private fb = inject(FormBuilder);
-private firebaseService = inject(FirebaseService);
+  private fb = inject(FormBuilder);
+  private firebaseService = inject(FirebaseService);
 
-registerForm!: FormGroup;
+  registerForm!: FormGroup;
 
-step = 1;
-isLoading = false;
+  step = 1;
+  isLoading = false;
 
-// 🔥 Courses & Subjects
-courses: any[] = [];
-availableSubjects: string[] = [];
-selectedSubjects: string[] = [];
-  router: any;
+  // 🔥 Courses & Subjects
+  courses: any[] = [];
+  availableSubjects: string[] = [];
+  selectedSubjects: string[] = [];
+  private router = inject(Router);
 
-constructor() {
+  constructor() {
 
-this.registerForm = this.fb.group({
+    this.registerForm = this.fb.group({
 
-fullName: ['', Validators.required],
-email: ['', [Validators.required, Validators.email]],
-mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-dob: ['', Validators.required],
-gender: ['', Validators.required],
-city: ['', Validators.required],
-state: ['', Validators.required],
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
 
-standard: ['', Validators.required],
-board: ['', Validators.required],
-stream: ['', Validators.required],
-scienceGroup: [''],
+      standard: ['', Validators.required],
+      board: ['', Validators.required],
+      stream: ['', Validators.required],
+      scienceGroup: [''],
 
-subjects: [[], Validators.required]
+      subjects: [[], Validators.required]
 
-});
+    });
 
-// 🔹 Science Group Validation
-this.registerForm.get('stream')?.valueChanges.subscribe(value => {
+    // 🔹 Science Group Validation
+    this.registerForm.get('stream')?.valueChanges.subscribe(value => {
 
-const scienceControl = this.registerForm.get('scienceGroup');
+      const scienceControl = this.registerForm.get('scienceGroup');
 
-if (value === 'Science') {
-scienceControl?.setValidators([Validators.required]);
-} else {
-scienceControl?.clearValidators();
-scienceControl?.setValue('');
-}
+      if (value === 'Science') {
+        scienceControl?.setValidators([Validators.required]);
+      } else {
+        scienceControl?.clearValidators();
+        scienceControl?.setValue('');
+      }
 
-scienceControl?.updateValueAndValidity();
+      scienceControl?.updateValueAndValidity();
 
-});
+    });
 
-}
+  }
 
-// ===============================
-// 🔥 LOAD COURSES FROM FIREBASE
-// ===============================
+  // ===============================
+  // 🔥 LOAD COURSES FROM FIREBASE
+  // ===============================
 
-ngOnInit() {
+  ngOnInit() {
 
-  this.firebaseService
-  .getCollection<any>(FirebaseCollections.Courses)
-  .subscribe(data => {
+    this.firebaseService
+      .getCollection<any>(FirebaseCollections.Courses)
+      .subscribe(data => {
 
-    this.courses = data;
+        this.courses = data;
 
-  });
+      });
 
-// 🔥 STANDARD CHANGE → SUBJECT FILTER
-this.registerForm.get('standard')?.valueChanges.subscribe(std => {
+    // 🔥 STANDARD CHANGE → SUBJECT FILTER
+    this.registerForm.get('standard')?.valueChanges.subscribe(std => {
 
-const filteredCourses = this.courses.filter(
-course => course.class === std
-);
+      const filteredCourses = this.courses.filter(
+        course => course.class === std
+      );
 
-this.availableSubjects = filteredCourses.map(
-course => course.title
-);
+      this.availableSubjects = filteredCourses.map(
+        course => course.title
+      );
 
-});
+    });
 
-}
+  }
 
-// ===============================
-// 🔹 SUBJECT CHECKBOX HANDLER
-// ===============================
+  // ===============================
+  // 🔹 SUBJECT CHECKBOX HANDLER
+  // ===============================
 
-toggleSubject(event: any, subject: string) {
+  toggleSubject(event: any, subject: string) {
 
-if (event.target.checked) {
+    if (event.target.checked) {
 
-  this.selectedSubjects.push(subject);
+      this.selectedSubjects.push(subject);
 
-} else {
+    } else {
 
-  this.selectedSubjects = this.selectedSubjects.filter(
-    s => s !== subject
-  );
+      this.selectedSubjects = this.selectedSubjects.filter(
+        s => s !== subject
+      );
 
-}
+    }
 
-// 🔥 Form control update
-this.registerForm.patchValue({
-  subjects: this.selectedSubjects
-});
+    // 🔥 Form control update
+    this.registerForm.patchValue({
+      subjects: this.selectedSubjects
+    });
 
-}
+  }
 
-// ===============================
-// 🔹 STEP 1 → STEP 2 VALIDATION
-// ===============================
+  // ===============================
+  // 🔹 STEP 1 → STEP 2 VALIDATION
+  // ===============================
 
-nextStep() {
+  nextStep() {
 
-if (this.step === 1) {
+    if (this.step === 1) {
 
-const personalFields = [
-'fullName',
-'email',
-'mobile',
-'dob',
-'gender',
-'city',
-'state'
-];
+      const personalFields = [
+        'fullName',
+        'email',
+        'mobile',
+        'dob',
+        'gender',
+        'city',
+        'state'
+      ];
 
-const isStepOneValid = personalFields.every(field =>
-this.registerForm.get(field)?.valid
-);
+      const isStepOneValid = personalFields.every(field =>
+        this.registerForm.get(field)?.valid
+      );
 
-if (isStepOneValid) {
+      if (isStepOneValid) {
 
-this.step = 2;
-window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.step = 2;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-} else {
+      } else {
 
-alert("Please fill all required personal details properly.");
-this.registerForm.markAllAsTouched();
+        alert("Please fill all required personal details properly.");
+        this.registerForm.markAllAsTouched();
 
-}
+      }
 
-}
+    }
 
-}
+  }
 
-// ===============================
-// 🔹 BACK BUTTON
-// ===============================
+  // ===============================
+  // 🔹 BACK BUTTON
+  // ===============================
 
-previousStep() {
+  previousStep() {
 
-this.step = 1;
-window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.step = 1;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-}
+  }
 
-// ===============================
-// 🔹 SUBMIT FORM
-// ===============================
+  // ===============================
+  // 🔹 SUBMIT FORM
+  // ===============================
 
-async onSubmit() {
+  async onSubmit() {
 
-if (this.registerForm.invalid) {
+    if (this.registerForm.invalid) {
 
-alert("Please fill all required fields.");
-this.registerForm.markAllAsTouched();
-return;
+      alert("Please fill all required fields.");
+      this.registerForm.markAllAsTouched();
+      return;
 
-}
+    }
 
-this.isLoading = true;
+    this.isLoading = true;
 
-const formData: StudentRegistration = {
+    const formData: StudentRegistration = {
 
-...this.registerForm.value,
-subjects: this.selectedSubjects,
-createdAt: new Date()
+      ...this.registerForm.value,
+      subjects: this.selectedSubjects,
+      status: 'pending',
+      createdAt: new Date()
 
-};
+    };
 
-try {
+    try {
 
-  await this.firebaseService.addStudent(formData);
+      await this.firebaseService.addStudent(formData);
 
-  alert("🎉 Registration Successful!");
+      alert("🎉 Registration Successful!");
 
-  this.registerForm.reset();
-  this.selectedSubjects = [];
-  this.step = 1;
+      this.registerForm.reset();
+      this.selectedSubjects = [];
+      this.step = 1;
 
-  // 🔥 Redirect
-  this.router.navigate(['/student/stud-sign-in']);
+      // 🔥 Redirect
+      this.router.navigate(['/student/stud-sign-in']);
 
-} catch (error) {
+    } catch (error) {
 
-  console.error("Firebase Error:", error);
-  alert("❌ Error saving data. Try again.");
+      console.error("Firebase Error:", error);
+      alert("❌ Error saving data. Try again.");
 
 
-} finally {
+    } finally {
 
-this.isLoading = false;
+      this.isLoading = false;
 
-}
+    }
 
-}
+  }
 
 }

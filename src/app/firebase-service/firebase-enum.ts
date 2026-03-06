@@ -7,7 +7,7 @@ export enum FirebaseCollections {
   Teachers = 'teachers',
   StudentRegistrations = 'student-registrations', // ✅ ADD THIS
    Standard = 'stadards',
- ClassContent = "ClassContent"
+   ClassContent = "ClassContent"
     
 
 }
