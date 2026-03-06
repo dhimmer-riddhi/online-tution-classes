@@ -1,8 +1,4 @@
-// import { StudentStatus } from "../enums/student-status.enum";
-
-export interface Student {
-  id?: string;
-
+export interface StudentRegistration {
   fullName: string;
   email: string;
   mobile: string;
@@ -17,6 +13,5 @@ export interface Student {
   scienceGroup?: string;
   subjects: string;
 
-  // status: StudentStatus;
   createdAt: Date;
 }
