@@ -1,0 +1,157 @@
+.contact-header {
+  text-align: center;
+  padding: 215px 20px;
+  background: linear-gradient(to right, #ebdfe8, #dbecf1);
+  color: #000000;
+}
+
+/* Gradient Header */
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #ffe2f2, #9ccbd7);
+  display: flex;
+  align-items: flex-start;   /* upar thi lavva mate */
+  justify-content: center;
+  text-align: center;
+  padding-top: 80px;         /* get in touch upar */
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.breadcrumb {
+  font-size: 1rem;
+  font-weight: bold;
+  padding-left: 81px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: rgb(2, 2, 2);
+}
+
+
+/* second section */
+.category-section {
+  padding: 70px 8%;
+  background: #f4f7ff;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* Base Card */
+.category-card {
+  position: relative;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  transition: 0.4s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+}
+
+/* 🔥 Gradient Border Animation */
+.category-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc, #00c6ff);
+  background-size: 300% 300%;
+  animation: borderAnimation 4s linear infinite;
+  /* -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0); */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+@keyframes borderAnimation {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Hover */
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* ICON */
+.top-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+/* TITLE */
+.category-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* DESCRIPTION */
+.category-card p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* BUTTON */
+.category-card button {
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: 0.3s;
+}
+
+/* 🎨 Different Stream Colors */
+.general button {
+  background: linear-gradient(45deg, #5f6fff, #00c6ff);
+}
+
+.science button {
+  background: linear-gradient(45deg, #11998e, #38ef7d);
+}
+
+.commerce button {
+  background: linear-gradient(45deg, #ff8c00, #ff512f);
+}
+
+.category-card button:hover {
+  transform: scale(1.05);
+}
+
+/* ⭐ Ribbon */
+.ribbon {
+  position: absolute;
+  top: 15px;
+  right: -40px;
+  background: #ff3e6c;
+  color: white;
+  padding: 5px 40px;
+  font-size: 12px;
+  font-weight: 600;
+  transform: rotate(45deg);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+

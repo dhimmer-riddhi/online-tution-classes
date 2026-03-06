@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Cource } from './cource';
+import { TenthCbse } from './tenth-cbse';
 
-describe('Cource', () => {
-  let component: Cource;
-  let fixture: ComponentFixture<Cource>;
+describe('TenthCbse', () => {
+  let component: TenthCbse;
+  let fixture: ComponentFixture<TenthCbse>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Cource]
+      imports: [TenthCbse]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Cource);
+    fixture = TestBed.createComponent(TenthCbse);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
