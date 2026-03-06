@@ -1,0 +1,217 @@
+<div class="dashboard-container">
+
+  <!-- HEADER -->
+  <app-teacher-header></app-teacher-header>
+
+  <div class="main-container">
+
+    <div class="top-banner">
+      <h1>Classes Content</h1>
+    </div>
+
+    <!-- Standards -->
+    <div class="standard-section">
+      @for (std of standards; track std) {
+      <button (click)="selectStandard(std)" [class.active]="selectedStandard === std">
+        Class {{ std }}
+      </button>
+      }
+    </div>
+
+    <!-- Categories -->
+    @if (selectedStandard && categories.length) {
+    <div class="category-section">
+      @for (cat of categories; track cat) {
+      <button (click)="selectCategory(cat)" [class.active]="selectedCategory === cat">
+        {{ cat }}
+      </button>
+      }
+    </div>
+    }
+
+       <!-- Subjects -->
+    @if (selectedStandard && !selectedSubject && (!categories.length || selectedCategory)) {
+    <div class="subject-grid">
+      @for (sub of subjects; track sub.id) {
+      <div class="subject-card">
+        <h3>{{ sub.subject }}</h3>
+        <button (click)="openSubject(sub)">Manage</button>
+      </div>
+      }
+    </div>
+    }
+    <!-- ================= FORM ================= -->
+
+    @if (selectedSubject) {
+
+    <div class="content-view">
+
+      <button class="back-btn" (click)="backToSubjects()">← Back</button>
+
+      <h2>
+        Class {{ selectedStandard }}
+        @if (selectedCategory) {
+        <span> - {{ selectedCategory }}</span>
+        }
+        - {{ selectedSubject.subject }}
+      </h2>
+
+      <button class="add-chapter-btn" (click)="addChapter()">+ Add Chapter</button>
+
+      @if (contents.length) {
+      <div class="chapter-tabs">
+        @for (ch of contents; track ch.chapterNo; let i = $index) {
+        <button (click)="selectedChapterIndex = i" [class.active]="selectedChapterIndex === i">
+          Chapter {{ ch.chapterNo }}
+        </button>
+        }
+      </div>
+      }
+
+      @for (chapter of contents; track chapter.chapterNo; let i = $index) {
+
+      @if (i === selectedChapterIndex) {
+
+      <div class="chapter-box">
+
+        <div class="chapter-header">
+          <div>Chapter {{ chapter.chapterNo }}</div>
+
+          <div class="action-buttons">
+            <button class="delete-btn" (click)="deleteChapter(i)">Delete</button>
+          </div>
+        </div>
+
+        <input type="text" placeholder="Chapter Name" [(ngModel)]="chapter.chapterName">
+
+        <button class="small-btn" (click)="addConcept(chapter)">
+          + Add Concept
+        </button>
+
+        @for (concept of chapter.concepts; track concept; let ci = $index) {
+
+        <div class="concept-box">
+
+          <div class="concept-header">
+            <strong>Concept</strong>
+
+            <div class="action-buttons">
+              <button class="delete-btn" (click)="deleteConcept(chapter, ci)">Delete</button>
+            </div>
+          </div>
+
+          <input type="text" placeholder="Concept Title" [(ngModel)]="concept.title">
+
+          <textarea placeholder="Concept Definition" [(ngModel)]="concept.definition"></textarea>
+
+          <button class="small-btn" (click)="addContent(concept)">
+            + Add Content
+          </button>
+
+          @for (content of concept.contents; track content; let co = $index) {
+
+          <div class="content-block">
+
+            <div class="content-header">
+              <strong>Upload The Video</strong>
+
+              <div class="action-buttons">
+                <button class="delete-btn" (click)="deleteContent(concept, co)">Delete</button>
+              </div>
+            </div>
+
+            <input type="file" [accept]="videoAccept" (change)="onVideoUpload($event, content)">
+
+            @if (content.videos.length) {
+
+            @for (vid of content.videos; track vid; let vi = $index) {
+
+            <div class="video-box">
+
+              <video width="250" controls>
+                <source [src]="vid.url">
+              </video>
+
+              <p>{{ vid.fileName }}</p>
+
+              <button class="delete-btn" (click)="deleteVideo(content, vi)">
+                Delete
+              </button>
+
+            </div>
+            }
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+      }
+      }
+      <button class="save-btn" (click)="saveContent()">
+        Save
+      </button>
+    </div>
+    }
+    <!-- ================= TABLE ================= -->
+    @if (savedContents.length) {
+
+    <div class="table-section">
+
+      <h2>Saved Data</h2>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Standard</th>
+            <th>Subject</th>
+            <th>Chapter Names</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (data of savedContents; track data.subjectId; let i = $index) {
+
+          <tr>
+            <td>{{data.standard}}</td>
+            <td>{{data.subjectName}}</td>
+            <td>
+              @for (ch of data.contents; track ch.chapterNo) {
+              <div class="chapter-name">
+                <span
+                  style="background:#3b82f6;color:#fff;padding:3px 8px;border-radius:12px;margin:2px;display:inline-block">
+                 <p>chapter {{ ch.chapterNo }}</p><br><p>chapter name {{ ch.chapterName }}</p>
+                </span>
+              </div>
+              }
+            </td>
+
+            <td>
+
+              <button class="edit-btn" (click)="editSaved(data)">
+                Edit
+              </button>
+
+              <button class="delete-btn" (click)="deleteSaved(i,data)">
+                Delete
+              </button>
+
+            </td>
+
+          </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    }
+
+  </div>
+</div>

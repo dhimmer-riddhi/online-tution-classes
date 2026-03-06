@@ -20,23 +20,27 @@ import {
 import { Observable, from, map } from 'rxjs';
 import { FirebaseCollections } from '../firebase-service/firebase-enum';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Application } from '../admin/application/application';
+// import { Applications } from '../admin/manage-application/manage-application';
 import { StudentRegistration } from '../interface/student-registration.interface';
+import { Application } from '../interface/application';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
+  uploadVideo(file: any) {
+    throw new Error('Method not implemented.');
+  }
   // ===============================
 // ADD STUDENT REGISTRATION
 // ===============================
 public addStudent(formData: StudentRegistration) {
   return this.addDocument(
-    FirebaseCollections.STUDENT_REGISTRATION,
+    FirebaseCollections.StudentRegistrations,
     formData
   );
 }
 
-  constructor(private readonly firestore: Firestore) {}
+  constructor(private readonly firestore: Firestore) { }
 
   // ✅ FIXED METHOD
   getApplicationById(appId: string): Observable<Application | undefined> {
