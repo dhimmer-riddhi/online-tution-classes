@@ -21,10 +21,20 @@ import { Observable, from, map } from 'rxjs';
 import { FirebaseCollections } from '../firebase-service/firebase-enum';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Application } from '../admin/application/application';
+import { StudentRegistration } from '../interface/student-registration.interface';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
+  // ===============================
+// ADD STUDENT REGISTRATION
+// ===============================
+public addStudent(formData: StudentRegistration) {
+  return this.addDocument(
+    FirebaseCollections.STUDENT_REGISTRATION,
+    formData
+  );
+}
 
   constructor(private readonly firestore: Firestore) {}
 
@@ -127,16 +137,22 @@ export class FirebaseService {
   }
 
   // ===============================
-  // FILE UPLOAD
-  // ===============================
-  async uploadFile(path: string, file: File) {
-    const storage = getStorage();
-    const storageRef = ref(storage, path);
+// FILE UPLOAD
+// ===============================
+async uploadFile(path: string, file: File) {
 
-    await uploadBytes(storageRef, file);
-    const downloadURL = await getDownloadURL(storageRef);
+  const storage = getStorage();
 
-    return { downloadURL };
-  }
+  const storageRef = ref(storage, path);
+
+  const uploadResult = await uploadBytes(storageRef, file);
+
+  const downloadURL = await getDownloadURL(uploadResult.ref);
+
+  return { downloadURL };
+
+}
+
+
 
 }

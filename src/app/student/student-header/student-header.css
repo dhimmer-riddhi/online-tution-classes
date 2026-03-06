@@ -127,3 +127,130 @@
 .register-btn:hover {
   background: #e63b5a;
 }
+
+/* mega menu */
+/* ===== MEGA MENU (STANDARD) ONLY ===== */
+
+.mega-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Standard link */
+.mega-link {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Mega Menu Box */
+.mega-menu {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+
+  width: 880px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;   /* ⭐ proper alignment */
+  gap: 24px;
+
+  padding: 24px 28px;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.14);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+/* Hover Open */
+.mega-wrapper:hover .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Column */
+.mega-col {
+  min-width: 180px;
+}
+
+/* Column Heading */
+.mega-col h4 {
+  font-size: 15.5px;
+  font-weight: 600;
+  margin-bottom: 8px;     /* ⭐ reduced gap */
+  color: #2c2c2c;
+}
+
+/* Links */
+.mega-col a {
+  display: block;
+  text-decoration: none;
+  color: #555;
+  font-size: 14px;
+  padding: 4px 0;        /* ⭐ compact spacing */
+  transition: all 0.25s ease;
+}
+
+.mega-col a:hover {
+  color: #4b3fbf;
+  padding-left: 5px;
+}
+
+/* Science Sub Group */
+.sub-group {
+  margin-top: 4px;       /* ⭐ reduced space */
+}
+
+.sub-group span {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin: 4px 0;
+}
+
+/* ===== MEGA MENU FONT STYLE ===== */
+
+/* Column Heading */
+.mega-col h4 {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0a2540;          /* dark navy */
+  margin-bottom: 14px;
+  letter-spacing: 0.2px;
+}
+
+/* Menu Links */
+.mega-col a {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f3a5f;          /* blue-gray */
+  line-height: 1.9;
+  text-decoration: none;
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+/* Hover Effect */
+.mega-col a:hover {
+  color: #2563eb;          /* education blue */
+  padding-left: 6px;
+}
+
+/* Science Sub Group Label */
+.sub-group span {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a2540;
+  margin: 8px 0 4px;
+  display: block;
+}

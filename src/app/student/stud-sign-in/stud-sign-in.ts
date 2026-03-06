@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StudentHeader } from "../student-header/student-header";
+import { StudFooter } from "../stud-footer/stud-footer";
 
 @Component({
   selector: 'app-stud-sign-in',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, StudentHeader, StudFooter],
   templateUrl: './stud-sign-in.html',
   styleUrl: './stud-sign-in.css',
 })

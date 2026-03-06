@@ -230,6 +230,27 @@ h2 {
     width: 150px;
 }
 
+.subject-list{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.subject-item{
+background:#f4f4f4;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.subject-item input{
+cursor:pointer;
+}
+
 img {
     border: none;
     outline: none;
