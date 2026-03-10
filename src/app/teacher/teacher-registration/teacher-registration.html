@@ -16,7 +16,7 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="registerTeacher()">
 
-      <!-- 🔵 STEP 1 - Personal Details -->
+      <!-- STEP 1 -->
       <div *ngIf="step === 1" class="form-step">
 
         <h2>Personal Details</h2>
@@ -52,16 +52,10 @@
 
       </div>
 
-
-      <!-- 🔵 STEP 2 - Professional Details -->
+      <!-- STEP 2 -->
       <div *ngIf="step === 2" class="form-step">
 
         <h2>Professional Details</h2>
-
-        <div class="form-group">
-          <label>Teacher ID</label>
-          <input type="text" formControlName="teacherId">
-        </div>
 
         <div class="form-group">
           <label>Subject Expertise</label>
@@ -73,9 +67,20 @@
           <input type="number" formControlName="experience">
         </div>
 
+        <!-- CV Upload -->
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" formControlName="password">
+          <label>Upload CV (PDF/DOC)</label>
+          <input type="file"
+                 (change)="onCvSelected($event)"
+                 accept=".pdf,.doc,.docx">
+        </div>
+
+        <!-- Photo Upload -->
+        <div class="form-group">
+          <label>Upload Profile Photo</label>
+          <input type="file"
+                 (change)="onPhotoSelected($event)"
+                 accept="image/*">
         </div>
 
         <button type="button" (click)="previousStep()" class="btn-back">

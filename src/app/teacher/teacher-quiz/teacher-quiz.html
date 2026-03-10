@@ -1,0 +1,73 @@
+<div class="main-container">
+  <div class="top-banner">
+    <h1>Teacher Quiz Management</h1>
+  </div>
+
+  <div class="standard-section">
+    <button *ngFor="let std of standards" (click)="selectStandard(std)" [class.active]="selectedStandard === std">Class {{ std }}</button>
+  </div>
+
+  <div *ngIf="selectedStandard && categories.length" class="category-section">
+    <button *ngFor="let cat of categories" (click)="selectedCategory = cat; loadSubjects()" [class.active]="selectedCategory === cat">{{ cat }}</button>
+  </div>
+
+  <div *ngIf="selectedStandard && !selectedSubject" class="subject-grid">
+    <div class="subject-card" *ngFor="let sub of subjects">
+      <h3>{{ sub.subject }}</h3>
+      <button (click)="openSubjectQuiz(sub)">Configure Quiz</button>
+    </div>
+  </div>
+
+  <div *ngIf="selectedSubject" class="content-view">
+    <div class="header-row">
+      <button class="back-btn" (click)="backToSubjects()">← Back</button>
+      <div class="quiz-title-box">
+        <input type="text" [(ngModel)]="activeQuiz.quizName" placeholder="Enter Quiz Title (e.g. Monthly Test)">
+      </div>
+      <div class="grand-total">Grand Total: {{ activeQuiz.totalQuizMarks }}</div>
+    </div>
+
+    <div class="chapter-tabs">
+      <button *ngFor="let ch of activeQuiz.chapters; let i=index" 
+              (click)="selectedChapterIndex=i" 
+              [class.active]="selectedChapterIndex===i">
+        Ch {{ ch.chapterNo }}: {{ ch.chapterName }}
+      </button>
+    </div>
+
+    <div *ngFor="let chapter of activeQuiz.chapters; let i=index">
+      <div *ngIf="i === selectedChapterIndex" class="chapter-box">
+        <div class="chapter-header">
+          <span>{{ chapter.chapterName }}</span>
+          <span class="small-badge">Marks: {{ chapter.totalMarks }}</span>
+        </div>
+
+        <button class="small-btn" (click)="addQuestion(chapter)">+ Add Question</button>
+
+        <div *ngFor="let q of chapter.questions; let qi=index" class="concept-box">
+          <div class="concept-header">
+            <strong>Question {{ qi + 1 }}</strong>
+            <button class="delete-btn" (click)="removeQuestion(chapter, qi)">Delete</button>
+          </div>
+
+          <input type="text" [(ngModel)]="q.question" placeholder="Write question here..." class="mb-2">
+
+          <div class="content-block">
+            <div *ngFor="let opt of [0,1,2,3]" class="option-row">
+              <input type="radio" [name]="'correct_'+i+'_'+qi" [value]="q.options[opt]" [(ngModel)]="q.correctAnswer">
+              <input type="text" [(ngModel)]="q.options[opt]" [placeholder]="'Option ' + (opt+1)">
+            </div>
+          </div>
+
+          <div class="q-footer-marks">
+            <span>Points:</span>
+            <input type="number" [(ngModel)]="q.marks" (change)="calculateChapterTotal(chapter)">
+            <span class="correct-indicator" *ngIf="q.correctAnswer">✓ {{q.correctAnswer}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" (click)="saveQuiz()">Save All Quiz Data</button>
+  </div>
+</div>

@@ -59,7 +59,7 @@ export class TeacherLogin {
       alert("Login Successful!");
 
       // ✅ Redirect to Dashboard
-      this.router.navigate(['/teacher/teacher-header']);
+      this.router.navigate(['/teacher/dashboard']);
 
     } catch (error) {
       console.error(error);

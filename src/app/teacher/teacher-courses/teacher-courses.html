@@ -1,1 +1,94 @@
-<p>teacher-courses works!</p>
+<div class="container">
+
+  <h2 class="manage-title">Manage Classes</h2>
+
+  <!-- STANDARD BUTTONS -->
+  <div class="standard-buttons">
+    <button class="standard-btn" (click)="selectStandard('9')">Class 9</button>
+    <button class="standard-btn" (click)="selectStandard('10')">Class 10</button>
+    <button class="standard-btn" (click)="selectStandard('11')">Class 11</button>
+    <button class="standard-btn" (click)="selectStandard('12')">Class 12</button>
+  </div>
+
+  <!-- FORM + TABLE -->
+  <div *ngIf="selectedStandard" class="contact-form-section">
+
+    <div class="portal-card contact-card">
+
+      <h3>Add Subject - Class {{ selectedStandard }}</h3>
+
+      <form [formGroup]="courseForm" (ngSubmit)="submitForm()">
+
+        <!-- CATEGORY -->
+        <div *ngIf="categories.length > 0" style="margin-bottom:25px;">
+          <label style="font-weight:600; display:block; margin-bottom:8px;">
+            Select Category
+          </label>
+
+          <select formControlName="category"
+                  style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">Select Category</option>
+            <option *ngFor="let cat of categories" [value]="cat">
+              {{ cat }}
+            </option>
+          </select>
+        </div>
+
+        <!-- SUBJECT -->
+        <div style="margin-bottom:30px;">
+          <label style="font-weight:600; display:block; margin-bottom:8px;">
+            Subject Name
+          </label>
+          <input type="text"
+                 formControlName="subject"
+                 placeholder="Enter Subject Name"
+                 style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;" />
+        </div>
+
+        <button type="submit" class="big-btn" [disabled]="courseForm.invalid">
+          {{ editMode ? 'Update Subject' : 'Save Subject' }}
+        </button>
+
+      </form>
+
+      <!-- ================= TABLE ================= -->
+      <div style="margin-top:50px;" *ngIf="subjects.length > 0">
+
+        <h4>Added Subjects - Class {{ selectedStandard }}</h4>
+
+        <table class="custom-table">
+
+          <tr>
+            <th>Subject</th>
+            <th *ngIf="categories.length > 0">Category</th>
+            <th>Actions</th>
+          </tr>
+
+          <tr *ngFor="let sub of subjects">
+            <td>{{ sub.subject }}</td>
+            <td *ngIf="categories.length > 0">{{ sub.category }}</td>
+            <td>
+              <button class="edit-btn" (click)="editSubject(sub)">Edit</button>
+              <button class="delete-btn" (click)="deleteSubject(sub)">Delete</button>
+            </td>
+          </tr>
+
+        </table>
+
+      </div>
+
+      <p *ngIf="subjects.length === 0" style="margin-top:20px;">
+        No subjects added yet.
+      </p>
+
+      <!-- BACK BUTTON -->
+      <div style="text-align:center; margin-top:40px;">
+        <button class="big-btn" (click)="backToStandards()">
+          ⬅ Back
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

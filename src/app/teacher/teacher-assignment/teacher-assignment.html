@@ -1,0 +1,169 @@
+<div class="main-container">
+
+  <div class="top-banner">
+    <h1>Teacher Assignments</h1>
+  </div>
+
+  <!-- STANDARD -->
+  <div class="standard-section">
+    <button *ngFor="let std of standards"
+            (click)="selectStandard(std)"
+            [class.active]="selectedStandard === std">
+      Class {{ std }}
+    </button>
+  </div>
+
+  <!-- CATEGORY -->
+  <div *ngIf="categories.length > 0"
+       class="category-section">
+    <button *ngFor="let cat of categories"
+            (click)="selectCategory(cat)"
+            [class.active]="selectedCategory === cat">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- SUBJECT -->
+  <div *ngIf="selectedStandard && !selectedSubject"
+       class="subject-grid">
+
+    <div class="subject-card"
+         *ngFor="let sub of subjects">
+
+      <h3>{{ sub.subject }}</h3>
+      <button (click)="openSubject(sub)">
+        Manage Assignment
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT SECTION -->
+  <div *ngIf="selectedSubject">
+
+    <button class="back-btn" (click)="back()">← Back</button>
+
+    <h2>
+      Class {{ selectedStandard }}
+      <span *ngIf="selectedCategory">
+        - {{ selectedCategory }}
+      </span>
+      - {{ selectedSubject.subject }}
+    </h2>
+
+    <button class="add-chapter-btn"
+            (click)="addChapter()">
+      + Add Chapter
+    </button>
+
+    <!-- CHAPTER -->
+    <div *ngFor="let chapter of chapters; let i = index"
+         class="chapter-box">
+
+      <div class="chapter-header">
+        <div>
+          Chapter {{ chapter.chapterNo }} -
+          {{ chapter.chapterName || 'Untitled' }}
+        </div>
+
+        <div>
+          <button class="edit-btn"
+                  (click)="toggleChapterEdit(chapter)">
+            {{ chapter.editing ? 'Save' : 'Edit' }}
+          </button>
+
+          <button class="delete-btn"
+                  (click)="deleteChapter(i)">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="chapter.editing">
+        <input type="text"
+               placeholder="Chapter Name"
+               [(ngModel)]="chapter.chapterName">
+      </div>
+
+      <button class="small-btn"
+              (click)="addAssignment(chapter)">
+        + Add Assignment
+      </button>
+
+      <!-- ASSIGNMENT -->
+      <div *ngFor="let assign of chapter.assignments; let ai = index"
+           class="content-block"
+           [class.expired]="assign.expired">
+
+        <div class="content-header">
+
+          <strong>
+            {{ assign.title || 'Assignment' }}
+          </strong>
+
+          <div>
+            <button class="edit-btn"
+                    (click)="toggleAssignmentEdit(assign)">
+              {{ assign.editing ? 'Save' : 'Edit' }}
+            </button>
+
+            <button class="delete-btn"
+                    (click)="deleteAssignment(chapter, ai)">
+              Delete
+            </button>
+          </div>
+
+        </div>
+
+        <div *ngIf="assign.editing">
+          <input type="text"
+                 placeholder="Assignment Title"
+                 [(ngModel)]="assign.title">
+
+          <input type="date"
+                 [(ngModel)]="assign.dueDate">
+
+          <input type="file"
+                 (change)="onFileUpload($event, assign)">
+        </div>
+
+        <div *ngIf="assign.dueDate"
+             class="countdown-box">
+
+          <span *ngIf="!assign.expired">
+            ⏳ {{ assign.countdown }}
+          </span>
+
+          <span *ngIf="assign.expired"
+                class="expired-text">
+            ❌ Expired
+          </span>
+
+        </div>
+
+        <div *ngFor="let file of assign.files; let fi = index"
+             class="video-box">
+
+          <a [href]="file.fileUrl" target="_blank">
+            {{ file.fileName }}
+          </a>
+
+          <button class="delete-btn"
+                  (click)="deleteFile(assign, fi)">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="save-btn"
+            (click)="saveAssignment()">
+      Save Assignment
+    </button>
+
+  </div>
+
+</div>

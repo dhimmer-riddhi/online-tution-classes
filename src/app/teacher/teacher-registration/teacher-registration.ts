@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 
@@ -18,6 +17,9 @@ export class TeacherRegistration {
   registerForm!: FormGroup;
   step = 1;
 
+  selectedCV: File | null = null;
+  selectedPhoto: File | null = null;
+
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
@@ -29,11 +31,8 @@ export class TeacherRegistration {
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', Validators.required],
       gender: ['', Validators.required],
-
-      teacherId: ['', Validators.required],
       subjects: ['', Validators.required],
-      experience: ['', Validators.required],
-      password: ['', Validators.required]
+      experience: ['', Validators.required]
     });
   }
 
@@ -41,7 +40,8 @@ export class TeacherRegistration {
     if (
       this.registerForm.get('teacherName')?.valid &&
       this.registerForm.get('email')?.valid &&
-      this.registerForm.get('mobile')?.valid
+      this.registerForm.get('mobile')?.valid &&
+      this.registerForm.get('gender')?.valid
     ) {
       this.step = 2;
     } else {
@@ -53,38 +53,65 @@ export class TeacherRegistration {
     this.step = 1;
   }
 
+  onCvSelected(event: any) {
+    this.selectedCV = event.target.files[0];
+  }
+
+  onPhotoSelected(event: any) {
+    this.selectedPhoto = event.target.files[0];
+  }
+
+  generateTeacherId() {
+    return 'TCH' + Math.floor(1000 + Math.random() * 9000);
+  }
+
+  generatePassword() {
+    return Math.random().toString(36).slice(-8);
+  }
+
   async registerTeacher() {
 
-    if (!this.registerForm.valid) {
-      alert("Please fill all required fields");
+    if (!this.registerForm.valid || !this.selectedCV || !this.selectedPhoto) {
+      alert("Please fill all fields and upload CV & Photo");
       return;
     }
 
     try {
-      const teachers = await firstValueFrom(
-        this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
+
+      const teacherId = this.generateTeacherId();
+      const password = this.generatePassword();
+
+      // Upload CV
+      const cvUpload = await this.firebaseService.uploadFile(
+        `teacher-cv/${teacherId}`,
+        this.selectedCV
       );
 
-      const exists = teachers.find(
-        t => t.teacherId === this.registerForm.value.teacherId
+      // Upload Photo
+      const photoUpload = await this.firebaseService.uploadFile(
+        `teacher-photo/${teacherId}`,
+        this.selectedPhoto
       );
 
-      if (exists) {
-        alert("Teacher already registered!");
-        return;
-      }
-
+      // Save Data
       await this.firebaseService.addDocument(
         FirebaseCollections.Teachers,
-        this.registerForm.value
+        {
+          ...this.registerForm.value,
+          teacherId,
+          password,
+          cvUrl: cvUpload.downloadURL,
+          photoUrl: photoUpload.downloadURL,
+          status: 'Pending'
+        }
       );
 
-      alert("Registration Successful!");
+      alert("Registration Submitted! Wait for Admin Approval.");
       this.router.navigate(['/teacher/teacher-login']);
 
-    } catch (error) {
-      alert("Registration error");
+    } catch (error: any) {
       console.error(error);
+      alert(error.message);
     }
   }
 }

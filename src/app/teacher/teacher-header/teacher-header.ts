@@ -21,7 +21,6 @@ export class TeacherHeader implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const teacherId = localStorage.getItem('teacherId');
 
     if (teacherId) {
@@ -35,6 +34,6 @@ export class TeacherHeader implements OnInit {
 
   logout() {
     localStorage.removeItem('teacherId');
-    this.router.navigate(['/teacher']);
+    this.router.navigate(['/teacher/teacher-login']);
   }
 }

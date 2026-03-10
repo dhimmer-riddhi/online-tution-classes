@@ -1,0 +1,114 @@
+<div class="main-container">
+  <div class="top-banner"><h1>Classes Content</h1></div>
+
+  <!-- Standards -->
+  <div class="standard-section">
+    <button *ngFor="let std of standards"
+            (click)="selectStandard(std)"
+            [class.active]="selectedStandard === std">
+      Class {{ std }}
+    </button>
+  </div>
+
+  <!-- Categories -->
+  <div *ngIf="selectedStandard && categories.length" class="category-section">
+    <button *ngFor="let cat of categories"
+            (click)="selectCategory(cat)"
+            [class.active]="selectedCategory === cat">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- Subjects -->
+  <div *ngIf="selectedStandard && !selectedSubject && (!categories.length || selectedCategory)" class="subject-grid">
+    <div class="subject-card" *ngFor="let sub of subjects">
+      <h3>{{ sub.subject }}</h3>
+      <button (click)="openSubject(sub)">Manage</button>
+    </div>
+  </div>
+
+  <!-- Content View -->
+  <div *ngIf="selectedSubject" class="content-view">
+    <button class="back-btn" (click)="backToSubjects()">← Back</button>
+
+    <h2>
+      Class {{ selectedStandard }}
+      <span *ngIf="selectedCategory"> - {{ selectedCategory }}</span>
+      - {{ selectedSubject.subject }}
+    </h2>
+
+    <button class="add-chapter-btn" (click)="addChapter()">+ Add Chapter</button>
+
+    <!-- Chapter Tabs -->
+    <div class="chapter-tabs" *ngIf="contents.length">
+      <button *ngFor="let ch of contents; let i=index"
+              (click)="selectedChapterIndex=i"
+              [class.active]="selectedChapterIndex===i">
+        Chapter {{ ch.chapterNo }}
+      </button>
+    </div>
+
+    <!-- Chapters -->
+    <ng-container *ngFor="let chapter of contents; let i=index">
+      <div *ngIf="i===selectedChapterIndex" class="chapter-box">
+        <div class="chapter-header">
+          <div>Chapter {{ chapter.chapterNo }}</div>
+          <div class="action-buttons">
+            <button class="edit-btn" (click)="editChapter(chapter)">Edit</button>
+            <button class="delete-btn" (click)="deleteChapter(i)">Delete</button>
+          </div>
+        </div>
+
+        <input type="text" placeholder="Chapter Name" [(ngModel)]="chapter.chapterName">
+        <button class="small-btn" (click)="addConcept(chapter)">+ Add Concept</button>
+
+        <!-- Concepts -->
+        <div *ngFor="let concept of chapter.concepts; let ci=index" class="concept-box">
+          <div class="concept-header">
+            <strong>Concept</strong>
+            <div class="action-buttons">
+              <button class="edit-btn" (click)="editConcept(concept)">Edit</button>
+              <button class="delete-btn" (click)="deleteConcept(chapter, ci)">Delete</button>
+            </div>
+          </div>
+
+          <input type="text" placeholder="Concept Title" [(ngModel)]="concept.title">
+          <textarea placeholder="Concept Definition" [(ngModel)]="concept.definition"></textarea>
+          <button class="small-btn" (click)="addContent(concept)">+ Add Content</button>
+
+          <!-- Contents -->
+          <div *ngFor="let content of concept.contents; let co=index" class="content-block">
+            <div class="content-header">
+              <strong>Content</strong>
+              <div class="action-buttons">
+                <button class="edit-btn" (click)="editContent(content)">Edit</button>
+                <button class="delete-btn" (click)="deleteContent(concept, co)">Delete</button>
+              </div>
+            </div>
+
+            <input type="text" placeholder="Content Title" [(ngModel)]="content.contentTitle">
+            <textarea placeholder="Content Definition" [(ngModel)]="content.contentDefinition"></textarea>
+
+            <input type="file" [accept]="videoAccept" (change)="onVideoUpload($event, content)">
+
+            <!-- Videos -->
+            <div *ngFor="let vid of (content.videos || []); let vi=index" class="video-box">
+              <video width="250" controls (loadedmetadata)="onVideoMetadataLoaded($event, vid)">
+                <source [src]="vid.url">
+              </video>
+              <p>File: {{ vid.fileName }}</p>
+              <p>Duration: {{ vid.duration }} sec</p>
+              <div class="action-buttons">
+                <button class="edit-btn" (click)="editVideo(vid)">Edit</button>
+                <button class="delete-btn" (click)="deleteVideo(content, vi)">Delete</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <button class="save-btn" (click)="saveContent()">Save All</button>
+  </div>
+</div>
