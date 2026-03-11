@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-teacher-registration',
@@ -23,14 +24,17 @@ export class TeacherRegistration {
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
+    private http: HttpClient,
     private router: Router
   ) {
-
     this.registerForm = this.fb.group({
       teacherName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', Validators.required],
+      dob: ['', Validators.required],          // ✅ Added DOB
       gender: ['', Validators.required],
+      city: ['', Validators.required],         // ✅ Added City
+      state: ['', Validators.required],        // ✅ Added State
       subjects: ['', Validators.required],
       experience: ['', Validators.required]
     });
@@ -41,7 +45,10 @@ export class TeacherRegistration {
       this.registerForm.get('teacherName')?.valid &&
       this.registerForm.get('email')?.valid &&
       this.registerForm.get('mobile')?.valid &&
-      this.registerForm.get('gender')?.valid
+      this.registerForm.get('dob')?.valid &&
+      this.registerForm.get('gender')?.valid &&
+      this.registerForm.get('city')?.valid &&
+      this.registerForm.get('state')?.valid
     ) {
       this.step = 2;
     } else {
@@ -65,10 +72,9 @@ export class TeacherRegistration {
     return 'TCH' + Math.floor(1000 + Math.random() * 9000);
   }
 
-  generatePassword() {
-    return Math.random().toString(36).slice(-8);
-  }
-
+  // ===============================  
+  // ✅ REGISTER TEACHER (Pending by default)
+  // ===============================
   async registerTeacher() {
 
     if (!this.registerForm.valid || !this.selectedCV || !this.selectedPhoto) {
@@ -77,9 +83,7 @@ export class TeacherRegistration {
     }
 
     try {
-
       const teacherId = this.generateTeacherId();
-      const password = this.generatePassword();
 
       // Upload CV
       const cvUpload = await this.firebaseService.uploadFile(
@@ -93,18 +97,16 @@ export class TeacherRegistration {
         this.selectedPhoto
       );
 
-      // Save Data
-      await this.firebaseService.addDocument(
-        FirebaseCollections.Teachers,
-        {
-          ...this.registerForm.value,
-          teacherId,
-          password,
-          cvUrl: cvUpload.downloadURL,
-          photoUrl: photoUpload.downloadURL,
-          status: 'Pending'
-        }
-      );
+      // Save Teacher as pending
+      await this.firebaseService.addDocument(FirebaseCollections.Teachers, {
+        teacherId,
+        ...this.registerForm.value,
+        cvUrl: cvUpload.downloadURL,
+        photoUrl: photoUpload.downloadURL,
+        status: 'pending',      // ✅ Pending by default
+        role: 'teacher',
+        createdAt: new Date()
+      });
 
       alert("Registration Submitted! Wait for Admin Approval.");
       this.router.navigate(['/teacher/teacher-login']);

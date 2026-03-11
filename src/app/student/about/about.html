@@ -1,49 +1,71 @@
 <app-student-header></app-student-header>
-<!-- ABOUT SECTION -->
-<section class="relative bg-sky-400 text-white overflow-hidden">
+<div class="banner-wrapper">
 
-  <!-- TOP WAVE -->
-  <svg class="absolute top-0 left-0 w-full" viewBox="0 0 1440 90" preserveAspectRatio="none">
-    <path fill="#ffffff" d="M0,60 C120,20 240,20 360,45 480,70 600,80 720,65 840,50 960,10 1080,20 1200,30 1320,50 1440,40 L1440,0 L0,0 Z"></path>
-  </svg>
+  <!-- TOP IMAGE SECTION -->
+  <div class="banner-image">
+    <img src="feature-1.jpg" alt="Students Banner">
 
-  <div class="container mx-auto px-6 py-24 relative z-10">
-    <div class="row align-items-center">
+    <!-- Play Button -->
+    <div class="play-btn" (click)="openVideo()">
+      ▶
+    </div>
+  </div>
 
-      <!-- LEFT CONTENT -->
-      <div class="col-md-6 mb-4">
-        <h2 class="text-4xl font-bold mb-4">
-          About <span class="bg-yellow-400 text-black px-3 rounded-lg">Learna</span>
-        </h2>
 
-        <p class="text-lg opacity-90 mb-4">
-          Learna is a creative and playful education platform where kids learn
-          through fun activities, games, and interactive lessons.
-        </p>
+  <!-- BOTTOM CONTENT SECTION -->
+   
+  <div class="banner-bottom">
 
-        <p class="opacity-80">
-          Our mission is to build confidence, curiosity, and creativity in every
-          child while making learning joyful and stress-free.
-        </p>
+    <div class="content-left">
+      <h2>
+        Trusted by the 15,000+ happy students and online users since 2000
+      </h2>
 
-        <button class="mt-6 bg-white text-sky-500 font-semibold px-6 py-3 rounded-full hover:bg-sky-100 transition">
-          Learn More
-        </button>
+      <div class="banner-buttons">
+        <button class="btn student">Enroll as Student</button>
+        <button class="btn tutor">Apply as Tutor</button>
+      </div>
+    </div>
+
+    <div class="content-right">
+
+      <div class="stats">
+        <div class="stat-card">
+          <h3>9.8/10</h3>
+          <p>Course Approval Score</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>13k+</h3>
+          <p>Satisfied Students Worldwide</p>
+        </div>
       </div>
 
-      <!-- RIGHT IMAGE -->
-      <div class="col-md-6 text-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
-             alt="Kids Learning"
-             class="mx-auto w-72 drop-shadow-xl">
+      <div class="testimonial">
+        <img src="user-28 (1).jpg" alt="User">
+        <p>
+          “All courses are incredibly helpful for people to achieve their goals”
+        </p>
       </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- VIDEO MODAL -->
+  <div class="video-modal" *ngIf="showVideo">
+    <div class="video-content">
+
+      <span class="close-btn" (click)="closeVideo()">✖</span>
+
+      <video #videoPlayer width="100%" controls autoplay>
+        <source src="9th-demo vedio.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
     </div>
   </div>
 
-  <!-- BOTTOM WAVE -->
-  <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 100" preserveAspectRatio="none">
-    <path fill="#ffffff" d="M0,30 C150,80 300,80 450,55 600,30 750,0 900,15 1050,30 1200,60 1350,55 1420,50 1440,45 1440,45 L1440,100 L0,100 Z"></path>
-  </svg>
-
-</section>
+</div>
+<app-stud-footer>  </app-stud-footer>

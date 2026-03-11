@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { TeacherFooter } from '../teacher-footer/teacher-footer';
+import { TeacherHeader } from '../teacher-header/teacher-header';
 
 @Component({
   selector: 'app-teacher-courses',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,TeacherHeader,TeacherFooter],
   templateUrl: './teacher-courses.html',
   styleUrls: ['./teacher-courses.css']
 })

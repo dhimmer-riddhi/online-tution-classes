@@ -1,169 +1,161 @@
-<div class="main-container">
+<div class="assignment-container">
 
-  <div class="top-banner">
-    <h1>Teacher Assignments</h1>
-  </div>
+<h1 class="page-title">Assignments</h1>
 
-  <!-- STANDARD -->
-  <div class="standard-section">
-    <button *ngFor="let std of standards"
-            (click)="selectStandard(std)"
-            [class.active]="selectedStandard === std">
-      Class {{ std }}
-    </button>
-  </div>
+<!-- STANDARD -->
 
-  <!-- CATEGORY -->
-  <div *ngIf="categories.length > 0"
-       class="category-section">
-    <button *ngFor="let cat of categories"
-            (click)="selectCategory(cat)"
-            [class.active]="selectedCategory === cat">
-      {{ cat }}
-    </button>
-  </div>
+<div class="standard-section">
 
-  <!-- SUBJECT -->
-  <div *ngIf="selectedStandard && !selectedSubject"
-       class="subject-grid">
+<button
+*ngFor="let std of standards"
+(click)="selectStandard(std)"
+[class.active]="selectedStandard===std">
 
-    <div class="subject-card"
-         *ngFor="let sub of subjects">
+Class {{std}}
 
-      <h3>{{ sub.subject }}</h3>
-      <button (click)="openSubject(sub)">
-        Manage Assignment
-      </button>
+</button>
 
-    </div>
-  </div>
+</div>
 
-  <!-- ASSIGNMENT SECTION -->
-  <div *ngIf="selectedSubject">
+<!-- CATEGORY -->
 
-    <button class="back-btn" (click)="back()">← Back</button>
+<div
+*ngIf="categories.length>0"
+class="category-section">
 
-    <h2>
-      Class {{ selectedStandard }}
-      <span *ngIf="selectedCategory">
-        - {{ selectedCategory }}
-      </span>
-      - {{ selectedSubject.subject }}
-    </h2>
+<button
+*ngFor="let cat of categories"
+(click)="selectCategory(cat)"
+[class.active]="selectedCategory===cat">
 
-    <button class="add-chapter-btn"
-            (click)="addChapter()">
-      + Add Chapter
-    </button>
+{{cat}}
 
-    <!-- CHAPTER -->
-    <div *ngFor="let chapter of chapters; let i = index"
-         class="chapter-box">
+</button>
 
-      <div class="chapter-header">
-        <div>
-          Chapter {{ chapter.chapterNo }} -
-          {{ chapter.chapterName || 'Untitled' }}
-        </div>
+</div>
 
-        <div>
-          <button class="edit-btn"
-                  (click)="toggleChapterEdit(chapter)">
-            {{ chapter.editing ? 'Save' : 'Edit' }}
-          </button>
+<!-- SUBJECT -->
 
-          <button class="delete-btn"
-                  (click)="deleteChapter(i)">
-            Delete
-          </button>
-        </div>
-      </div>
+<div
+*ngIf="selectedStandard && !selectedSubject"
+class="subject-grid">
 
-      <div *ngIf="chapter.editing">
-        <input type="text"
-               placeholder="Chapter Name"
-               [(ngModel)]="chapter.chapterName">
-      </div>
+<div
+class="subject-card"
+*ngFor="let sub of subjects">
 
-      <button class="small-btn"
-              (click)="addAssignment(chapter)">
-        + Add Assignment
-      </button>
+<h3>{{sub.subject}}</h3>
 
-      <!-- ASSIGNMENT -->
-      <div *ngFor="let assign of chapter.assignments; let ai = index"
-           class="content-block"
-           [class.expired]="assign.expired">
+<button (click)="openSubject(sub)">
+Open
+</button>
 
-        <div class="content-header">
+</div>
 
-          <strong>
-            {{ assign.title || 'Assignment' }}
-          </strong>
+<p *ngIf="subjects.length===0">
+No subject available
+</p>
 
-          <div>
-            <button class="edit-btn"
-                    (click)="toggleAssignmentEdit(assign)">
-              {{ assign.editing ? 'Save' : 'Edit' }}
-            </button>
+</div>
 
-            <button class="delete-btn"
-                    (click)="deleteAssignment(chapter, ai)">
-              Delete
-            </button>
-          </div>
+<!-- ASSIGNMENT -->
 
-        </div>
+<div *ngIf="selectedSubject">
 
-        <div *ngIf="assign.editing">
-          <input type="text"
-                 placeholder="Assignment Title"
-                 [(ngModel)]="assign.title">
+<button
+class="back-btn"
+(click)="back()">
 
-          <input type="date"
-                 [(ngModel)]="assign.dueDate">
+← Back
 
-          <input type="file"
-                 (change)="onFileUpload($event, assign)">
-        </div>
+</button>
 
-        <div *ngIf="assign.dueDate"
-             class="countdown-box">
+<h2>
 
-          <span *ngIf="!assign.expired">
-            ⏳ {{ assign.countdown }}
-          </span>
+Class {{selectedStandard}}
 
-          <span *ngIf="assign.expired"
-                class="expired-text">
-            ❌ Expired
-          </span>
+<span *ngIf="selectedCategory">
 
-        </div>
+- {{selectedCategory}}
 
-        <div *ngFor="let file of assign.files; let fi = index"
-             class="video-box">
+</span>
 
-          <a [href]="file.fileUrl" target="_blank">
-            {{ file.fileName }}
-          </a>
+- {{selectedSubject.subject}}
 
-          <button class="delete-btn"
-                  (click)="deleteFile(assign, fi)">
-            Delete
-          </button>
+</h2>
 
-        </div>
+<button
+class="add-chapter-btn"
+(click)="addChapter()">
 
-      </div>
++ Add Chapter
 
-    </div>
+</button>
 
-    <button class="save-btn"
-            (click)="saveAssignment()">
-      Save Assignment
-    </button>
+<div
+*ngFor="let chapter of chapters; let i=index"
+class="chapter-box">
 
-  </div>
+<div class="chapter-header">
+
+<strong>
+
+Chapter {{chapter.chapterNo}}
+
+</strong>
+
+<button (click)="deleteChapter(i)">
+Delete
+</button>
+
+</div>
+
+<input
+[(ngModel)]="chapter.chapterName"
+placeholder="Chapter Name">
+
+<button
+(click)="addAssignment(chapter)">
+
+Add Assignment
+
+</button>
+
+<div
+*ngFor="let a of chapter.assignments; let j=index">
+
+<input
+[(ngModel)]="a.title"
+placeholder="Assignment Title">
+
+<input
+type="date"
+[(ngModel)]="a.dueDate">
+
+<input
+type="number"
+[(ngModel)]="a.totalMarks"
+placeholder="Marks">
+
+<button
+(click)="deleteAssignment(chapter,j)">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+<button
+class="save-btn"
+(click)="saveAssignment()">
+
+Save Assignment
+
+</button>
+
+</div>
 
 </div>

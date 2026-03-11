@@ -1,3 +1,4 @@
+<app-student-header></app-student-header>
 <!-- Gradient Header Section -->
 <section class="contact-header">
   <div class="contact-content">
@@ -114,10 +115,26 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label>Subjects Interested</label>
-      <input type="text" formControlName="subjects">
-    </div>
+    <div class="form-group" *ngIf="availableSubjects.length">
+
+  <label>Select Subjects</label>
+
+  <div class="subject-list">
+
+    <label *ngFor="let subject of availableSubjects" class="subject-item">
+      
+      <input
+        type="checkbox"
+        (change)="toggleSubject($event, subject)"
+      />
+
+      {{subject}}
+
+    </label>
+
+  </div>
+
+</div>
 
     <button type="button" (click)="previousStep()" class="btn-back">Back</button>
     <button type="submit" class="btn-submit">Submit</button>
@@ -128,3 +145,4 @@
     <img src="contact form img.png" alt="Image Not Found">
   </div>
 </section>
+<app-stud-footer>  </app-stud-footer>

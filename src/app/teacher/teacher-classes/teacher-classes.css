@@ -1,0 +1,215 @@
+/* ================= HEADER SECTION ================= */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background: #f4f6fb;
+  font-family: 'Poppins', sans-serif;
+}
+.contact-header {
+  height: 400px;
+  background: linear-gradient(135deg, #1abc9c, #274046);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  color: white;
+}
+
+.contact-content h1 {
+  font-size: 65px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.sub-title {
+  font-size: 20px;
+  opacity: 0.95;
+}
+
+/* ================= MANAGE CLASSES TITLE ================= */
+
+.manage-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  color: #2c3e50;
+}
+
+/* ================= STANDARD BUTTONS ================= */
+
+.standard-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.standard-btn {
+  padding: 18px 45px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+  box-shadow: 0 10px 25px rgba(26, 188, 156, 0.3);
+}
+
+.standard-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(26, 188, 156, 0.45);
+}
+
+/* ================= BACK BUTTON ================= */
+
+.back-btn {
+  margin-top: 15px;
+  padding: 10px 35px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #34495e;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #2c3e50;
+}
+
+/* ================= CARD ================= */
+
+.contact-form-section {
+  display: flex;
+  justify-content: center;
+  margin-top: -120px;
+  padding-bottom: 80px;
+}
+
+.portal-card {
+  width: 65%;
+  text-align: center;
+  padding: 60px 50px;
+}
+
+.contact-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  animation: fadeInUp 0.6s ease;
+}
+
+/* ================= FORM INPUT ================= */
+
+.form-control,
+.form-select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* ================= BIG BUTTON ================= */
+
+.big-btn {
+  padding: 16px 50px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+  box-shadow: 0 12px 30px rgba(26,188,156,0.3);
+}
+
+.big-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(26,188,156,0.4);
+}
+
+/* ================= TABLE ================= */
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.custom-table th {
+  background: #1abc9c;
+  color: white;
+}
+
+.edit-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  margin-right: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  .manage-title {
+    font-size: 34px;
+  }
+
+  .standard-btn {
+    width: 100%;
+  }
+
+  .portal-card {
+    width: 90%;
+  }
+
+  .contact-content h1 {
+    font-size: 40px;
+  }
+
+}

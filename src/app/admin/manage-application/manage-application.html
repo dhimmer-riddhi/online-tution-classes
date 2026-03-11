@@ -1,0 +1,78 @@
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <!-- Main Content -->
+  <div class="content-area">
+
+    <h2 class="section-title">Applications</h2>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Standard</th>
+          <th>Board</th>
+          <th>Stream</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (student of registrations; track student.id) {
+          <tr>
+            <td>{{student.fullName}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.standard}}</td>
+            <td>{{student.board}}</td>
+            <td>{{student.stream}}</td>
+            <td>
+              <button class="approve-btn"
+                (click)="approve(student)">Approve</button>
+
+              <button class="reject-btn"
+                (click)="reject(student)">Reject</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <!-- Approved / Rejected Table -->
+
+    <h2 class="section-title mt-5">Approved/Reject  Applications</h2>
+
+    <table class="custom-table">
+      <thead class="processed-head">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Standard</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (student of processedStudents; track student.id) {
+          <tr>
+            <td>{{student.fullName}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.standard}}</td>
+            <td>
+              <span 
+                [ngClass]="{
+                  'status-approved': student.status === 'approved',
+                  'status-rejected': student.status === 'rejected'
+                }">
+                {{student.status}}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+</div>

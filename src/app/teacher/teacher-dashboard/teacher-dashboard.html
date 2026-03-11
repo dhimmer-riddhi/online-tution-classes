@@ -1,1 +1,54 @@
-<p>teacher-dashboard works!</p>
+<div class="dashboard-container">
+
+  <h1 class="dashboard-title">
+    Welcome {{teacherName}} 👋
+  </h1>
+
+  <!-- STAT CARDS -->
+
+  <div class="dashboard-cards">
+
+    <div class="card students">
+      <h2>{{totalStudents}}</h2>
+      <p>Total Students</p>
+    </div>
+
+    <div class="card classes">
+      <h2>{{totalClasses}}</h2>
+      <p>Total Classes</p>
+    </div>
+
+    <div class="card subjects">
+      <h2>{{totalSubjects}}</h2>
+      <p>Total Subjects</p>
+    </div>
+
+    <div class="card assignments">
+      <h2>{{totalAssignments}}</h2>
+      <p>Total Assignments</p>
+    </div>
+
+    <div class="card videos">
+      <h2>{{totalVideos}}</h2>
+      <p>Total Uploaded Videos</p>
+    </div>
+
+  </div>
+
+  <!-- CHART SECTION -->
+
+  <div class="charts">
+
+    <div class="chart-box">
+      <h3>Assignments by Class</h3>
+      <canvas id="assignmentChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h3>Uploaded Videos by Subject</h3>
+      <canvas id="videoChart"></canvas>
+    </div>
+
+  </div>
+
+</div>

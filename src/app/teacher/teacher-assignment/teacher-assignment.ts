@@ -1,246 +1,233 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { Assignment } from '../../interface/teacher-assignment';
+import { TeacherFooter } from '../teacher-footer/teacher-footer';
 
 @Component({
-  selector: 'app-teacher-assignment',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './teacher-assignment.html',
-  styleUrls: ['./teacher-assignment.css']
+selector: 'app-teacher-assignment',
+standalone: true,
+imports: [CommonModule, FormsModule],
+templateUrl: './teacher-assignment.html',
+styleUrls: ['./teacher-assignment.css']
 })
-export class TeacherAssignment implements OnInit, OnDestroy {
 
-  selectedStandard: string | null = null;
-  selectedCategory: string | null = null;
-  selectedSubject: any = null;
+export class TeacherAssignment implements OnInit {
 
-  standards = ['9', '10', '11', '12'];
-  categories: string[] = [];
+selectedStandard:string | null=null;
+selectedCategory:string | null=null;
+selectedSubject:any=null;
 
-  subjects: any[] = [];
-  chapters: any[] = [];
+standards=['9','10','11','12'];
 
-  timer: any;
+categories:string[]=[];
 
-  constructor(
-    private firebaseService: FirebaseService,
-    private ngZone: NgZone
-  ) {}
+subjects:any[]=[];
+chapters:any[]=[];
 
-  ngOnInit(): void {
-    this.startCountdownTimer();
-  }
+teacherSubjects:string[]=[];
 
-  ngOnDestroy(): void {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-  }
+constructor(
+private firebaseService:FirebaseService,
+private router:Router
+){}
 
-  // ================= CATEGORY =================
-  selectStandard(std: string): void {
-    this.selectedStandard = std;
-    this.selectedSubject = null;
-    this.selectedCategory = null;
-    this.chapters = [];
+ngOnInit(){
 
-    if (std === '9') {
-      this.categories = [];
-    } else if (std === '10') {
-      this.categories = ['GSEB', 'CBSE'];
-    } else if (std === '11' || std === '12') {
-      this.categories = ['Commerce', 'PCM', 'PCB'];
-    }
+const teacherId=sessionStorage.getItem('teacherId');
+const password=sessionStorage.getItem('teacherPassword');
 
-    this.loadSubjects();
-  }
+if(!teacherId || !password){
 
-  selectCategory(cat: string): void {
-    this.selectedCategory = cat;
-    this.selectedSubject = null;
-    this.chapters = [];
-    this.loadSubjects();
-  }
+this.router.navigate(['/teacher/login']);
+return;
 
-  loadSubjects(): void {
-    this.firebaseService
-      .getCollection(FirebaseCollections.Standard)
-      .subscribe((data: any[]) => {
+}
 
-        this.subjects = data.filter(d => {
+this.loadTeacher(teacherId,password);
 
-          if (this.selectedStandard === '9') {
-            return d.standard === this.selectedStandard;
-          }
+}
 
-          return (
-            d.standard === this.selectedStandard &&
-            d.category === this.selectedCategory
-          );
-        });
+loadTeacher(teacherId:string,password:string){
 
-      });
-  }
+this.firebaseService
+.getCollection(FirebaseCollections.Teachers)
+.subscribe((teachers:any[])=>{
 
-  openSubject(subject: any): void {
-    this.selectedSubject = subject;
+const teacher=teachers.find((t:any)=>
+t.teacherId==teacherId && t.password===password
+);
 
-    this.firebaseService
-      .getDocument<Assignment>(
-        FirebaseCollections.TeacherAssignment,
-        subject.id
-      )
-      .subscribe(doc => {
+if(teacher){
 
-        this.ngZone.run(() => {
+this.teacherSubjects = teacher.subjects
+.split(',')
+.map((s:string)=>s.trim().toLowerCase());
 
-          this.chapters = doc?.chapters || [];
+}
 
-          // ensure flags exist
-          this.chapters.forEach((ch: any) => {
-            ch.editing = false;
+});
 
-            if (!ch.assignments) ch.assignments = [];
+}
 
-            ch.assignments.forEach((a: any) => {
-              a.editing = false;
-              a.expired = false;
-            });
-          });
+selectStandard(std:string){
 
-          this.updateCountdown();
-        });
+this.selectedStandard=std;
+this.selectedCategory=null;
+this.selectedSubject=null;
+this.chapters=[];
 
-      });
-  }
+if(std==='9') this.categories=[];
+if(std==='10') this.categories=['GSEB','CBSE'];
+if(std==='11'||std==='12') this.categories=['Commerce','PCM','PCB'];
 
-  back(): void {
-    this.selectedSubject = null;
-    this.chapters = [];
-  }
+this.loadSubjects();
 
-  // ================= EDIT FUNCTIONS =================
-  toggleChapterEdit(chapter: any): void {
-    chapter.editing = !chapter.editing;
-  }
+}
 
-  toggleAssignmentEdit(assign: any): void {
-    assign.editing = !assign.editing;
-  }
+selectCategory(cat:string){
 
-  // ================= COUNTDOWN =================
-  startCountdownTimer(): void {
-    this.timer = setInterval(() => {
-      this.updateCountdown();
-    }, 1000);
-  }
+this.selectedCategory=cat;
+this.selectedSubject=null;
+this.chapters=[];
 
-  updateCountdown(): void {
+this.loadSubjects();
 
-    const now = new Date().getTime();
+}
 
-    this.chapters.forEach((ch: any) => {
+loadSubjects(){
 
-      ch.assignments?.forEach((a: any) => {
+this.firebaseService
+.getCollection(FirebaseCollections.Standard)
+.subscribe((data:any[])=>{
 
-        if (!a.dueDate) return;
+let filtered:any[]=[];
 
-        const due = new Date(a.dueDate).getTime();
-        const distance = due - now;
+if(this.selectedStandard==='9'){
 
-        if (distance <= 0) {
-          a.expired = true;
-          a.countdown = 'Expired';
-        } else {
+filtered=data.filter((d:any)=>
+d.standard==='9'
+);
 
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((distance / 1000 / 60) % 60);
-          const seconds = Math.floor((distance / 1000) % 60);
+}else{
 
-          a.countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-          a.expired = false;
-        }
+filtered=data.filter((d:any)=>
+d.standard===this.selectedStandard &&
+d.category===this.selectedCategory
+);
 
-      });
+}
 
-    });
-  }
+filtered=filtered.filter((s:any)=>
+this.teacherSubjects.includes(
+s.subject.toLowerCase()
+)
+);
 
-  // ================= CHAPTER =================
-  addChapter(): void {
-    this.chapters.push({
-      chapterNo: this.chapters.length + 1,
-      chapterName: '',
-      editing: true,
-      assignments: []
-    });
-  }
+this.subjects=filtered;
 
-  deleteChapter(index: number): void {
-    this.chapters.splice(index, 1);
-    this.chapters.forEach((ch: any, i: number) => ch.chapterNo = i + 1);
-  }
+});
 
-  // ================= ASSIGNMENT =================
-  addAssignment(chapter: any): void {
-    chapter.assignments.push({
-      title: '',
-      dueDate: '',
-      editing: true,
-      expired: false,
-      files: []
-    });
-  }
+}
 
-  deleteAssignment(chapter: any, index: number): void {
-    chapter.assignments.splice(index, 1);
-  }
+openSubject(subject:any){
 
-  async onFileUpload(event: any, assignment: any): Promise<void> {
+this.selectedSubject=subject;
 
-    const file = event.target.files[0];
-    if (!file) return;
+this.firebaseService
+.getCollection(FirebaseCollections.TeacherAssignment)
+.subscribe((data:any[])=>{
 
-    const path = `assignments/${Date.now()}_${file.name}`;
-    const result = await this.firebaseService.uploadFile(path, file);
+const assignment=data.find((a:any)=>
+a.subjectId===subject.id
+);
 
-    assignment.files.push({
-      fileName: file.name,
-      fileUrl: result.downloadURL,
-      fileSize: file.size
-    });
+if(assignment){
 
-    alert('File Uploaded Successfully');
-  }
+this.chapters=assignment.chapters;
 
-  deleteFile(assignment: any, index: number): void {
-    assignment.files.splice(index, 1);
-  }
+}else{
 
-  // ================= SAVE =================
-  async saveAssignment(): Promise<void> {
+this.chapters=[];
 
-    if (!this.selectedStandard || !this.selectedSubject) return;
+}
 
-    const data: Assignment = {
-      standard: this.selectedStandard,
-      category: this.selectedCategory || '',
-      subjectId: this.selectedSubject.id,
-      subjectName: this.selectedSubject.subject,
-      chapters: this.chapters
-    };
+});
 
-    await this.firebaseService.updateDocument(
-      FirebaseCollections.TeacherAssignment,
-      this.selectedSubject.id,
-      data
-    );
+}
 
-    alert('Assignment Saved Successfully');
-  }
+back(){
+
+this.selectedSubject=null;
+this.chapters=[];
+
+}
+
+addChapter(){
+
+this.chapters.push({
+
+chapterNo:this.chapters.length+1,
+chapterName:'',
+assignments:[]
+
+});
+
+}
+
+deleteChapter(i:number){
+
+this.chapters.splice(i,1);
+
+}
+
+addAssignment(ch:any){
+
+ch.assignments.push({
+
+title:'',
+dueDate:'',
+totalMarks:'',
+files:[]
+
+});
+
+}
+
+deleteAssignment(ch:any,i:number){
+
+ch.assignments.splice(i,1);
+
+}
+
+async saveAssignment(){
+
+if(!this.selectedSubject) return;
+
+const data:Assignment={
+
+standard:this.selectedStandard!,
+category:this.selectedCategory || '',
+subjectId:this.selectedSubject.id,
+subjectName:this.selectedSubject.subject,
+chapters:this.chapters
+
+};
+
+await this.firebaseService.updateDocument(
+
+FirebaseCollections.TeacherAssignment,
+this.selectedSubject.id,
+data
+
+);
+
+alert('Assignment Saved');
+
+}
+
 }

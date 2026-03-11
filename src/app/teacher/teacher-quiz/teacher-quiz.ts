@@ -5,11 +5,13 @@ import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { Quiz } from '../../interface/quiz';
 import { ClassContent } from '../../interface/class-content';
+import { TeacherFooter } from '../teacher-footer/teacher-footer';
+import { TeacherHeader } from '../teacher-header/teacher-header';
 
 @Component({
   selector: 'app-teacher-quiz',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,TeacherHeader,TeacherFooter],
   templateUrl: './teacher-quiz.html',
   styleUrls: ['./teacher-quiz.css']
 })

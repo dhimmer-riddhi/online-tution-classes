@@ -1,42 +1,54 @@
-<div class="header-container">
+<header class="main-header" [class.scrolled]="isScrolled">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
+  <!-- TOP HEADER (UNCHANGED) -->
+  <div class="top-header">
     <div class="logo">
-      📚 Online Tuition
+      <img src="footer-logo (1).png" alt="Bright Classes Logo">
     </div>
 
-    <!-- PROFILE (Always Visible) -->
-    <div class="sidebar-profile" *ngIf="teacherData">
-      <img
-        [src]="teacherData.profileImage || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"
-        class="profile-img"
-      />
-      <h4>{{ teacherData.name }}</h4>
-      <p>{{ teacherData.email }}</p>
+    <div class="icons">
+      <button class="logout-btn" (click)="logout()">↩ Logout</button>
     </div>
-
-    <!-- NAVIGATION -->
-    <nav class="nav-links">
-      <a routerLink="dashboard" routerLinkActive="active">🏠 Dashboard</a>
-      <a routerLink="students" routerLinkActive="active">👩‍🎓 Students</a>
-      <a routerLink="attendance" routerLinkActive="active">📅 Attendance</a>
-      <a routerLink="courses" routerLinkActive="active">📖 Classes</a>
-      <a routerLink="class-content" routerLinkActive="active">📖 Classs-Content</a>
-      <a routerLink="assignment" routerLinkActive="active">📝 Assignments</a>
-      <a routerLink="quiz" routerLinkActive="active">📝 Quiz</a>
-      <a routerLink="reports" routerLinkActive="active">📊 Reports</a>
-      <button class="logout-btn" (click)="logout()">🚪 Logout</button>
-    </nav>
-
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-    <div class="page-content">
-      <router-outlet></router-outlet>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="teacher-layout">
+
+  <!-- SIDEBAR MENU -->
+  <div class="menu-bar">
+
+    <a routerLink="/teacher/dashboard" routerLinkActive="active">
+      🏠 Dashboard
+    </a>
+
+    <a routerLink="/teacher/students" routerLinkActive="active">
+      👩‍🎓 Students
+    </a>
+
+    
+
+    <div class="mega-wrapper">
+      <a routerLink="/teacher/classes" routerLinkActive="active">
+        📖 Classes
+      </a>
     </div>
+
+    <a routerLink="/teacher/class-content" routerLinkActive="active">
+      📖 Class Content
+    </a>
+
+    <a routerLink="/teacher/assignment" routerLinkActive="active">
+      📝 Assignments
+    </a>
+
+    
+  </div>
+
+  <!-- RIGHT SIDE CONTENT -->
+  <div class="page-content">
+    <router-outlet></router-outlet>
   </div>
 
 </div>

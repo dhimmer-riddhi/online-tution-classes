@@ -1,13 +1,15 @@
-// src/app/firebase-service/firebase-enums.ts
-
 export enum FirebaseCollections {
   Users = 'users',
   Applications = 'applications',
-  Standard = 'stadards',
+  Courses = 'courses',
   Payments = 'payments',
   Students = 'students',
-  Quizzes = 'Quizzes',
   Teachers = 'teachers',
-  ClassContent = "ClassContent",
-  TeacherAssignment = "teacher-assignment"
+  StudentRegistrations = 'student-registrations', // ✅ ADD THIS
+   Standard = 'stadards',
+   ClassContent = "ClassContent",
+   Quizzes = "Quizzes",
+   TeacherAssignment = "TeacherAssignment"
+    
+
 }
