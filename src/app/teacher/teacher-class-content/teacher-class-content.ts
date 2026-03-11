@@ -5,14 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { ClassContent } from '../../interface/class-content';
-import { TeacherFooter } from '../teacher-footer/teacher-footer';
-import { TeacherHeader } from '../teacher-header/teacher-header';
 
 
 @Component({
   selector: 'app-teacher-class-content',
   standalone: true,
-  imports: [CommonModule, FormsModule,TeacherHeader,TeacherFooter],
+  imports: [CommonModule, FormsModule],
   templateUrl: './teacher-class-content.html',
   styleUrls: ['./teacher-class-content.css']
 })

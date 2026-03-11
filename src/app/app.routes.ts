@@ -20,11 +20,9 @@ import { StudStandard } from './student/stud-standard/stud-standard';
 import { Slider } from './student/slider/slider';
 import { TeacherStudents } from './teacher/teacher-students/teacher-students';
 import { TeacherRegistration } from './teacher/teacher-registration/teacher-registration';
-import { TeacherAttendance } from './teacher/teacher-attendance/teacher-attendance';
 import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
 import { TeacherAssignment } from './teacher/teacher-assignment/teacher-assignment';
 import { TeacherQuiz } from './teacher/teacher-quiz/teacher-quiz';
-import { TeacherReports } from './teacher/teacher-reports/teacher-reports';
 
 
 export const routes: Routes = [
@@ -134,13 +132,12 @@ export const routes: Routes = [
 
       { path: 'dashboard', component: TeacherDashboard },
       { path: 'students', component: TeacherStudents },
-      { path: 'attendance', component: TeacherAttendance },
+      
       { path: 'classes', component: TeacherClasses },
       { path: 'class-content', component: TeacherClassContent },
       { path: 'courses', component: TeacherCourses },
       { path: 'assignment', component: TeacherAssignment },
       { path: 'quiz', component: TeacherQuiz },
-      { path: 'reports', component: TeacherReports },
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 
