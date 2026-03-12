@@ -1,5 +1,4 @@
 /* ================= HEADER ================= */
-
 .contact-header {
   height: 350px;
   background: linear-gradient(to right, #e6dada, #274046);
@@ -8,32 +7,48 @@
   justify-content: center;
   text-align: center;
   padding-top: 80px;
+  position: relative;
 }
 
 .contact-content h1 {
   font-size: 60px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 .breadcrumb {
-  font-size: 1rem;
-  font-weight: bold;
-  padding-left: 81px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .breadcrumb a {
   text-decoration: none;
   color: #000;
+  transition: 0.3s;
 }
 
-/* ================= FORM SECTION ================= */
+.breadcrumb a:hover {
+  color: #1abc9c;
+}
 
+.breadcrumb span {
+  color: #000;
+}
+
+
+
+/* ================= FORM SECTION ================= */
 .contact-form-section {
   display: flex;
   justify-content: center;
   margin-top: -100px;
   padding-bottom: 80px;
+  position: relative;
 }
 
 .contact-card {
@@ -43,28 +58,24 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   animation: fadeInUp 0.6s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-card h2 {
   font-size: 28px;
   margin-bottom: 25px;
+  color: #333;
 }
 
 /* ================= FORM STYLE ================= */
-
 .form-step {
   animation: slideFade 0.5s ease;
 }
 
 @keyframes slideFade {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .form-group {
@@ -99,7 +110,6 @@
 }
 
 /* ================= BUTTONS ================= */
-
 .btn-next,
 .btn-back,
 .btn-submit {
@@ -110,17 +120,20 @@
   cursor: pointer;
   transition: 0.3s ease;
   margin-top: 15px;
+  position: relative;
+  z-index: 2; /* button ko upar rakhne ke liye */
 }
 
 .btn-next {
-  background: #1abc9c;
-  color: white;
+  background: #28a745; /* Bright Classes green */
+  color: #fff;
+  font-weight: bold;
 }
 
 .btn-next:hover {
-  background: #16a085;
+  background: #218838;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+  box-shadow: 0 10px 20px rgba(40,167,69,0.3);
 }
 
 .btn-back {
@@ -144,26 +157,54 @@
 }
 
 /* ================= CARD ANIMATION ================= */
-
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= FORM IMAGE ================= */
+.contact-form-section img {
+  position: absolute;
+  left: -190px;   /* thoda aur andar */
+  top: 520px;     /* button ke level ke paas */
+  width: 280px;   /* size adjust */
+  bottom: -5000px;
+   transform: rotate(-20deg) skewX(-0.91deg) translateY(0px);
+ /* daali ko thoda cross angle dena */
+  z-index: 0;     /* button ke peeche overlap */
+}
+
+img {
+  border: none;
+  outline: none;
+  max-width: 100%;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 768px) {
   .contact-card {
+    width: 90%;
     padding: 30px 20px;
   }
 
   .contact-header h1 {
     font-size: 32px;
+  }
+
+  .breadcrumb {
+    padding-left: 20px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .contact-form-section img {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin: 20px auto 0;
+    display: block;
+    transform: none; /* mobile pe straight */
   }
 }

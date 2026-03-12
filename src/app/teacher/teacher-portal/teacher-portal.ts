@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-portal',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './teacher-portal.html',
-  styleUrl: './teacher-portal.css',
+  styleUrls: ['./teacher-portal.css']
 })
 export class TeacherPortal {
-
 }

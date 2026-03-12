@@ -2,215 +2,145 @@
 
 
 
-  <div class="main-container">
+<div class="main-container">
 
-    <div class="top-banner">
-      <h1>Classes Content</h1>
-    </div>
+<div class="top-banner">
+<h1>Upload Subject Videos</h1>
+</div>
 
-    <!-- Standards -->
-    <div class="standard-section">
-      @for (std of standards; track std) {
-      <button (click)="selectStandard(std)" [class.active]="selectedStandard === std">
-        Class {{ std }}
-      </button>
-      }
-    </div>
+<!-- Standards -->
+<div class="standard-section">
+@for (std of standards; track std) {
+<button
+(click)="selectStandard(std)"
+[class.active]="selectedStandard === std">
+Class {{ std }}
+</button>
+}
+</div>
 
-    <!-- Categories -->
-    @if (selectedStandard && categories.length) {
-    <div class="category-section">
-      @for (cat of categories; track cat) {
-      <button (click)="selectCategory(cat)" [class.active]="selectedCategory === cat">
-        {{ cat }}
-      </button>
-      }
-    </div>
-    }
+<!-- Categories -->
+@if (selectedStandard && categories.length) {
+<div class="category-section">
+@for (cat of categories; track cat) {
+<button
+(click)="selectCategory(cat)"
+[class.active]="selectedCategory === cat">
+{{ cat }}
+</button>
+}
+</div>
+}
 
-       <!-- Subjects -->
-    @if (selectedStandard && !selectedSubject && (!categories.length || selectedCategory)) {
-    <div class="subject-grid">
-      @for (sub of subjects; track sub.id) {
-      <div class="subject-card">
-        <h3>{{ sub.subject }}</h3>
-        <button (click)="openSubject(sub)">Manage</button>
-      </div>
-      }
-    </div>
-    }
-    <!-- ================= FORM ================= -->
+<!-- Subjects -->
+@if (selectedStandard && !selectedSubject && (!categories.length || selectedCategory)) {
 
-    @if (selectedSubject) {
+<div class="subject-grid">
 
-    <div class="content-view">
+@for (sub of subjects; track sub.id) {
 
-      <button class="back-btn" (click)="backToSubjects()">← Back</button>
+<div class="subject-card">
 
-      <h2>
-        Class {{ selectedStandard }}
-        @if (selectedCategory) {
-        <span> - {{ selectedCategory }}</span>
-        }
-        - {{ selectedSubject.subject }}
-      </h2>
+<h3>{{ sub.title }}</h3>
 
-      <button class="add-chapter-btn" (click)="addChapter()">+ Add Chapter</button>
+<button (click)="openSubject(sub)">
+Upload Video
+</button>
 
-      @if (contents.length) {
-      <div class="chapter-tabs">
-        @for (ch of contents; track ch.chapterNo; let i = $index) {
-        <button (click)="selectedChapterIndex = i" [class.active]="selectedChapterIndex === i">
-          Chapter {{ ch.chapterNo }}
-        </button>
-        }
-      </div>
-      }
+</div>
 
-      @for (chapter of contents; track chapter.chapterNo; let i = $index) {
+}
 
-      @if (i === selectedChapterIndex) {
+</div>
 
-      <div class="chapter-box">
+}
 
-        <div class="chapter-header">
-          <div>Chapter {{ chapter.chapterNo }}</div>
+<!-- VIDEO FORM -->
 
-          <div class="action-buttons">
-            <button class="delete-btn" (click)="deleteChapter(i)">Delete</button>
-          </div>
-        </div>
+@if (selectedSubject) {
 
-        <input type="text" placeholder="Chapter Name" [(ngModel)]="chapter.chapterName">
+<div class="content-view">
 
-        <button class="small-btn" (click)="addConcept(chapter)">
-          + Add Concept
-        </button>
+<button class="back-btn" (click)="backToSubjects()">← Back</button>
 
-        @for (concept of chapter.concepts; track concept; let ci = $index) {
+<h2>
+Class {{ selectedStandard }}
+@if (selectedCategory) {
+<span> - {{ selectedCategory }}</span>
+}
+- {{ selectedSubject.title }}
+</h2>
 
-        <div class="concept-box">
+<div class="video-form">
 
-          <div class="concept-header">
-            <strong>Concept</strong>
+<input
+type="text"
+placeholder="Video Title"
+[(ngModel)]="video.title"
+/>
 
-            <div class="action-buttons">
-              <button class="delete-btn" (click)="deleteConcept(chapter, ci)">Delete</button>
-            </div>
-          </div>
+<textarea
+placeholder="Video Description"
+[(ngModel)]="video.description">
+</textarea>
 
-          <input type="text" placeholder="Concept Title" [(ngModel)]="concept.title">
+<input
+type="date"
+[(ngModel)]="video.date"
+/>
 
-          <textarea placeholder="Concept Definition" [(ngModel)]="concept.definition"></textarea>
+<input
+type="number"
+placeholder="Video Duration (Minutes)"
+[(ngModel)]="video.time"
+/>
 
-          <button class="small-btn" (click)="addContent(concept)">
-            + Add Content
-          </button>
+<input
+type="file"
+[accept]="videoAccept"
+(change)="onVideoUpload($event)"
+/>
 
-          @for (content of concept.contents; track content; let co = $index) {
+@if (video.url) {
 
-          <div class="content-block">
+<div class="video-preview">
 
-            <div class="content-header">
-              <strong>Upload The Video</strong>
+<video width="300" controls>
+<source [src]="video.url">
+</video>
 
-              <div class="action-buttons">
-                <button class="delete-btn" (click)="deleteContent(concept, co)">Delete</button>
-              </div>
-            </div>
+<p>{{ video.fileName }}</p>
 
-            <input type="file" [accept]="videoAccept" (change)="onVideoUpload($event, content)">
+</div>
 
-            @if (content.videos.length) {
+}
+<input
+type="file"
+accept="image/*"
+(change)="onImageUpload($event)"
+/>
 
-            @for (vid of content.videos; track vid; let vi = $index) {
+@if (video.image) {
 
-            <div class="video-box">
+<div class="image-preview">
 
-              <video width="250" controls>
-                <source [src]="vid.url">
-              </video>
+<img
+[src]="video.image"
+width="200"
+/>
 
-              <p>{{ vid.fileName }}</p>
+</div>
 
-              <button class="delete-btn" (click)="deleteVideo(content, vi)">
-                Delete
-              </button>
+}
+<button class="save-btn" (click)="saveVideo()">
+Save Video
+</button>
 
-            </div>
-            }
-            }
-          </div>
-          }
-        </div>
-        }
-      </div>
-      }
-      }
-      <button class="save-btn" (click)="saveContent()">
-        Save
-      </button>
-    </div>
-    }
-    <!-- ================= TABLE ================= -->
-    @if (savedContents.length) {
+</div>
 
-    <div class="table-section">
+</div>
 
-      <h2>Saved Data</h2>
+}
 
-      <table>
-
-        <thead>
-          <tr>
-            <th>Standard</th>
-            <th>Subject</th>
-            <th>Chapter Names</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          @for (data of savedContents; track data.subjectId; let i = $index) {
-
-          <tr>
-            <td>{{data.standard}}</td>
-            <td>{{data.subjectName}}</td>
-            <td>
-              @for (ch of data.contents; track ch.chapterNo) {
-              <div class="chapter-name">
-                <span
-                  style="color:#1723a0;padding:3px 8px;border-radius:12px;margin:2px;display:inline-block">
-                 <p>Chapter: {{ ch.chapterNo }}</p><br><p>Chapter Name: {{ ch.chapterName }}</p>
-                </span>
-              </div>
-              }
-            </td>
-
-            <td>
-
-              <button class="edit-btn" (click)="editSaved(data)">
-                Edit
-              </button>
-
-              <button class="delete-btn" (click)="deleteSaved(i,data)">
-                Delete
-              </button>
-
-            </td>
-
-          </tr>
-
-          }
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-    }
-
-  </div>
+</div>
 </div>

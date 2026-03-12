@@ -1,0 +1,167 @@
+/* ================= PAGE BACKGROUND ================= */
+body {
+  background: linear-gradient(135deg, #f4f7fb, #eef3f8);
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= FORM CARD CONTAINER ================= */
+form {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ================= FORM HEADINGS ================= */
+form h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a2540;
+  margin-bottom: 25px;
+}
+form h3 {
+  font-size: 20px;
+  color: #0a2540;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+/* ================= INPUT & SELECT FIELDS ================= */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 15px;
+  background: #fdfdfd;
+  box-sizing: border-box;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #1abc9c;
+}
+
+/* ================= TEXTAREA ================= */
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ================= VALIDATION MESSAGES ================= */
+div[ngIf] {
+  font-size: 13px;
+  color: #e74c3c;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* ================= FILE UPLOAD ================= */
+input[type="file"] {
+  padding: 6px;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+img {
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* ================= CHAPTERS ARRAY ================= */
+.chapter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.chapter-row input {
+  flex: 1;
+}
+.add-btn,
+.remove-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.add-btn {
+  background: #1abc9c;
+  color: white;
+}
+.add-btn:hover {
+  background: #16a085;
+  transform: scale(1.05);
+}
+.remove-btn {
+  background: #e74c3c;
+  color: white;
+}
+.remove-btn:hover {
+  background: #c0392b;
+  transform: scale(1.05);
+}
+
+/* ================= SUBMIT BUTTON ================= */
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  cursor: pointer;
+  margin-top: 25px;
+  transition: 0.3s;
+}
+button[type="submit"]:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #16a085, #138f77);
+}
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ================= IMAGE PREVIEW MESSAGE ================= */
+p {
+  margin: 5px 0 10px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  form {
+    padding: 20px;
+    margin: 20px;
+  }
+  .chapter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .add-btn, .remove-btn {
+    width: 100%;
+  }
+}

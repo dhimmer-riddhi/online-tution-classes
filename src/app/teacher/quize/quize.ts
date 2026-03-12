@@ -11,7 +11,7 @@ import { ClassContent } from '../../interface/class-content';
 
 @Component({
   selector: 'app-quize',
-  imports: [CommonModule, FormsModule, TeacherHeader],
+  imports: [CommonModule, FormsModule],
   templateUrl: './quize.html',
   styleUrl: './quize.css',
 })
