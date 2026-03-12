@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
+import { TeacherHeader } from '../teacher-header/teacher-header';
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-teacher-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,TeacherHeader],
   templateUrl: './teacher-dashboard.html',
   styleUrls: ['./teacher-dashboard.css']
 })

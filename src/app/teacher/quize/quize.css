@@ -79,7 +79,7 @@ color:#555;
 margin-top:20px;
 padding:12px;
 width:100%;
-background:#4CAF50;
+background:#1abc9c;
 color:white;
 border:none;
 border-radius:6px;
@@ -89,5 +89,25 @@ transition:0.3s;
 }
 
 .quiz-container button:hover{
-background:#45a049;
+background:#0f8d74;
+}
+.title  {
+color: #0a2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.button create-quiz {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  background: #1abc9c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }

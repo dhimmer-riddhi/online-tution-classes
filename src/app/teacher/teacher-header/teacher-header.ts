@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 })
 export class TeacherHeader implements OnInit {
   teacherData: any;
-  isScrolled: boolean = false;
 
   constructor(
     private firebaseService: FirebaseService,
@@ -30,16 +29,10 @@ export class TeacherHeader implements OnInit {
           this.teacherData = data;
         });
     }
-
-    // Scroll detection for header styling
-    window.addEventListener('scroll', () => {
-      this.isScrolled = window.scrollY > 0;
-    });
   }
 
   logout() {
     localStorage.removeItem('teacherId');
-    // After logout, redirect to login page (better than dashboard)
     this.router.navigate(['/teacher/login']);
   }
 }

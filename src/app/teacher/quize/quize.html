@@ -1,12 +1,14 @@
 <div class="teacher-layout">
 
 
-
+<app-teacher-header></app-teacher-header>
 <div class="content">
 
 <div class="quiz-container">
 
-<h2>Create Quiz</h2>
+<div class="title">
+  <h2>Create Quiz</h2>
+</div>
 
 <label>Standard</label>
 
@@ -46,11 +48,9 @@
 <input [(ngModel)]="q.answer" placeholder="Correct Answer">
 
 </div>
-
 <button (click)="createQuiz()">
 Send Quiz
 </button>
-
 </div>
 
 </div>
