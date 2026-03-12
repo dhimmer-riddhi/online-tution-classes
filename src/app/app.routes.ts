@@ -9,24 +9,27 @@ import { StudRegistration } from './student/stud-registration/stud-registration'
 import { StudSignIn } from './student/stud-sign-in/stud-sign-in';
 import { ManageApplication } from './admin/manage-application/manage-application';
 import { TeacherPortal } from './teacher/teacher-portal/teacher-portal';
-import { TeacherRegistarion } from './teacher/teacher-registarion/teacher-registarion';
 import { TeacherHeader } from './teacher/teacher-header/teacher-header';
 import { TeacherDashboard } from './teacher/teacher-dashboard/teacher-dashboard';
 import { TeacherLogin } from './teacher/teacher-login/teacher-login';
 import { ManageTeacher } from './admin/manage-teacher/manage-teacher';
-// import { TeacherClasses } from './teacher/teacher-classes/teacher-classes';
 import { TeacherClassContent } from './teacher/teacher-class-content/teacher-class-content';
 import { StudFooter } from './student/stud-footer/stud-footer';
 import { StudStandard } from './student/stud-standard/stud-standard';
 import { Slider } from './student/slider/slider';
-import { Student } from './teacher/student/student';
+
+import { TeacherRegistration } from './teacher/teacher-registration/teacher-registration';
+import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
+// import { TeacherAssignment } from './teacher/teacher-assignment/teacher-assignment';
 import { Quize } from './teacher/quize/quize';
+import { Student } from './teacher/student/student';
 import { StudDashboard } from './student/stud-dashboard/stud-dashboard';
 import { studentAuthGuard } from './student/student-auth.guard.ts/student-auth.guard';
 import { Banner } from './student/stud-dashboard/banner/banner';
 import { Profile } from './student/stud-dashboard/profile/profile';
 import { Standard } from './student/stud-dashboard/standard/standard';
 import { Sidebar } from './student/stud-dashboard/sidebar/sidebar';
+
 
 
 export const routes: Routes = [
@@ -103,26 +106,36 @@ children:[
   { path: 'admin/admin-login', component: AdminLogin },
   { path: 'admin/admin-dashboard', component: AdminDashboard },
   { path: 'admin/admin-sidebar', component: AdminSidebar },
-  { path: 'admin/manage-application', component: ManageApplication },
   { path: 'admin/manage-teacher', component: ManageTeacher },
 
-
-
-
-  //TEACHER ROUTES
-  { path: '', component: TeacherPortal },
-  { path: 'teacher/teacher-dashboard', component: TeacherDashboard },
-  { path: 'teacher/teacher-header', component: TeacherHeader },
   { path: 'teacher/teacher-portal', component: TeacherPortal },
-  { path: 'teacher/teacher-registarion', component: TeacherRegistarion },
   { path: 'teacher/teacher-login', component: TeacherLogin },
-  // { path: 'teacher/teacher-classes', component: TeacherClasses },
-  { path: 'teacher/teacher-class-content', component: TeacherClassContent },
-  { path: 'teacher/student', component: Student },
-  { path: 'teacher/quize', component: Quize },
+  { path: 'teacher/teacher-registration', component: TeacherRegistration },
+
+  // ===== TEACHER PANEL (HEADER + SIDEBAR + CONTENT) =====
+
+  {
+    path: 'teacher',
+    component: TeacherHeader,
+
+    children: [
+
+      { path: 'dashboard', component: TeacherDashboard },
+      { path: 'students', component: Student },
+      
+      
+      { path: 'class-content', component: TeacherClassContent },
+      { path: 'courses', component: TeacherCourses },
+      // { path: 'assignment', component: TeacherAssignment },
+      { path: 'quiz', component: Quize },
+
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+
+    ]
+  },
+  // // Fallback
+ // { path: '**', redirectTo: 'student/stud-home' },
 
 
-
-  // Fallback
-  { path: '**', redirectTo: 'student/stud-home' },
+    
 ];

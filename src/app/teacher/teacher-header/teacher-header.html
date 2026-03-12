@@ -1,43 +1,58 @@
-<div class="header-container">
+<header class="main-header" [class.scrolled]="isScrolled">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
+  <!-- TOP HEADER (UNCHANGED) -->
+  <div class="top-header">
     <div class="logo">
-      📚 Online Tuition
+      <img src="footer-logo (1).png" alt="Bright Classes Logo">
     </div>
 
-    <!-- PROFILE (Always Visible) -->
-   @if (teacherData) {
-      <div class="sidebar-profile">
-        <img
-          [src]="teacherData.profileImage || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"
-          class="profile-img"
-          alt="Teacher Profile"
-        />
-        <h4>{{ teacherData.name }}</h4>
-        <p>{{ teacherData.email }}</p>
-      </div>
-    }
-
-    <!-- NAVIGATION -->
-    <nav class="nav-links">
-      <a routerLink="/teacher/teacher-dashboard" routerLinkActive="active"> Dashboard</a>
-      <a routerLink="/teacher/student" routerLinkActive="active">Students</a>
-      <a routerLink="/teacher/teacher-classes" routerLinkActive="active"> Classes</a>
-      <a routerLink="/teacher/teacher-class-content" routerLinkActive="active">Classs-Content</a>
-      <a routerLink="/teacher/quize" routerLinkActive="active">Quiz</a>
-      <a routerLink="reports" routerLinkActive="active">📊 Reports</a>
-      <button class="logout-btn" (click)="logout()">🚪 Logout</button>
-    </nav>
-
+    <div class="icons">
+      <button class="logout-btn" (click)="logout()">↩ Logout</button>
+    </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-    <div class="page-content">
-      <router-outlet></router-outlet>
-    </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="teacher-layout">
+
+  <!-- SIDEBAR MENU -->
+  <div class="menu-bar">
+
+    <a routerLink="/teacher/dashboard" routerLinkActive="active">
+      🏠 Dashboard
+    </a>
+
+    <a routerLink="/teacher/students" routerLinkActive="active">
+      👩‍🎓 Students
+    </a>
+
+    
+
+    
+    
+
+    <a routerLink="/teacher/class-content" routerLinkActive="active">
+      📖 Class Content
+    </a>
+
+    <a routerLink="/teacher/assignment" routerLinkActive="active">
+      📝 Assignments
+    </a>
+
+    <a routerLink="/teacher/courses" routerLinkActive="active">
+      📚 Courses
+    </a>
+
+    <a routerLink="/teacher/quiz" routerLinkActive="active">
+      🧠 Quiz
+    </a>
+    
+  </div>
+
+  <!-- RIGHT SIDE CONTENT -->
+  <div class="page-content">
+    <router-outlet></router-outlet>
   </div>
 
 </div>

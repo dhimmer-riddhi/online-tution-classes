@@ -11,6 +11,8 @@ export interface ClassContent {
     chapterNo: number
     chapterName: string
 
+    content?: string;      // <-- ADD THIS
+
     concepts: {
 
       title: string

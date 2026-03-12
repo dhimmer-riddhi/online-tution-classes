@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-student',
-  imports: [TeacherHeader, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './student.html',
   styleUrl: './student.css',
 })

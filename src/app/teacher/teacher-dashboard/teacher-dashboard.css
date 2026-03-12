@@ -1,0 +1,93 @@
+.dashboard-container{
+padding:20px;
+}
+
+/* TITLE */
+
+.dashboard-title{
+font-size:28px;
+margin-bottom:25px;
+color:#0a2540;
+font-weight:600;
+}
+
+/* CARDS */
+
+.dashboard-cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-bottom:30px;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+transition:0.3s;
+
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h2{
+font-size:34px;
+margin-bottom:5px;
+}
+
+.card p{
+color:#666;
+}
+
+/* COLORS */
+
+.students{
+border-left:6px solid #3498db;
+}
+
+.classes{
+border-left:6px solid #9b59b6;
+}
+
+.subjects{
+border-left:6px solid #f39c12;
+}
+
+.assignments{
+border-left:6px solid #1abc9c;
+}
+
+.videos{
+border-left:6px solid #e74c3c;
+}
+
+/* CHARTS */
+
+.charts{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:25px;
+
+}
+
+.chart-box{
+
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+
+}
+
+.chart-box h3{
+margin-bottom:15px;
+color:#333;
+}
