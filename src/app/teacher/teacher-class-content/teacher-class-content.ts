@@ -14,301 +14,243 @@ import { TeacherHeader } from "../teacher-header/teacher-header";
   styleUrls: ['./teacher-class-content.css']
 })
 export class TeacherClassContent implements OnInit {
+openSubject(subject:any){
+  this.selectedSubject = subject
+}
 
-  selectedStandard: string | null = null;
-  selectedCategory: string | null = null;
-  selectedSubject: any = null;
+backToSubjects(){
+  this.selectedSubject = null
+}
 
-  standards = ['9', '10', '11', '12'];
-  categories: string[] = [];
-  subjects: any[] = [];
+ 
 
-  contents: ClassContent['contents'] = [];
+selectedStandard: string | null = null
+selectedCategory: string | null = null
+selectedSubject: any = null
 
-  savedContents: ClassContent[] = [];
+standards = ['9th','10th','11th','12th']
+categories: string[] = []
+subjects: any[] = []
 
-  selectedChapterIndex = 0;
+video:any = {
+title:'',
+description:'',
+date:'',
+time:'',
+url:'',
+fileName:''
+}
 
-  allowedExtensions = ['mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', 'mpeg', 'mpg', '3gp', 'asf'];
-  videoAccept = '.mp4,.avi,.mkv,.mov,.wmv,.flv,.webm,.mpeg,.mpg,.3gp,.asf';
+videoAccept = '.mp4,.avi,.mkv,.mov,.wmv,.flv,.webm'
 
-  constructor(
-    private firebaseService: FirebaseService,
-    private ngZone: NgZone
-  ) { }
+constructor(
+private firebaseService:FirebaseService,
+private ngZone:NgZone
+){}
 
-  ngOnInit() {
-    this.loadSavedData();
-    this.loadSavedContents();
+ngOnInit(){}
 
-  }
-  loadSavedContents() {
+selectStandard(std:string){
 
-    this.firebaseService
-      .getCollection(FirebaseCollections.ClassContent)
-      .subscribe((data: any) => {
+this.selectedStandard = std
+this.selectedCategory = null
+this.selectedSubject = null
+this.categories = []
 
-        // ⭐ newest first
-        this.savedContents = data.reverse()
+if(std === '10th')
+this.categories = ['GSEB','CBSE']
 
-      })
+else if(std === '11th' || std === '12th')
+this.categories = ['Commerce','PCM','PCB']
 
-  }
-  /* LOAD TABLE DATA */
-  loadSavedData() {
-    this.firebaseService.getCollection(FirebaseCollections.ClassContent)
-      .subscribe((data: any[]) => {
-        this.savedContents = data;
-      });
-  }
-  selectStandard(std: string) {
+this.loadSubjects()
 
-    this.selectedStandard = std;
-    this.selectedCategory = null;
-    this.selectedSubject = null;
-    this.contents = [];
-    this.categories = [];
+}
 
-    if (std === '10') this.categories = ['GSEB', 'CBSE'];
-    else if (std === '11' || std === '12') this.categories = ['Commerce', 'PCM', 'PCB'];
+selectCategory(cat:string){
 
-    this.loadSubjects();
-  }
+this.selectedCategory = cat
+this.selectedSubject = null
+this.loadSubjects()
 
-  selectCategory(cat: string) {
+}
 
-    this.selectedCategory = cat;
-    this.selectedSubject = null;
-    this.contents = [];
-    this.loadSubjects();
+loadSubjects(){
 
-  }
+this.firebaseService
+.getCollection(FirebaseCollections.Courses)
+.subscribe((data:any[])=>{
 
-  loadSubjects() {
+let filtered = data
 
-    this.firebaseService.getCollection(FirebaseCollections.Standard)
-      .subscribe((data: any[]) => {
+if(this.selectedStandard){
+filtered = filtered.filter(
+d => d.class == this.selectedStandard
+)
+}
 
-        let filtered = data.filter(d => d.standard === this.selectedStandard);
+if(this.selectedCategory){
 
-        if (this.selectedCategory)
-          filtered = filtered.filter(d => d.category === this.selectedCategory);
+filtered = filtered.filter(
+d => d.board == this.selectedCategory ||
+d.stream == this.selectedCategory
+)
 
-        this.subjects = filtered;
+}
 
-      });
+this.subjects = filtered
 
-  }
+})
 
-  openSubject(subject: any) {
 
-    this.selectedSubject = subject;
+}
 
-    this.firebaseService.getDocument<ClassContent>(FirebaseCollections.ClassContent, subject.id)
-      .subscribe(doc => {
+onVideoUpload(event:any){
 
-        this.ngZone.run(() => {
+const file = event.target.files[0]
 
-          this.contents = doc?.contents || [];
+if(!file) return
 
-          // ===== ADD THIS =====
-          if (this.contents.length > 0) {
-            this.selectedChapterIndex = this.contents.length - 1;
-          } else {
-            this.selectedChapterIndex = 0;
-          }
+const formData = new FormData()
 
-        });
+formData.append('file',file)
+formData.append('upload_preset','Tution_videos')
 
-      });
+fetch('https://api.cloudinary.com/v1_1/dovmj5mds/upload',{
+method:'POST',
+body:formData
+})
+.then(res=>res.json())
+.then(data=>{
 
-  }
+this.ngZone.run(()=>{
 
-  backToSubjects() {
+this.video.url = data.secure_url
+this.video.fileName = file.name
 
-    this.selectedSubject = null;
-    this.contents = [];
+alert("Video Uploaded")
 
-  }
-  addChapter() {
+})
 
-    const newChapter = {
-      chapterNo: this.contents.length + 1,
-      chapterName: '',
-      concepts: []
-    }
+})
 
-    this.contents.push(newChapter)
+}
 
-    // ⭐ NEW CHAPTER AUTO OPEN
-    this.selectedChapterIndex = this.contents.length - 1
+// image uload
 
-  }
-  deleteChapter(index: number) {
-    if (confirm('Delete this chapter?')) {
-      this.contents.splice(index, 1);
-      this.contents.forEach((c, i) => c.chapterNo = i + 1);
-    }
-  }
-  addConcept(chapter: any) {
+onImageUpload(event:any){
 
-    chapter.concepts.push({
-      title: '',
-      contents: []
-    });
+const file = event.target.files[0]
 
-  }
-  deleteConcept(chapter: any, index: number) {
+if(!file) return
 
-    if (confirm('Delete concept?'))
-      chapter.concepts.splice(index, 1);
+const reader = new FileReader()
 
-  }
+reader.readAsDataURL(file)
 
-  addContent(concept: any) {
+reader.onload = () => {
 
-    concept.contents.push({
-      contentTitle: '',
-      contentDefinition: '',
-      videos: []
-    });
+const base64Image = reader.result
 
-  }
+const formData = new FormData()
 
-  deleteContent(concept: any, index: number) {
+formData.append('file', base64Image as string)
+formData.append('upload_preset','Tution_videos')
 
-    if (confirm('Delete content?'))
-      concept.contents.splice(index, 1);
+fetch('https://api.cloudinary.com/v1_1/dovmj5mds/image/upload',{
+method:'POST',
+body:formData
+})
+.then(res=>res.json())
+.then(data=>{
 
-  }
+this.ngZone.run(()=>{
 
-  onVideoUpload(event: any, content: any) {
+this.video.image = data.secure_url
 
-    const file = event.target.files[0];
-    if (!file) return;
+alert("Image Uploaded")
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'Tution_videos');
+})
 
-    fetch('https://api.cloudinary.com/v1_1/dovmj5mds/upload', {
-      method: 'POST',
-      body: formData
-    })
-      .then(res => res.json())
-      .then(data => {
+})
 
-        this.ngZone.run(() => {
+}
 
-          if (!content.videos) content.videos = [];
+}
+async saveVideo(){
 
-          content.videos.push({
-            url: data.secure_url,
-            duration: 0,
-            fileName: file.name
-          });
+if(!this.selectedStandard || !this.selectedSubject){
+alert("Select Subject")
+return
+}
 
-          alert("Video Uploaded");
+if(!this.video.date){
+alert("Select Date")
+return
+}
 
-        });
+if(!this.video.url){
+alert("Upload Video First")
+return
+}
 
-      });
+// date convert
+const inputDate = new Date(this.video.date)
 
-  }
+const day = inputDate.toLocaleDateString('en-GB',{day:'2-digit'})
 
-  deleteVideo(content: any, index: number) {
+const month = inputDate.toLocaleDateString('en-US',{
+month:'short',
+year:'numeric'
+})
 
-    if (confirm('Delete video?'))
-      content.videos.splice(index, 1);
+const duration = this.video.time + ' Minutes'
 
-  }
+const data = {
 
-  async saveContent() {
+standard:this.selectedStandard,
+subjectId:this.selectedSubject.id,
+subjectName:this.selectedSubject.title,
 
-    if (!this.selectedStandard || !this.selectedSubject) {
+board:this.selectedSubject.board || null,
+stream:this.selectedSubject.stream || null,
 
-      alert("Select Standard & Subject");
-      return;
+video:{
+title:this.video.title,
+description:this.video.description,
+url:this.video.url,
+fileName:this.video.fileName,
 
-    }
+image:this.video.image,  // 🔹 important
 
-    const data: ClassContent = {
+time: duration,
 
-      standard: this.selectedStandard,
-      subjectId: this.selectedSubject.id,
-      subjectName: this.selectedSubject.subject,
-      contents: this.contents
+date:{
+day: day,
+month: month
+}
 
-    };
+}
 
-    if (this.selectedCategory)
-      (data as any).category = this.selectedCategory;
+}
 
-    try {
+await this.firebaseService.addDocument(
+FirebaseCollections.ClassContent,
+data
+)
 
-      await this.firebaseService.updateDocument(
-        FirebaseCollections.ClassContent,
-        this.selectedSubject.id,
-        data
-      );
+alert("Video Saved")
 
-      alert('Content Saved Successfully');
+this.video = {
+title:'',
+description:'',
+date:'',
+time:'',
+url:'',
+fileName:''
+}
 
-    }
-    catch {
+}
 
-      await this.firebaseService.addDocument(
-        FirebaseCollections.ClassContent,
-        { id: this.selectedSubject.id, ...data }
-      );
 
-      alert('Content Saved Successfully');
-
-    }
-
-    // reload table
-    this.loadSavedContents();
-
-    // reset form
-    this.contents = [];
-    this.selectedSubject = null;
-    this.selectedChapterIndex = 0;
-    this.savedContents.unshift(data);
-  }
-  editSaved(data: any) {
-
-    this.selectedStandard = data.standard
-    this.selectedCategory = data.category || null
-
-    this.selectedSubject = {
-      id: data.subjectId,
-      subject: data.subjectName
-    }
-
-    this.contents = JSON.parse(JSON.stringify(data.contents))
-
-    // ⭐ LAST CHAPTER OPEN
-    if (this.contents.length > 0) {
-      this.selectedChapterIndex = this.contents.length - 1
-    } else {
-      this.selectedChapterIndex = 0
-    }
-
-  }
-
-  /* DELETE DATA */
-  async deleteSaved(index: number, data: any) {
-
-    if (confirm("Delete this data?")) {
-
-      await this.firebaseService.deleteDocument(
-        FirebaseCollections.ClassContent,
-        data.subjectId
-      )
-
-      this.savedContents.splice(index, 1)
-
-    }
-
-  }
 }

@@ -156,7 +156,9 @@ async uploadFile(path: string, file: File) {
   return { downloadURL };
 
 }
-
+getStudents(){
+  return this.getCollection<any>(FirebaseCollections.StudentRegistrations);
+}
 
 
 }

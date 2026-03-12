@@ -96,17 +96,74 @@ export class StudRegistration implements OnInit {
     // 🔥 STANDARD CHANGE → SUBJECT FILTER
     this.registerForm.get('standard')?.valueChanges.subscribe(std => {
 
-      const filteredCourses = this.courses.filter(
-        course => course.class === std
-      );
+  this.availableSubjects = [];
+  this.selectedSubjects = [];
 
-      this.availableSubjects = filteredCourses.map(
-        course => course.title
-      );
+  if (std === '10th') {
+    this.registerForm.get('board')?.setValidators([Validators.required]);
+    this.registerForm.get('stream')?.clearValidators();
+  }
 
-    });
+  if (std === '11th' || std === '12th') {
+    this.registerForm.get('stream')?.setValidators([Validators.required]);
+    this.registerForm.get('board')?.clearValidators();
+  }
+
+  this.registerForm.get('board')?.updateValueAndValidity();
+  this.registerForm.get('stream')?.updateValueAndValidity();
+
+
+
+});
+this.registerForm.get('board')?.valueChanges.subscribe(board => {
+
+  const std = this.registerForm.get('standard')?.value;
+
+  if (std === '10th') {
+
+    const filteredCourses = this.courses.filter(
+      course => course.class === '10th' && course.board === board
+    );
+
+    this.availableSubjects = filteredCourses.map(course => course.title);
 
   }
+
+});
+this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
+
+  const std = this.registerForm.get('standard')?.value;
+
+  if (std === '11th' || std === '12th') {
+
+    if (stream === 'Science') {
+
+      // Science subjects (PCM + PCB)
+      const filteredCourses = this.courses.filter(
+        course =>
+          course.class === std &&
+          (course.stream === 'PCM' || course.stream === 'PCB')
+      );
+
+      this.availableSubjects = filteredCourses.map(course => course.title);
+
+    } else {
+
+      // Commerce / Arts
+      const filteredCourses = this.courses.filter(
+        course => course.class === std && course.stream === stream
+      );
+
+      this.availableSubjects = filteredCourses.map(course => course.title);
+
+    }
+
+  }
+
+});
+  }
+
+  
 
   // ===============================
   // 🔹 SUBJECT CHECKBOX HANDLER

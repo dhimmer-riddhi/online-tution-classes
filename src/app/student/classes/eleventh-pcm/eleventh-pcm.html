@@ -43,4 +43,163 @@
 
   </div>
 </section>
+
+
+                                                                  <!-- -------------//second subject section//------------- -->
+
+
+
+<div class="event-section-alt" >
+  <!-- event header scetion -->
+   <!-- SECTION HEADER -->
+<div class="event-header-one">
+
+  <!-- LEFT CONTENT -->
+  <div class="event-header-left-one">
+    <h2>Explore Our Learning Programs for Class 11 Science (PCM)</h2>
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  
+  
+</div>
+
+<div class="carousel">
+  <!-- Fixed orange navigation box -->
+  <div class="simple-nav">
+    <button (click)="prevCard()" [disabled]="currentCard === 1">‹</button>
+    <span>{{currentCard}} / {{cards.length}}</span>
+    <button (click)="nextCard()" [disabled]="currentCard === cards.length">›</button>
+  </div>
+
+  <!-- Dynamic course cards -->
+  <div class="swipe-area">
+    <div class="course-card" *ngFor="let card of cards; let i = index"
+         [class.active]="i+1 === currentCard">
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h2>{{card.title}}</h2>
+          <p class="subtitle">{{card.description}}</p>
+        </div>
+
+        <div class="card-info">
+          <div><b>Fees:</b> {{card.fees}}</div>
+          <div><b>Duration:</b> {{card.duration}}</div>
+          <div *ngIf="card.mode"><b>Mode:</b> {{card.mode}}</div>
+        </div>
+
+        <div class="teacher">
+          <img [src]="card.teacher?.profile" />
+          <div>
+            <h4>{{card.teacher?.name}}</h4>
+<small>{{card.teacher?.details}}</small>
+<p>{{card.teacher?.bio}}</p>
+          </div>
+        </div>
+
+        <div class="chapters">
+          <h4>Major Chapters Covered</h4>
+          <ul>
+            <li *ngFor="let chapter of card.chapters">{{chapter}}</li>
+          </ul>
+        </div>
+
+        <div class="btn-group">
+
+        <button
+              class="btn primary"
+              (click)="getVideosBySubject(card.title)"
+              [disabled]="!canAccessSubject(card.title)">
+              View Videos
+        </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>  
+
+
+                                                                                 
+<!-- ================= VIDEO SECTION ================= -->
+
+<div class="event-section" *ngIf="videos && videos.length > 0">
+
+  <!-- SECTION HEADER -->
+  <div class="event-header">
+
+    <div class="event-header-left">
+      <span class="tag">Videos Here</span>
+      <h2>Join Our Upcoming <br> Monthly Teaching Events</h2>
+    </div>
+
+    <div class="event-header-right">
+      <p>
+        There are many variations of passages of Lorem Ipsum available,
+        but the majority have suffered alteration in some form,
+        by injected humour, words which don't look even slightly believable.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- VIDEO CARDS -->
+  <div class="event-card" *ngFor="let video of videos">
+
+    <!-- LEFT IMAGE -->
+    <div class="event-image" (click)="openVideo(video)">
+      <img [src]="video.thumb">
+      <span class="play-btn">▶</span>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="event-content">
+
+      <!-- DATE -->
+      <div class="event-date">
+        <span class="day">{{ video.date?.day }}</span>
+        <span class="month">{{ video.date?.month }}</span>
+      </div>
+
+      <div class="event-details">
+
+        <h3>{{ video.title }}</h3>
+
+        <p>{{ video.desc }}</p>
+
+        <span>⏱ {{ video.duration }}</span>
+
+        <button class="btn primary" (click)="openVideo(video)">
+          Watch Video
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= VIDEO MODAL ================= -->
+
+<div class="video-modal" *ngIf="showVideo">
+
+  <div class="video-content">
+
+    <span class="close-btn" (click)="closeVideo()">✖</span>
+
+    <video width="100%" controls autoplay *ngIf="selectedVideo">
+
+      <source [src]="selectedVideo.videoUrl" type="video/mp4">
+
+    </video>
+
+  </div>
+
+</div>
 <app-stud-footer>  </app-stud-footer>

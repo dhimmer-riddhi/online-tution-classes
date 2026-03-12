@@ -1,0 +1,51 @@
+.stud-banner{
+height:160px;
+background: linear-gradient(90deg,#ff5a5f,#ff7a18);
+border-radius:10px;
+padding:20px;
+color:white;
+position:relative;
+overflow:hidden;
+margin-top: 50px;
+}
+
+.banner-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
+height:100%;
+}
+
+.profile-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.profile-img{
+width:70px;
+height:70px;
+border-radius:50%;
+border:3px solid white;
+object-fit:cover;
+}
+
+.profile-info h2{
+margin:0;
+font-size:22px;
+}
+
+.profile-info p{
+margin:0;
+opacity:0.8;
+}
+
+.edit-btn{
+background:white;
+color:#ff5a5f;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}

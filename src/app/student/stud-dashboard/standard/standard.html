@@ -1,0 +1,22 @@
+<div class="standard-card">
+
+<h2>My Standard</h2>
+
+<div class="standard-box">
+
+<label>Standard</label>
+<p>{{student?.standard}}</p>
+
+</div>
+
+<h3>My Subjects</h3>
+
+<div class="subject-list">
+
+<div class="subject-card" *ngFor="let sub of student?.subjects">
+{{sub}}
+</div>
+
+</div>
+
+</div>

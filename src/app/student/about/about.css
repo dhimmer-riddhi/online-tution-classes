@@ -5,6 +5,8 @@
   width: 100%;
   position: relative;
   font-family: 'Poppins', sans-serif;
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 
 
@@ -249,6 +251,17 @@
 }
 
 /* LEFT CONTENT */
+.banner-heading{
+text-align:center;
+margin-bottom:50px;
+}
+
+.banner-heading h1{
+font-size:44px;
+font-weight:800;
+color:#1a1a1a;
+letter-spacing:0.5px;
+}
 
 .hero-content{
   max-width:550px;
@@ -339,7 +352,7 @@
 
 .hero-section{
 background:#cdd7dd;
-padding:120px 0;
+padding:67px 0;
 position:relative;
 overflow:hidden;
 }
@@ -531,4 +544,267 @@ transform: scale(1.1);
 transform: scale(1);
 }
 
+} 
+
+/* third section */
+
+.faq-section{
+  padding:60px 0;
+  background:#f8f8f8;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+.faq-title{
+  font-size:36px;
+  font-weight:700;
+  color:#ff5a1f;
+}
+
+.faq-subtitle{
+  margin-bottom:25px;
+  color:#555;
+}
+
+.faq-box{
+  background:#fff;
+  border:1px solid #e5e5e5;
+  border-radius:8px;
+  margin-bottom:12px;
+  overflow:hidden;
+}
+
+.faq-question{
+  padding:18px 20px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.faq-answer{
+  padding:15px 20px;
+  border-top:1px solid #eee;
+  color:#555;
+  line-height:1.6;
+}
+
+.arrow{
+  transition:0.3s;
+}
+
+.rotate{
+  transform:rotate(180deg);
+} 
+
+
+/* third section */
+
+.tutor-section{
+padding:80px 10%;
+background-color: #3da182;
+background-image: url(/about-after-img.png);
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+.tutor-header{
+text-align:center;
+margin-bottom:50px;
+}
+
+.tutor-header h2{
+  color: #ffffff;
+font-size:52px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.tutor-header p{
+color:#666;
+font-size:16px;
+}
+
+/* grid */
+
+.tutor-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+/* card */
+
+.tutor-card{
+display:flex;
+align-items:center;
+gap:20px;
+background:#e9ecef;
+padding:25px;
+border-radius:6px;
+transition:0.3s;
+}
+
+.tutor-card:hover{
+transform:translateY(-5px);
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* image */
+
+.tutor-card img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* text */
+
+.tutor-info h3{
+margin:0;
+font-size:20px;
+}
+
+.tutor-info span{
+color:#777;
+font-size:15px;
+}
+
+
+/* second section */
+
+.about{
+padding:80px 10%;
+background:#f6f7fb;
+}
+
+.about-container{
+display:flex;
+align-items:center;
+gap:60px;
+}
+
+/* LEFT SIDE */
+
+.about-left{
+position:relative;
+}
+
+.main-img{
+width:420px;
+height:520px;
+object-fit:cover;
+border-radius:50% / 35%;
+}
+
+/* small round image */
+
+.small-circle{
+position:absolute;
+bottom:20px;
+right:-40px;
+width:120px;
+height:120px;
+border-radius:50%;
+overflow:hidden;
+border:5px solid #ffffff;
+background: #ffffff;
+
+/* animation */
+animation: rotateCircle 6s linear infinite;
+}
+
+.small-circle img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* rotation animation */
+@keyframes rotateCircle{
+0%{
+transform: rotate(0deg);
+}
+
+100%{
+transform: rotate(360deg);
+}
+}
+
+/* RIGHT SIDE */
+
+.about-right{
+max-width:550px;
+}
+
+.about-tag{
+border:1px solid #3ba7d7;
+color:#3ba7d7;
+padding:6px 15px;
+border-radius:6px;
+font-weight:600;
+font-size:14px;
+}
+
+.about-right h2{
+font-size:42px;
+margin:20px 0;
+line-height:1.3;
+}
+
+/* STATS BOX */
+
+.stats-box{
+background:#81cbec;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:80px;
+
+padding:26px 95px;
+border-radius:100px;   /* pill shape */
+margin:30px 0;
+width:fit-content;     /* content જેટલું width */
+border-radius: 0px 100px 100px 10px;
+}
+
+.stats-box div{
+text-align:center;
+}
+
+.stats-box h3{
+font-size:38px;
+font-weight:700;
+margin-bottom:5px;
+}
+
+.stats-box p{
+font-size:16px;
+opacity:0.9;
+}
+
+.about-right p{
+color:#000000;
+line-height:1.6;
+margin-bottom:25px;
+}
+
+/* BUTTON */
+
+.btn{
+background:#3ba7d7;
+color:white;
+border:none;
+padding:14px 30px;
+border-radius:30px;
+cursor:pointer;
+font-size:16px;
 }

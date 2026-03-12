@@ -11,9 +11,9 @@ export interface StudentRegistration {
   state: string;
 
   standard: string;
-  board: string;
-  stream: string;
-  scienceGroup?: string;
+ board: string;         //CBSE/GSEB
+  stream: string;       //COMMERCE/SCIENCE
+  scienceGroup?: string;  //PCM/PCB
 
   subjects: string[];
 

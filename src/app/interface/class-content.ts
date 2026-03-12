@@ -1,90 +1,45 @@
-// // src/app/models/class-content.interface.ts
-
-// export interface ClassContent {
-
-//   id?: string;                 // Firestore document ID
-
-//   standard: string;
-//   category?: string;        // 9, 10, 11, 12
-//   subjectId: string;           // Subject document ID
-//   subjectName: string;         // Maths, Science, etc.
-
-//   contents: {
-//     chapterNo: number;                  // Chapter No (day = chapter number)
-//     chapterName?: string;      // Chapter Name
-//     expanded?: boolean;        // Expand/Collapse support
-
-//     concepts: {
-//       id: string;
-//       title: string;
-
-//       definition?: string;
-//       example?: string;
-
-//       // 🔥 Multiple videos support
-//       videos?: {
-//         url: string;
-//         duration: number;
-//         fileName?: string;
-//         progress?: number;
-//         uploading?: boolean;
-//       }[];
-
-//       status?: 'pending' | 'completed' | 'locked';
-//     }[];
-
-//   }[];
-
-// }
-// src/app/models/class-content.interface.ts
-
 export interface ClassContent {
 
-  id?: string;                   // Firestore Document ID
+  standard: string
+  subjectId: string
+  title: string
 
-  standard: string;              // 9,10,11,12
-  category?: string;             // Commerce / PCM / PCB etc
-
-  subjectId: string;             // Subject ID
-  subjectName: string;           // Maths, Science etc
-
+  category?: string
 
   contents: {
 
-    chapterNo: number;           // Chapter Number
-    chapterName: string;         // Chapter Name
-    expanded?: boolean;
+    chapterNo: number
+    chapterName: string
 
     concepts: {
 
-      id?: string;
-
-      title: string;             // Concept Title
-      definition?: string;       // Concept Definition
-      example?: string;
+      title: string
 
       contents: {
 
-        contentTitle: string;        // Video Title
-        contentDefinition?: string;  // Description
+        contentTitle: string
+        contentDefinition: string
 
         videos: {
 
-          url: string;               // Firebase Video URL
-          duration: number;          // seconds
-          fileName?: string;
+          url: string
+          fileName: string
+          duration: number
 
-          progress?: number;         // student progress
-          uploading?: boolean;       // upload loader
+          // 🔹 NEW FIELDS
+          title?: string
+          description?: string
+          date?: string
+          time?: string
 
-        }[];
+          image?: string   // 🔹 Thumbnail Image
 
-      }[];
+        }[]
 
-      status?: 'pending' | 'completed' | 'locked';
+      }[]
 
-    }[];
+    }[]
 
-  }[];
+  }[]
 
 }

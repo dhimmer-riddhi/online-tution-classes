@@ -277,3 +277,230 @@ tr:hover {
   border-radius: 8px;
   margin-left: 5px;
 }
+
+
+
+
+/* ================= CONTAINER ================= */
+
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #f6f7fb;
+}
+
+.main-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+/* ================= HEADER ================= */
+
+.top-banner {
+  margin-bottom: 25px;
+}
+
+.top-banner h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ================= STANDARD BUTTONS ================= */
+
+.standard-section {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.standard-section button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.standard-section button:hover {
+  background: #f1f5f9;
+}
+
+.standard-section button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+/* ================= CATEGORY ================= */
+
+.category-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.category-section button {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.category-section button.active {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+/* ================= SUBJECT GRID ================= */
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* ================= SUBJECT CARD ================= */
+
+.subject-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+}
+
+.subject-card h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #1e293b;
+}
+
+.subject-card button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ================= VIDEO FORM ================= */
+
+.content-view {
+  margin-top: 25px;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.content-view h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #1e293b;
+}
+
+/* ================= BACK BUTTON ================= */
+
+.back-btn {
+  margin-bottom: 15px;
+  background: transparent;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ================= FORM FIELDS ================= */
+
+.video-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.video-form input,
+.video-form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.video-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ================= FILE INPUT ================= */
+
+.video-form input[type="file"] {
+  border: none;
+}
+
+/* ================= VIDEO PREVIEW ================= */
+
+.video-preview {
+  margin-top: 15px;
+}
+
+.video-preview video {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.video-preview p {
+  font-size: 13px;
+  color: #555;
+}
+
+/* ================= SAVE BUTTON ================= */
+
+.save-btn {
+  margin-top: 10px;
+  background: #22c55e;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.save-btn:hover {
+  background: #16a34a;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  .subject-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

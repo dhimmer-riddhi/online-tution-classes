@@ -74,12 +74,12 @@ this.showStream = false;
 this.courseForm.get('board')?.clearValidators();
 this.courseForm.get('stream')?.clearValidators();
 
-if (selectedClass == '10') {
+if (selectedClass == '10th') {
 this.showBoard = true;
 this.courseForm.get('board')?.setValidators(Validators.required);
 }
 
-if (selectedClass == '11' || selectedClass == '12') {
+if (selectedClass == '11th' || selectedClass == '12th') {
 this.showStream = true;
 this.courseForm.get('stream')?.setValidators(Validators.required);
 }
