@@ -6,6 +6,7 @@ import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { ClassContent } from '../../interface/class-content';
 import { TeacherHeader } from "../teacher-header/teacher-header";
 
+
 @Component({
   selector: 'app-teacher-class-content',
   standalone: true,

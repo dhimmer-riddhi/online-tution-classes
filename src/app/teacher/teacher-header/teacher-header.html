@@ -22,13 +22,12 @@
 
     <!-- NAVIGATION -->
     <nav class="nav-links">
-      <a routerLink="/teacher/teacher-dashboard" >🏠 Dashboard</a>
-      <a routerLink="students" >👩‍🎓 Students</a>
-      <a routerLink="attendance" > Attendance</a>
-      <a routerLink="/teacher/teacher-classes" > Classes</a>
-      <a routerLink="/teacher/teacher-class-content" > Classs-Content</a>
-      <a routerLink="assignments" > Assignments</a>
-      <a routerLink="reports" >📊 Reports</a>
+      <a routerLink="/teacher/teacher-dashboard" routerLinkActive="active"> Dashboard</a>
+      <a routerLink="/teacher/student" routerLinkActive="active">Students</a>
+      <a routerLink="/teacher/teacher-classes" routerLinkActive="active"> Classes</a>
+      <a routerLink="/teacher/teacher-class-content" routerLinkActive="active">Classs-Content</a>
+      <a routerLink="/teacher/quize" routerLinkActive="active">Quiz</a>
+      <a routerLink="reports" routerLinkActive="active">📊 Reports</a>
       <button class="logout-btn" (click)="logout()">🚪 Logout</button>
     </nav>
 

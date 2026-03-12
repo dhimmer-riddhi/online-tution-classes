@@ -16,7 +16,8 @@ export interface StudentRegistration {
   scienceGroup?: string;  //PCM/PCB
 
   subjects: string[];
-
+  assignedTeacherId?: string;
+  assignedTeacherName?: string;
   status: 'pending' | 'approved' | 'rejected';
 
   createdAt: Date;
