@@ -4,13 +4,14 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
+import { TeacherHeader } from '../teacher-header/teacher-header';
 declare var bootstrap: any;
 
 
 @Component({
   selector: 'app-teacher-courses',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,TeacherHeader],
   templateUrl: './teacher-courses.html',
   styleUrl: './teacher-courses.css'
 })
