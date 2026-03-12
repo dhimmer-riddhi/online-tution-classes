@@ -1,139 +1,91 @@
-<app-teacher-header></app-teacher-header>
-<form [formGroup]="courseForm" (ngSubmit)="submit()">
+<div class="main-layout">
+  <div class="content-area">
+    <app-teacher-header></app-teacher-header>
 
-<h2>Add New Course</h2>
+    <form [formGroup]="courseForm" (ngSubmit)="submit()">
+      <h2 class="form-title">Add New Course</h2>
 
-<!-- CLASS -->
-<select formControlName="class" (change)="onClassChange()">
-  <option value="">Select Class</option>
-  <option value="9th">9th Standard</option>
-  <option value="10th">10th Standard</option>
-  <option value="11th">11th Standard</option>
-  <option value="12th">12th Standard</option>
-</select>
+      <div class="form-section">
+        <label>Select Class</label>
+        <select formControlName="class" (change)="onClassChange()">
+          <option value="">Choose Standard</option>
+          <option value="9th">9th Standard</option>
+          <option value="10th">10th Standard</option>
+          <option value="11th">11th Standard</option>
+          <option value="12th">12th Standard</option>
+        </select>
+        <div class="error-msg" *ngIf="courseForm.get('class')?.touched && courseForm.get('class')?.invalid">
+          Class is required
+        </div>
+      </div>
 
-<div *ngIf="courseForm.get('class')?.touched && courseForm.get('class')?.invalid">
-  Class is required
+      <div class="flex-row">
+        <div class="flex-col" *ngIf="showBoard">
+          <label>Board</label>
+          <select formControlName="board">
+            <option value="">Select Board</option>
+            <option value="GSEB">GSEB</option>
+            <option value="CBSE">CBSE</option>
+          </select>
+        </div>
+
+        <div class="flex-col" *ngIf="showStream">
+          <label>Stream</label>
+          <select formControlName="stream">
+            <option value="">Select Stream</option>
+            <option value="Commerce">Commerce</option>
+            <option value="PCM">PCM</option>
+            <option value="PCB">PCB</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Course Details</h3>
+        <input type="text" formControlName="title" placeholder="Course Title">
+        <input type="text" formControlName="description" placeholder="Course Description">
+        
+        <div class="flex-row">
+          <input type="number" formControlName="fees" placeholder="Course Fees">
+          <input type="text" formControlName="duration" placeholder="Duration (e.g. 6 Months)">
+          <input type="text" formControlName="mode" placeholder="Online / Offline">
+        </div>
+      </div>
+
+      <div class="form-section" formGroupName="teacher">
+        <h3>Teacher Details</h3>
+        <input type="text" formControlName="name" placeholder="Teacher Name">
+        <input type="text" formControlName="details" placeholder="Teacher Qualification">
+        <textarea formControlName="bio" placeholder="Brief Teacher Bio"></textarea>
+
+        <label class="file-label">Upload Teacher Profile</label>
+        <input type="file" accept="image/*" (change)="uploadTeacherImage($event)">
+
+        <div class="image-preview" *ngIf="teacherImage">
+          <img [src]="teacherImage" width="100" height="100">
+          <p class="success-text">✓ Image Uploaded Successfully</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Chapters List</h3>
+        <div formArrayName="chapters">
+          <div *ngFor="let chapter of chapters.controls; let i = index" class="chapter-row">
+            <input [formControlName]="i" placeholder="Chapter Name">
+            <button type="button" class="remove-btn" (click)="chapters.removeAt(i)">
+              ✕
+            </button>
+          </div>
+        </div>
+        <button type="button" class="add-btn" (click)="addChapter()">
+          + Add New Chapter
+        </button>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="courseForm.invalid">
+        Save Course
+      </button>
+
+    </form>
+  </div>
 </div>
-
-<!-- BOARD -->
-<div *ngIf="showBoard">
-<select formControlName="board">
-  <option value="">Select Board</option>
-  <option value="GSEB">GSEB</option>
-  <option value="CBSE">CBSE</option>
-</select>
-</div>
-
-<!-- STREAM -->
-<div *ngIf="showStream">
-<select formControlName="stream">
-  <option value="">Select Stream</option>
-  <option value="Commerce">Commerce</option>
-  <option value="PCM">PCM</option>
-  <option value="PCB">PCB</option>
-</select>
-</div>
-
-<br><br>
-
-<!-- COURSE DETAILS -->
-
-<input formControlName="title" placeholder="Course Title">
-<div *ngIf="courseForm.get('title')?.touched && courseForm.get('title')?.invalid">
-  Title is required
-</div>
-
-<input formControlName="description" placeholder="Course Description">
-<div *ngIf="courseForm.get('description')?.touched && courseForm.get('description')?.invalid">
-  Description is required
-</div>
-
-<input formControlName="fees" placeholder="Course Fees">
-<div *ngIf="courseForm.get('fees')?.touched && courseForm.get('fees')?.invalid">
-  Fees is required
-</div>
-
-<input formControlName="duration" placeholder="Course Duration">
-<div *ngIf="courseForm.get('duration')?.touched && courseForm.get('duration')?.invalid">
-  Duration is required
-</div>
-
-<input formControlName="mode" placeholder="Online / Offline">
-<div *ngIf="courseForm.get('mode')?.touched && courseForm.get('mode')?.invalid">
-  Mode is required
-</div>
-
-<br><br>
-
-<h3>Teacher Details</h3>
-
-<div formGroupName="teacher">
-
-<input formControlName="name" placeholder="Teacher Name">
-<div *ngIf="courseForm.get('teacher.name')?.touched && courseForm.get('teacher.name')?.invalid">
-  Teacher name required
-</div>
-
-<input formControlName="details" placeholder="Teacher Details">
-
-<textarea formControlName="bio" placeholder="Teacher Bio"></textarea>
-
-<br><br>
-
-<!-- IMAGE UPLOAD -->
-<label>Upload Teacher Profile</label>
-
-<input 
-type="file" 
-accept="image/*"
-(change)="uploadTeacherImage($event)"
->
-
-<!-- validation -->
-<div 
-*ngIf="courseForm.get('teacher.profile')?.invalid && courseForm.get('teacher.profile')?.touched"
-style="color:red"
->
-Profile Image is required
-</div>
-
-<!-- IMAGE PREVIEW -->
-<div *ngIf="teacherImage">
-<img [src]="teacherImage" width="120" height="120">
-<p style="color:green">Image Uploaded Successfully</p>
-</div>
-
-</div>
-
-<br>
-
-<!-- CHAPTERS -->
-
-<h3>Chapters</h3>
-
-<div formArrayName="chapters">
-
-<div *ngFor="let chapter of chapters.controls; let i = index" class="chapter-row">
-
-<input [formControlName]="i" placeholder="Chapter Name">
-
-<button type="button" class="remove-btn" (click)="chapters.removeAt(i)">
-Remove
-</button>
-
-</div>
-
-<button type="button" class="add-btn" (click)="addChapter()">
-+ Add Chapter
-</button>
-
-</div>
-
-<br>
-
-<button type="submit" [disabled]="courseForm.invalid">
-Save Course
-</button>
-
-</form>
