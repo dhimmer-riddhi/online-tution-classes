@@ -5,11 +5,13 @@ import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { Application } from '../../interface/application';
 import { AdminSidebar } from "../admin-sidebar/admin-sidebar";
+import { Teacher } from '../../interface/teacher';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-application',
   standalone: true,
-  imports: [CommonModule, AdminSidebar],
+  imports: [CommonModule, AdminSidebar,FormsModule],
   templateUrl: './manage-application.html',
   styleUrl: './manage-application.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,7 +20,7 @@ export class ManageApplication implements OnInit {
 
   registrations: StudentRegistration[] = [];
   processedStudents: StudentRegistration[] = [];
-
+  teachers: Teacher[] = [];
   constructor(
     private firebaseService: FirebaseService,
     private cdr: ChangeDetectorRef
@@ -26,6 +28,7 @@ export class ManageApplication implements OnInit {
 
   ngOnInit() {
     this.loadRegistrations();
+    this.loadTeachers();
   }
 
   loadRegistrations() {
@@ -46,7 +49,16 @@ export class ManageApplication implements OnInit {
         this.cdr.markForCheck();
       });
   }
+  loadTeachers() {
+    this.firebaseService
+      .getCollection<Teacher>(FirebaseCollections.Teachers)
+      .subscribe(data => {
 
+        this.teachers = data.filter(t => t.status === 'approved');
+
+        this.cdr.markForCheck();
+      });
+  }
   // 🔥 PASSWORD GENERATOR
   generatePassword(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -59,57 +71,64 @@ export class ManageApplication implements OnInit {
 
   async approve(student: StudentRegistration) {
 
-    const password = this.generatePassword();
+  const password = this.generatePassword();
 
-    // 1️⃣ Update Firebase Status
-    await this.firebaseService.updateDocument(
-      FirebaseCollections.StudentRegistrations,
-      student.id!,
-      {
-        status: 'approved',
-        password: password
-      }
-    );
+  // 🔹 Selected Teacher find
+  const teacher = this.teachers.find(
+    t => t.id === student.assignedTeacherId
+  );
 
-    // 2️⃣ Save Application Record
-    const applicationData: Application = {
-      studentId: student.id!,
-      fullName: student.fullName,
-      email: student.email,
-      standard: student.standard,
-      board: student.board,
-      stream: student.stream,
+  // 1️⃣ Update Firebase Status
+  await this.firebaseService.updateDocument(
+    FirebaseCollections.StudentRegistrations,
+    student.id!,
+    {
       status: 'approved',
-      appliedAt: new Date()
-    };
-
-    await this.firebaseService.addDocument(
-      FirebaseCollections.Applications,
-      applicationData
-    );
-
-    // 3️⃣ SEND EMAIL
-    try {
-
-      await fetch('http://localhost:3000/send-teacher-approval', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          to: student.email,
-          name: student.fullName,
-          password: password
-        })
-      });
-
-      alert("Student Approved & Email Sent");
-
-    } catch (error) {
-      console.error("Email Error", error);
+      password: password,
+      assignedTeacherId: student.assignedTeacherId,
+      assignedTeacherName: teacher?.teacherName
     }
+  );
 
+  // 2️⃣ Save Application Record
+  const applicationData: Application = {
+    studentId: student.id!,
+    fullName: student.fullName,
+    email: student.email,
+    standard: student.standard,
+    board: student.board,
+    stream: student.stream,
+    status: 'approved',
+    appliedAt: new Date()
+  };
+
+  await this.firebaseService.addDocument(
+    FirebaseCollections.Applications,
+    applicationData
+  );
+
+  // 3️⃣ SEND EMAIL
+  try {
+
+    await fetch('http://localhost:3000/send-teacher-approval', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: student.email,
+        name: student.fullName,
+        password: password
+      })
+    });
+
+    alert("Student Approved & Email Sent");
+
+  } catch (error) {
+    console.error("Email Error", error);
   }
+
+}
 
   async reject(student: StudentRegistration) {
 

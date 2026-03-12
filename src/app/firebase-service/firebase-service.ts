@@ -16,8 +16,9 @@ import {
   getDocs,
   query,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, firstValueFrom, from, map } from 'rxjs';
 import { FirebaseCollections } from '../firebase-service/firebase-enum';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 // import { Applications } from '../admin/manage-application/manage-application';
@@ -27,20 +28,41 @@ import { Application } from '../interface/application';
   providedIn: 'root',
 })
 export class FirebaseService {
+  constructor(private firestore: Firestore) { }
+
+  public getDocumentsByField<T extends DocumentData>(
+    collectionName: FirebaseCollections,
+    field: string,
+    value: any
+  ): Observable<T[]> {
+
+    const collectionRef = collection(this.firestore, collectionName);
+    const q = query(collectionRef, where(field, '==', value));
+
+    return from(getDocs(q)).pipe(
+      map(snapshot => {
+        return snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as unknown as T[];
+      })
+    );
+
+  }
   uploadVideo(file: any) {
     throw new Error('Method not implemented.');
   }
   // ===============================
-// ADD STUDENT REGISTRATION
-// ===============================
-public addStudent(formData: StudentRegistration) {
-  return this.addDocument(
-    FirebaseCollections.StudentRegistrations,
-    formData
-  );
-}
+  // ADD STUDENT REGISTRATION
+  // ===============================
+  public addStudent(formData: StudentRegistration) {
+    return this.addDocument(
+      FirebaseCollections.StudentRegistrations,
+      formData
+    );
+  }
 
-  constructor(private readonly firestore: Firestore) { }
+
 
   // ✅ FIXED METHOD
   getApplicationById(appId: string): Observable<Application | undefined> {
@@ -141,21 +163,21 @@ public addStudent(formData: StudentRegistration) {
   }
 
   // ===============================
-// FILE UPLOAD
-// ===============================
-async uploadFile(path: string, file: File) {
+  // FILE UPLOAD
+  // ===============================
+  async uploadFile(path: string, file: File) {
 
-  const storage = getStorage();
+    const storage = getStorage();
 
-  const storageRef = ref(storage, path);
+    const storageRef = ref(storage, path);
 
-  const uploadResult = await uploadBytes(storageRef, file);
+    const uploadResult = await uploadBytes(storageRef, file);
 
-  const downloadURL = await getDownloadURL(uploadResult.ref);
+    const downloadURL = await getDownloadURL(uploadResult.ref);
 
-  return { downloadURL };
+    return { downloadURL };
 
-}
+  }
 
 
 

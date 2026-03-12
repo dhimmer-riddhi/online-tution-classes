@@ -30,39 +30,36 @@ export class TeacherLogin {
 
   async loginTeacher() {
 
-    if (!this.loginForm.valid) {
-      alert("Please fill all fields");
+    if (this.loginForm.invalid) {
+      alert("Fill all fields");
       return;
     }
 
-    try {
+    const teachers = await firstValueFrom(
+      this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
+    );
 
-      const teachers = await firstValueFrom(
-        this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
-      );
+    console.log("Teachers:", teachers);
 
-      const teacher = teachers.find(
-        t =>
-          t.teacherId === this.loginForm.value.teacherId &&
-          t.password === this.loginForm.value.password
-      );
+    const email = this.loginForm.value.email.trim().toLowerCase();
+    const password = this.loginForm.value.password.trim();
 
-      if (!teacher) {
-        alert("Invalid Credentials");
-        return;
-      }
+    const teacher = teachers.find(t =>
+      t.email?.toLowerCase() === email &&
+      t.password === password &&
+      t.status === "approved"
+    );
 
-      // ✅ Save Logged In Teacher Firestore Document ID
-      localStorage.setItem('teacherId', teacher.id);
-
-      alert("Login Successful!");
-
-      // ✅ Redirect to Dashboard
-      this.router.navigate(['/teacher/teacher-header']);
-
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong!");
+    if (!teacher) {
+      alert("Invalid login or teacher not approved");
+      return;
     }
+
+    localStorage.setItem("teacherId", teacher.id);
+
+    alert("Login Success");
+
+    this.router.navigate(['/teacher/teacher-dashboard']);
+
   }
 }

@@ -19,6 +19,8 @@ import { TeacherClassContent } from './teacher/teacher-class-content/teacher-cla
 import { StudFooter } from './student/stud-footer/stud-footer';
 import { StudStandard } from './student/stud-standard/stud-standard';
 import { Slider } from './student/slider/slider';
+import { Student } from './teacher/student/student';
+import { Quize } from './teacher/quize/quize';
 
 
 export const routes: Routes = [
@@ -27,53 +29,53 @@ export const routes: Routes = [
   { path: '', redirectTo: 'student/stud-home', pathMatch: 'full' },
 
   // ================= STUDENT =================
-  
+
   { path: 'student/student-header', component: StudentHeader },
-  { path: 'student/stud-registration', component: StudRegistration},
-  { path: 'student/stud-sign-in', component: StudSignIn},
+  { path: 'student/stud-registration', component: StudRegistration },
+  { path: 'student/stud-sign-in', component: StudSignIn },
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
   { path: 'student/slider', component: Slider },
 
   // ================= STUDENT CLASSES LOAD COMPONENT =================
 
-  
+
   {
-    path:'student/classes/ninth',
-     loadComponent: () => import('./student/classes/ninth/ninth').then(m => m.Ninth)
+    path: 'student/classes/ninth',
+    loadComponent: () => import('./student/classes/ninth/ninth').then(m => m.Ninth)
   },
   {
-    path:'student/classes/tenth-gseb', 
+    path: 'student/classes/tenth-gseb',
     loadComponent: () => import('./student/classes/tenth-gseb/tenth-gseb').then(m => m.TenthGseb)
   },
   {
-    path:'student/classes/tenth-cbse', 
+    path: 'student/classes/tenth-cbse',
     loadComponent: () => import('./student/classes/tenth-cbse/tenth-cbse').then(m => m.TenthCbse)
   },
   {
-    path:'student/classes/eleventh-commerce', 
+    path: 'student/classes/eleventh-commerce',
     loadComponent: () => import('./student/classes/eleventh-commerce/eleventh-commerce').then(m => m.EleventhCommerce)
   },
   {
-    path:'student/classes/eleventh-pcm', 
+    path: 'student/classes/eleventh-pcm',
     loadComponent: () => import('./student/classes/eleventh-pcm/eleventh-pcm').then(m => m.EleventhPcm)
   },
   {
-    path:'student/classes/eleventh-pcb', 
+    path: 'student/classes/eleventh-pcb',
     loadComponent: () => import('./student/classes/eleventh-pcb/eleventh-pcb').then(m => m.EleventhPcb)
   },
   {
-    path:'student/classes/twelv-commerce', 
+    path: 'student/classes/twelv-commerce',
     loadComponent: () => import('./student/classes/twelv-commerce/twelv-commerce').then(m => m.TwelvCommerce)
   },
   {
-    path:'student/classes/twelv-pcm', 
+    path: 'student/classes/twelv-pcm',
     loadComponent: () => import('./student/classes/twelv-pcm/twelv-pcm').then(m => m.TwelvPcm)
   },
-  
+
   { path: 'student/stud-standard', component: StudStandard },
   { path: 'student/stud-footer', component: StudFooter },
-    
+
 
   // ================= ADMIN ROUTES =================
   { path: 'admin/admin-login', component: AdminLogin },
@@ -113,7 +115,9 @@ export const routes: Routes = [
   { path: 'teacher/teacher-login', component: TeacherLogin },
   { path: 'teacher/teacher-classes', component: TeacherClasses },
   { path: 'teacher/teacher-class-content', component: TeacherClassContent },
-   
+  { path: 'teacher/student', component: Student },
+  { path: 'teacher/quize', component: Quize },
+
 
 
   // Fallback
