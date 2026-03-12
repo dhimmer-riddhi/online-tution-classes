@@ -1,17 +1,23 @@
 export interface Teacher {
-  id?: string;  // Firestore document id
 
-  teacherId: string;
-  teacherName: string;
-  email: string;
-  mobile: string;
-  gender: string;
-  subjects: string;
-  experience: number;
+id?: string;
 
-  status: 'pending' | 'approved' | 'rejected';
-  role: 'teacher';
+teacherId: string;
+teacherName: string;
+email: string;
+mobile: string;
+gender: string;
 
-  password?: string;   // Only after admin approval
-  createdAt: Date;
+subjects: string[];     // multiple subjects
+standards: string[];    // multiple standards
+
+experience: number;
+
+status: 'pending' | 'approved' | 'rejected';
+role: 'teacher';
+
+password?: string;
+
+createdAt: Date;
+
 }

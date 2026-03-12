@@ -1,112 +1,65 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
-import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { Teacher } from '../../interface/teacher'; // your separate interface
+import { FirebaseCollections } from '../../firebase-service/firebase-enum';
+import { email } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-teacher-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './teacher-login.html',
-  styleUrls: ['./teacher-login.css'],
+  styleUrl: './teacher-login.css',
 })
-export class TeacherLogin implements OnInit {
-
-  // ✅ Directly define form here, no LoginForm interface
-  loginForm = new FormGroup({
-    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
-    password: new FormControl<string | null>(null, Validators.required),
-  });
-
-  teacherList: Teacher[] = [];
-
-  showToast = false;
-  toastMessage = '';
-
-  loggedIn = false;
-  teacherSubjects: string[] = [];
+export class TeacherLogin {
+  loginForm!: FormGroup;
 
   constructor(
-    private router: Router,
+    private fb: FormBuilder,
     private firebaseService: FirebaseService,
-    private cd: ChangeDetectorRef
-  ) {}
+    private router: Router
+  ) {
 
-  ngOnInit() {
-    this.loadTeachers();
-
-    // ✅ Check if teacher already logged in
-    const teacherId = sessionStorage.getItem('loggedInTeacherId');
-    const subjectsFromStorage = sessionStorage.getItem('loggedInTeacherSubjects');
-    if (teacherId && subjectsFromStorage) {
-      this.loggedIn = true;
-      this.teacherSubjects = subjectsFromStorage.split(',').map((s: string) => s.trim());
-    } else {
-      this.loggedIn = false;
-      // If someone manually types URL other than /teacher/login
-      if (!this.router.url.includes('/teacher/login')) {
-        this.router.navigate(['/teacher/login']);
-      }
-    }
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  async loadTeachers() {
-    const data = await firstValueFrom(
-      this.firebaseService.getCollection<Teacher>(FirebaseCollections.Teachers)
-    );
-    this.teacherList = data;
-  }
-
-  // ✅ Must match template
   async loginTeacher() {
+
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
+      alert("Fill all fields");
       return;
     }
 
-    const email = this.loginForm.value.email!;
-    const password = this.loginForm.value.password!;
-
-    const teacher = this.teacherList.find(
-      t => t.email === email && t.password === password && t.status === 'approved'
+    const teachers = await firstValueFrom(
+      this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
     );
 
-    if (teacher) {
-      // ✅ Save login info in sessionStorage
-      sessionStorage.setItem('loggedInTeacherId', teacher.teacherId);
-      sessionStorage.setItem('loggedInTeacherName', teacher.teacherName);
-      sessionStorage.setItem('loggedInTeacherSubjects', teacher.subjects);
+    console.log("Teachers:", teachers);
 
-      this.teacherSubjects = teacher.subjects.split(',').map((s: string) => s.trim());
-      this.loggedIn = true;
+    const email = this.loginForm.value.email.trim().toLowerCase();
+    const password = this.loginForm.value.password.trim();
 
-      this.router.navigate(['/teacher/dashboard']);
-    } else {
-      this.toastMessage = 'Email or Password Wrong / Not Approved';
-      this.showToast = true;
-      this.cd.detectChanges();
+    const teacher = teachers.find(t =>
+      t.email?.toLowerCase() === email &&
+      t.password === password &&
+      t.status === "approved"
+    );
 
-      setTimeout(() => {
-        this.showToast = false;
-        this.cd.detectChanges();
-      }, 3000);
+    if (!teacher) {
+      alert("Invalid login or teacher not approved");
+      return;
     }
-  }
 
-  logout() {
-    sessionStorage.removeItem('loggedInTeacherId');
-    sessionStorage.removeItem('loggedInTeacherName');
-    sessionStorage.removeItem('loggedInTeacherSubjects');
-    this.loggedIn = false;
-    this.loginForm.reset();
-    this.router.navigate(['/teacher/login']);
-  }
+    localStorage.setItem("teacherId", teacher.id);
 
-  closeToast() {
-    this.showToast = false;
+    alert("Login Success");
+
+    this.router.navigate(['/teacher/teacher-dashboard']);
+
   }
 }

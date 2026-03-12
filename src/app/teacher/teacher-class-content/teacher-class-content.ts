@@ -1,11 +1,10 @@
-// src/app/teacher/teacher-class-content/teacher-class-content.ts
-import { Component, OnInit, NgZone, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { ClassContent } from '../../interface/class-content';
-declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-teacher-class-content',
@@ -14,284 +13,244 @@ declare var bootstrap: any;
   templateUrl: './teacher-class-content.html',
   styleUrls: ['./teacher-class-content.css']
 })
-export class TeacherClassContent implements OnInit, OnDestroy {
+export class TeacherClassContent implements OnInit {
+openSubject(subject:any){
+  this.selectedSubject = subject
+}
 
-  selectedStandard: string | null = null;
-  selectedCategory: string | null = null;
-  selectedSubject: any = null;
+backToSubjects(){
+  this.selectedSubject = null
+}
 
-  standards = ['9','10','11','12'];
-  categories: string[] = [];
-  subjects: any[] = [];
-  contents: ClassContent['contents'] = [];
+ 
 
-  selectedChapterIndex: number | null = null;
-  timer: any;
+selectedStandard: string | null = null
+selectedCategory: string | null = null
+selectedSubject: any = null
 
-  allowedExtensions = ['mp4','avi','mkv','mov','wmv','flv','webm','mpeg','mpg','3gp','asf'];
-  videoAccept = '.mp4,.avi,.mkv,.mov,.wmv,.flv,.webm,.mpeg,.mpg,.3gp,.asf';
+standards = ['9th','10th','11th','12th']
+categories: string[] = []
+subjects: any[] = []
 
-  @ViewChild('saveToast') saveToast!: ElementRef;
+video:any = {
+title:'',
+description:'',
+date:'',
+time:'',
+url:'',
+fileName:''
+}
 
-  toastMessage = '';
-  
+videoAccept = '.mp4,.avi,.mkv,.mov,.wmv,.flv,.webm'
 
-  constructor(
-    private firebaseService: FirebaseService,
-    private ngZone: NgZone
-  ) {}
+constructor(
+private firebaseService:FirebaseService,
+private ngZone:NgZone
+){}
 
-  ngOnInit(): void {
-    this.startCountdownTimer();
-  }
+ngOnInit(){}
 
-  ngOnDestroy(): void {
-    if (this.timer) clearInterval(this.timer);
-  }
+selectStandard(std:string){
 
-  /* ================= STANDARD & CATEGORY ================= */
-  selectStandard(std: string): void {
-    this.selectedStandard = std;
-    this.selectedCategory = null;
-    this.selectedSubject = null;
-    this.contents = [];
-    this.selectedChapterIndex = null;
+this.selectedStandard = std
+this.selectedCategory = null
+this.selectedSubject = null
+this.categories = []
 
-    if (std === '10') this.categories = ['GSEB','CBSE'];
-    else if (std === '11' || std === '12') this.categories = ['Commerce','PCM','PCB'];
-    else this.categories = [];
+if(std === '10th')
+this.categories = ['GSEB','CBSE']
 
-    this.loadSubjects();
-  }
+else if(std === '11th' || std === '12th')
+this.categories = ['Commerce','PCM','PCB']
 
-  selectCategory(cat: string): void {
-    this.selectedCategory = cat;
-    this.selectedSubject = null;
-    this.contents = [];
-    this.selectedChapterIndex = null;
-    this.loadSubjects();
-  }
+this.loadSubjects()
 
-  loadSubjects(): void {
-    this.firebaseService.getCollection(FirebaseCollections.Standard)
-      .subscribe((data: any[]) => {
-        let filtered = data.filter(d => d.standard === this.selectedStandard);
-        if (this.selectedCategory) filtered = filtered.filter(d => d.category === this.selectedCategory);
-        this.subjects = filtered;
-      });
-  }
+}
 
-  openSubject(subject: any): void {
-    this.selectedSubject = subject;
+selectCategory(cat:string){
 
-    this.firebaseService.getDocument<ClassContent>(FirebaseCollections.ClassContent, subject.id)
-      .subscribe(doc => {
-        this.ngZone.run(() => {
-          this.contents = doc?.contents || [];
-          this.selectedChapterIndex = this.contents.length > 0 ? 0 : null;
+this.selectedCategory = cat
+this.selectedSubject = null
+this.loadSubjects()
 
-          // Initialize editing flags for chapters and contents
-          this.contents.forEach(ch => {
-            ch.editing = false;
-            if (!ch.concepts) ch.concepts = [];
-            ch.concepts.forEach(con => {
-              if (!con.contents) con.contents = [];
-              con.contents.forEach(cont => cont.editing = false);
-            });
-          });
-        });
-      });
-  }
+}
 
-  backToSubjects(): void {
-    this.selectedSubject = null;
-    this.contents = [];
-    this.selectedChapterIndex = null;
-  }
+loadSubjects(){
 
-  showToast(message: string) {
-    this.toastMessage = message;
-    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
-      delay: 3000
-    });
-    toast.show();
-  }
-  /* ================= CHAPTER ================= */
-  addChapter(): void {
-    const chapter = {
-      chapterNo: this.contents.length + 1,
-      chapterName: '',
-      content: '',
-      editing: true,
-      expanded: true,
-      concepts: []
-    };
-    this.contents.push(chapter);
-    this.selectedChapterIndex = this.contents.length - 1;
-  }
+this.firebaseService
+.getCollection(FirebaseCollections.Courses)
+.subscribe((data:any[])=>{
 
-  toggleChapterEdit(chapter: any): void {
-    chapter.editing = !chapter.editing;
-  }
+let filtered = data
 
-  deleteChapter(index: number): void {
-    if (confirm('Delete this chapter?')) {
-      this.contents.splice(index, 1);
-      this.contents.forEach((ch, i) => ch.chapterNo = i + 1);
-      if (this.selectedChapterIndex === index) this.selectedChapterIndex = null;
-      else if (this.selectedChapterIndex !== null && this.selectedChapterIndex > index) this.selectedChapterIndex--;
-    }
-  }
+if(this.selectedStandard){
+filtered = filtered.filter(
+d => d.class == this.selectedStandard
+)
+}
 
-  openChapter(index: number): void {
-    this.selectedChapterIndex = index;
-    this.contents[index].editing = true;
-  }
+if(this.selectedCategory){
 
-  /* ================= CONCEPT ================= */
-  addConcept(chapter: any): void {
-    chapter.concepts.push({
-      id: undefined,
-      title: '',
-      definition: '',
-      contents: []
-    });
-  }
+filtered = filtered.filter(
+d => d.board == this.selectedCategory ||
+d.stream == this.selectedCategory
+)
 
-  editConcept(concept: any): void { }
-  deleteConcept(chapter: any, index: number): void {
-    if (confirm('Delete this concept?')) chapter.concepts.splice(index, 1);
-  }
+}
 
-  /* ================= CONTENT ================= */
-  addContent(concept: any): void {
-    concept.contents.push({
-      contentTitle: '',
-      contentDefinition: '',
-      videos: [],
-      editing: true
-    });
-  }
+this.subjects = filtered
 
-  editContent(content: any): void {
-    content.editing = true;
-  }
+})
 
-  saveContentBlock(content: any): void {
-    content.editing = false;
-  }
 
-  deleteContent(concept: any, index: number): void {
-    if (confirm('Delete this content?')) concept.contents.splice(index, 1);
-  }
+}
 
-  /* ================= VIDEO ================= */
-  onVideoUpload(event: any, content: any): void {
-    const file = event.target.files?.[0];
-    if (!file) return;
+onVideoUpload(event:any){
 
-    const extension = file.name.split('.').pop()?.toLowerCase();
-    if (!extension || !this.allowedExtensions.includes(extension)) {
-      
-      this.showToast('Invalid video format');
-      return;
-    }
+const file = event.target.files[0]
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'Tution_videos');
+if(!file) return
 
-    fetch('https://api.cloudinary.com/v1_1/dovmj5mds/upload', { method: 'POST', body: formData })
-      .then(res => res.json())
-      .then(data => {
-        this.ngZone.run(() => {
-          content.videos = content.videos || [];
-          content.videos.push({
-            url: data.secure_url,
-            duration: 0,
-            fileName: file.name
-          });
-          this.showToast('Video Uploaded Successfully');
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        
-        this.showToast('File Uploaded Failed');
-      });
-  }
+const formData = new FormData()
 
-  editVideo(video: any): void {
-    console.log('Editing video', video.fileName);
-  }
+formData.append('file',file)
+formData.append('upload_preset','Tution_videos')
 
-  deleteVideo(content: any, index: number): void {
-    if (confirm('Delete this video?')) content.videos.splice(index, 1);
-  }
+fetch('https://api.cloudinary.com/v1_1/dovmj5mds/upload',{
+method:'POST',
+body:formData
+})
+.then(res=>res.json())
+.then(data=>{
 
-  /* ================= RICH TEXT TOOLBAR ================= */
-  applyFormat(chapter: any, tag: string): void {
-    const textarea: any = document.getElementById(`chapter-${chapter.chapterNo}`);
-    if (!textarea) return;
+this.ngZone.run(()=>{
 
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const value = textarea.value;
-    let formatted = value;
+this.video.url = data.secure_url
+this.video.fileName = file.name
 
-    switch(tag) {
-      case 'b': formatted = value.slice(0,start)+'<b>'+value.slice(start,end)+'</b>'+value.slice(end); break;
-      case 'i': formatted = value.slice(0,start)+'<i>'+value.slice(start,end)+'</i>'+value.slice(end); break;
-      case 'link': const url=prompt('Enter URL'); if(url) formatted=value.slice(0,start)+`<a href="${url}">`+value.slice(start,end)+`</a>`+value.slice(end); break;
-      case 'img': const imgUrl=prompt('Enter image URL'); if(imgUrl) formatted=value.slice(0,start)+`<img src="${imgUrl}" alt="Image">`+value.slice(end); break;
-      case 'table': formatted=value.slice(0,start)+`<table><tr><td>Cell</td></tr></table>`+value.slice(end); break;
-      case 'quote': formatted=value.slice(0,start)+`<blockquote>`+value.slice(start,end)+`</blockquote>`+value.slice(end); break;
-      case 'video': const vUrl=prompt('Enter video URL'); if(vUrl) formatted=value.slice(0,start)+`<iframe src="${vUrl}" frameborder="0"></iframe>`+value.slice(end); break;
-      case 'ul': formatted=value.slice(0,start)+`<ul><li>`+value.slice(start,end)+`</li></ul>`+value.slice(end); break;
-      case 'ol': formatted=value.slice(0,start)+`<ol><li>`+value.slice(start,end)+`</li></ol>`+value.slice(end); break;
-      case 'undo': alert('Undo not implemented'); return;
-    }
+alert("Video Uploaded")
 
-    chapter.content = formatted;
-    textarea.value = formatted;
-  }
+})
 
-  /* ================= SAVE ================= */
-  async saveContent(): Promise<void> {
-    if (!this.selectedStandard || !this.selectedSubject) {
-      
-      this.showToast('Select Standard and Subject first');
-      return;
-    }
+})
 
-    // Clean invalid videos
-    this.contents.forEach(ch => {
-      ch.concepts.forEach(con => {
-        con.contents.forEach(content => {
-          content.videos = content.videos?.filter(v => v.url && v.fileName) || [];
-        });
-      });
-    });
+}
 
-    const data: ClassContent = {
-      standard: this.selectedStandard,
-      subjectId: this.selectedSubject.id,
-      subjectName: this.selectedSubject.subject,
-      contents: this.contents
-    };
+// image uload
 
-    if(this.selectedCategory) (data as any).category = this.selectedCategory;
+onImageUpload(event:any){
 
-    try {
-      await this.firebaseService.updateDocument(FirebaseCollections.ClassContent, this.selectedSubject.id, data);
-      
-      this.showToast('Content Saved Successfully');
-    } catch {
-      await this.firebaseService.addDocument(FirebaseCollections.ClassContent, { id: this.selectedSubject.id, ...data });
-      this.showToast('Content Saved Successfully');
-    }
-  }
+const file = event.target.files[0]
 
-  /* ================= COUNTDOWN PLACEHOLDER ================= */
-  startCountdownTimer(): void { }
-}  
+if(!file) return
+
+const reader = new FileReader()
+
+reader.readAsDataURL(file)
+
+reader.onload = () => {
+
+const base64Image = reader.result
+
+const formData = new FormData()
+
+formData.append('file', base64Image as string)
+formData.append('upload_preset','Tution_videos')
+
+fetch('https://api.cloudinary.com/v1_1/dovmj5mds/image/upload',{
+method:'POST',
+body:formData
+})
+.then(res=>res.json())
+.then(data=>{
+
+this.ngZone.run(()=>{
+
+this.video.image = data.secure_url
+
+alert("Image Uploaded")
+
+})
+
+})
+
+}
+
+}
+async saveVideo(){
+
+if(!this.selectedStandard || !this.selectedSubject){
+alert("Select Subject")
+return
+}
+
+if(!this.video.date){
+alert("Select Date")
+return
+}
+
+if(!this.video.url){
+alert("Upload Video First")
+return
+}
+
+// date convert
+const inputDate = new Date(this.video.date)
+
+const day = inputDate.toLocaleDateString('en-GB',{day:'2-digit'})
+
+const month = inputDate.toLocaleDateString('en-US',{
+month:'short',
+year:'numeric'
+})
+
+const duration = this.video.time + ' Minutes'
+
+const data = {
+
+standard:this.selectedStandard,
+subjectId:this.selectedSubject.id,
+subjectName:this.selectedSubject.title,
+
+board:this.selectedSubject.board || null,
+stream:this.selectedSubject.stream || null,
+
+video:{
+title:this.video.title,
+description:this.video.description,
+url:this.video.url,
+fileName:this.video.fileName,
+
+image:this.video.image,  // 🔹 important
+
+time: duration,
+
+date:{
+day: day,
+month: month
+}
+
+}
+
+}
+
+await this.firebaseService.addDocument(
+FirebaseCollections.ClassContent,
+data
+)
+
+alert("Video Saved")
+
+this.video = {
+title:'',
+description:'',
+date:'',
+time:'',
+url:'',
+fileName:''
+}
+
+}
+
+
+}

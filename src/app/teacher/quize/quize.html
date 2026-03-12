@@ -1,0 +1,58 @@
+<div class="teacher-layout">
+
+
+
+<div class="content">
+
+<div class="quiz-container">
+
+<h2>Create Quiz</h2>
+
+<label>Standard</label>
+
+<select [(ngModel)]="standard">
+
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+
+
+</select>
+
+<label>Subject</label>
+
+<select [(ngModel)]="subject">
+
+<option *ngFor="let sub of subjects">
+
+{{sub}}
+
+</option>
+
+</select>
+
+<div *ngFor="let q of questions; let i=index">
+
+<h3>Question {{i+1}}</h3>
+
+<input [(ngModel)]="q.question" placeholder="Question">
+
+<input [(ngModel)]="q.options[0]" placeholder="Option 1">
+<input [(ngModel)]="q.options[1]" placeholder="Option 2">
+<input [(ngModel)]="q.options[2]" placeholder="Option 3">
+<input [(ngModel)]="q.options[3]" placeholder="Option 4">
+
+<input [(ngModel)]="q.answer" placeholder="Correct Answer">
+
+</div>
+
+<button (click)="createQuiz()">
+Send Quiz
+</button>
+
+</div>
+
+</div>
+
+</div>
