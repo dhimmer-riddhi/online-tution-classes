@@ -1,210 +1,167 @@
-/* ================= HEADER SECTION ================= */
-
-.contact-header {
-  height: 400px;
-  background: linear-gradient(135deg, #1abc9c, #274046);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  color: white;
+/* ================= PAGE BACKGROUND ================= */
+body {
+  background: linear-gradient(135deg, #f4f7fb, #eef3f8);
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.contact-content h1 {
-  font-size: 65px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-}
-
-.sub-title {
-  font-size: 20px;
-  opacity: 0.95;
-}
-
-/* ================= MANAGE CLASSES TITLE ================= */
-
-.manage-title {
-  text-align: center;
-  font-size: 48px;
-  font-weight: 800;
-  margin-bottom: 40px;
-  letter-spacing: 1px;
-  color: #2c3e50;
-}
-
-/* ================= STANDARD BUTTONS ================= */
-
-.standard-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.standard-btn {
-  padding: 18px 45px;
-  font-size: 20px;
-  font-weight: 600;
+/* ================= FORM CARD CONTAINER ================= */
+form {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #fff;
   border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #1abc9c, #16a085);
-  color: white;
-  box-shadow: 0 10px 25px rgba(26, 188, 156, 0.3);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-.standard-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(26, 188, 156, 0.45);
-}
-
-/* ================= BACK BUTTON ================= */
-
-.back-btn {
-  margin-top: 15px;
-  padding: 10px 35px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: #34495e;
-  color: white;
-  transition: 0.3s ease;
-}
-
-.back-btn:hover {
-  background: #2c3e50;
-}
-
-/* ================= CARD ================= */
-
-.contact-form-section {
-  display: flex;
-  justify-content: center;
-  margin-top: -120px;
-  padding-bottom: 80px;
-}
-
-.portal-card {
-  width: 65%;
+/* ================= FORM HEADINGS ================= */
+form h2 {
   text-align: center;
-  padding: 60px 50px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a2540;
+  margin-bottom: 25px;
 }
-
-.contact-card {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  animation: fadeInUp 0.6s ease;
-}
-
-/* ================= FORM INPUT ================= */
-
-.form-control,
-.form-select {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 100%;
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-/* ================= BIG BUTTON ================= */
-
-.big-btn {
-  padding: 16px 50px;
-  font-size: 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-weight: 600;
-  background: linear-gradient(135deg, #1abc9c, #16a085);
-  color: white;
-  box-shadow: 0 12px 30px rgba(26,188,156,0.3);
-}
-
-.big-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(26,188,156,0.4);
-}
-
-/* ================= TABLE ================= */
-
-.custom-table {
-  width: 100%;
-  border-collapse: collapse;
+form h3 {
+  font-size: 20px;
+  color: #0a2540;
   margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
 }
 
-.custom-table th,
-.custom-table td {
+/* ================= INPUT & SELECT FIELDS ================= */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  background: #fdfdfd;
+  box-sizing: border-box;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #1abc9c;
 }
 
-.custom-table th {
+/* ================= TEXTAREA ================= */
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ================= VALIDATION MESSAGES ================= */
+div[ngIf] {
+  font-size: 13px;
+  color: #e74c3c;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* ================= FILE UPLOAD ================= */
+input[type="file"] {
+  padding: 6px;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+img {
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* ================= CHAPTERS ARRAY ================= */
+.chapter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.chapter-row input {
+  flex: 1;
+}
+.add-btn,
+.remove-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.add-btn {
   background: #1abc9c;
   color: white;
 }
-
-.edit-btn {
-  background: #3498db;
+.add-btn:hover {
+  background: #16a085;
+  transform: scale(1.05);
+}
+.remove-btn {
+  background: #e74c3c;
   color: white;
-  border: none;
-  padding: 6px 15px;
-  margin-right: 8px;
-  border-radius: 6px;
-  cursor: pointer;
+}
+.remove-btn:hover {
+  background: #c0392b;
+  transform: scale(1.05);
 }
 
-.delete-btn {
-  background: red;
-  color: white;
+/* ================= SUBMIT BUTTON ================= */
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
-  padding: 6px 15px;
-  border-radius: 6px;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
   cursor: pointer;
+  margin-top: 25px;
+  transition: 0.3s;
+}
+button[type="submit"]:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #16a085, #138f77);
+}
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* ================= ANIMATION ================= */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ================= IMAGE PREVIEW MESSAGE ================= */
+p {
+  margin: 5px 0 10px 0;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 768px) {
-
-  .manage-title {
-    font-size: 34px;
+  form {
+    padding: 20px;
+    margin: 20px;
   }
-
-  .standard-btn {
+  .chapter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .add-btn, .remove-btn {
     width: 100%;
   }
-
-  .portal-card {
-    width: 90%;
-  }
-
-  .contact-content h1 {
-    font-size: 40px;
-  }
-
 }

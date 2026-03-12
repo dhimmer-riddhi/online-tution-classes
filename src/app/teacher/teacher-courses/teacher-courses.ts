@@ -1,155 +1,171 @@
-import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
-import { TeacherFooter } from '../teacher-footer/teacher-footer';
-import { TeacherHeader } from '../teacher-header/teacher-header';
+import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
+declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-teacher-courses',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,TeacherHeader,TeacherFooter],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './teacher-courses.html',
-  styleUrls: ['./teacher-courses.css']
+  styleUrl: './teacher-courses.css'
 })
-export class TeacherCourses implements OnInit {
+export class TeacherCourses {
+@ViewChild('saveToast') saveToast!: ElementRef;
 
-  selectedStandard: string | null = null;
-  categories: string[] = [];
-  subjects: any[] = [];
+  toastMessage = '';
+  
+courseForm: FormGroup;
 
-  editMode = false;
-  editId: string | null = null;
+showBoard = false;
+showStream = false;
 
-  courseForm: FormGroup;
+teacherImage: any = null;
+uploading = false;   // image uploading loader
 
-  constructor(
-    private fb: FormBuilder,
-    private firebaseService: FirebaseService,
-    private ngZone: NgZone  // ✅ Inject NgZone
-  ) {
-    this.courseForm = this.fb.group({
-      standard: [''],
-      category: [''],
-      subject: ['', Validators.required] // required only for submission
-    });
-  }
+constructor(
+private fb: FormBuilder,
+private firebaseService: FirebaseService
+) {
 
-  ngOnInit() {}
+this.courseForm = this.fb.group({
 
-  // ================= SELECT STANDARD =================
-  selectStandard(std: string) {
-    this.selectedStandard = std;
+class: ['', Validators.required],
+board: [''],
+stream: [''],
 
-    // Reset only category & subject input
+title: ['', Validators.required],
+description: ['', Validators.required],
+fees: ['', Validators.required],
+duration: ['', Validators.required],
+mode: ['', Validators.required],
+
+teacher: this.fb.group({
+
+name: ['', Validators.required],
+profile: ['', Validators.required],
+details: ['', Validators.required],
+bio: ['', Validators.required]
+
+}),
+
+chapters: this.fb.array([
+this.fb.control('', Validators.required)
+])
+
+});
+}
+
+get chapters() {
+return this.courseForm.get('chapters') as FormArray;
+}
+
+addChapter() {
+this.chapters.push(this.fb.control('', Validators.required));
+}
+
+onClassChange() {
+
+const selectedClass = this.courseForm.get('class')?.value;
+
+this.showBoard = false;
+this.showStream = false;
+
+this.courseForm.get('board')?.clearValidators();
+this.courseForm.get('stream')?.clearValidators();
+
+if (selectedClass == '10') {
+this.showBoard = true;
+this.courseForm.get('board')?.setValidators(Validators.required);
+}
+
+if (selectedClass == '11' || selectedClass == '12') {
+this.showStream = true;
+this.courseForm.get('stream')?.setValidators(Validators.required);
+}
+
+this.courseForm.get('board')?.updateValueAndValidity();
+this.courseForm.get('stream')?.updateValueAndValidity();
+
+}
+
+// upload image section
+uploadTeacherImage(event: any) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+
+    const base64 = reader.result;
+
+    this.teacherImage = base64;
+
     this.courseForm.patchValue({
-      standard: std,
-      category: '',
-      subject: ''
-    });
-
-    this.editMode = false;
-    this.editId = null;
-
-    // Set categories
-    if (std === '9') this.categories = [];
-    else if (std === '10') this.categories = ['GSEB', 'CBSE'];
-    else if (std === '11') this.categories = ['Commerce', 'Science (PCM)', 'Science (PCB)'];
-    else if (std === '12') this.categories = ['Commerce', 'Science (PCM)', 'Science (PCB)'];
-
-    // Load all subjects for selected standard immediately
-    this.loadSubjects();
-  }
-
-  // ================= LOAD SUBJECTS =================
-  loadSubjects() {
-    if (!this.selectedStandard) return;
-
-    this.firebaseService
-      .getCollection(FirebaseCollections.Standard)
-      .subscribe((data: any[]) => {
-        this.subjects = data
-          .filter(d => d.standard === this.selectedStandard)
-          .map(d => ({ ...d, id: d.id }));
-      });
-  }
-
-  // ================= SAVE / UPDATE =================
-  submitForm() {
-    if (this.courseForm.invalid) return;
-
-    const data = this.courseForm.value;
-
-    if (this.editMode && this.editId) {
-      // UPDATE EXISTING
-      this.firebaseService.updateDocument(FirebaseCollections.Standard, this.editId, data);
-      this.firebaseService.updateDocument(FirebaseCollections.ClassContent, this.editId, data);
-
-      const index = this.subjects.findIndex(s => s.id === this.editId);
-      if (index !== -1) {
-        this.subjects[index] = { ...data, id: this.editId };
+      teacher: {
+        ...this.courseForm.value.teacher,
+        profile: base64
       }
-
-      this.editMode = false;
-      this.editId = null;
-
-    } else {
-      // ADD NEW SUBJECT
-      this.firebaseService.addDocument(FirebaseCollections.Standard, data)
-        .then((docRef: any) => {
-
-          // Add to ClassContent
-          this.firebaseService.updateDocument(FirebaseCollections.ClassContent, docRef.id, { ...data, contents: [] })
-            .catch(() => {
-              this.firebaseService.addDocument(FirebaseCollections.ClassContent, { id: docRef.id, ...data, contents: [] });
-            });
-
-          // ✅ Push new subject inside Angular zone for immediate UI update
-          this.ngZone.run(() => {
-            const newSubject = { ...data, id: docRef.id };
-            this.subjects = [...this.subjects, newSubject]; // triggers table update immediately
-          });
-
-        })
-        .catch(err => console.error('Error adding subject:', err));
-    }
-
-    // Reset form inputs
-    this.courseForm.patchValue({
-      subject: '',
-      category: ''
-    });
-  }
-
-  // ================= EDIT =================
-  editSubject(sub: any) {
-    this.courseForm.patchValue({
-      standard: sub.standard,
-      category: sub.category,
-      subject: sub.subject
     });
 
-    this.editMode = true;
-    this.editId = sub.id;
-  }
+  };
 
-  // ================= DELETE =================
-  deleteSubject(sub: any) {
-    this.firebaseService.deleteDocument(FirebaseCollections.Standard, sub.id);
-    this.firebaseService.deleteDocument(FirebaseCollections.ClassContent, sub.id);
+  reader.readAsDataURL(file);
+}
 
-    // Remove from subjects array immediately
-    this.subjects = this.subjects.filter(s => s.id !== sub.id);
+showToast(message: string) {
+    this.toastMessage = message;
+    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+      delay: 3000
+    });
+    toast.show();
   }
+// SAVE COURSE
 
-  // ================= BACK =================
-  backToStandards() {
-    this.selectedStandard = null;
-    this.subjects = [];
-    this.editMode = false;
-    this.editId = null;
-    this.courseForm.reset();
-  }
+async submit() {
+
+console.log(this.courseForm.value);
+
+if (this.courseForm.invalid) {
+
+this.courseForm.markAllAsTouched();
+
+alert("Please fill all required fields");
+
+return;
+
+}
+
+const formData = this.courseForm.value;
+
+try {
+
+await this.firebaseService.addDocument(
+FirebaseCollections.Courses,
+formData
+);
+
+alert('Course Added Successfully');
+
+this.courseForm.reset();
+this.teacherImage = null;
+this.showBoard = false;
+this.showStream = false;
+
+} catch (error) {
+
+console.error(error);
+alert("Error saving course");
+
+}
+
+}
 
 }

@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { HttpClient } from '@angular/common/http';
+declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-teacher-registration',
@@ -15,6 +17,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TeacherRegistration {
 
+  @ViewChild('saveToast') saveToast!: ElementRef;
+
+  toastMessage = '';
+  
   registerForm!: FormGroup;
   step = 1;
 
@@ -71,7 +77,13 @@ export class TeacherRegistration {
   generateTeacherId() {
     return 'TCH' + Math.floor(1000 + Math.random() * 9000);
   }
-
+showToast(message: string) {
+    this.toastMessage = message;
+    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+      delay: 3000
+    });
+    toast.show();
+  }
   // ===============================  
   // ✅ REGISTER TEACHER (Pending by default)
   // ===============================

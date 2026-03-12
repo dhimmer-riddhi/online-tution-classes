@@ -1,215 +1,200 @@
-/* ================= HEADER SECTION ================= */
+/* ================= PAGE BACKGROUND ================= */
+body {
+  background: linear-gradient(135deg, #f4f7fb, #eef3f8);
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= DASHBOARD CONTAINER ================= */
 .dashboard-container {
-  display: flex;
-  height: 100vh;
-  background: #f4f6fb;
-  font-family: 'Poppins', sans-serif;
-}
-.contact-header {
-  height: 400px;
-  background: linear-gradient(135deg, #1abc9c, #274046);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  color: white;
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 20px;
 }
 
-.contact-content h1 {
-  font-size: 65px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-}
-
-.sub-title {
-  font-size: 20px;
-  opacity: 0.95;
-}
-
-/* ================= MANAGE CLASSES TITLE ================= */
-
+/* ================= PAGE TITLES ================= */
 .manage-title {
   text-align: center;
-  font-size: 48px;
-  font-weight: 800;
-  margin-bottom: 40px;
-  letter-spacing: 1px;
-  color: #2c3e50;
-}
-
-/* ================= STANDARD BUTTONS ================= */
-
-.standard-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0a2540;
   margin-bottom: 30px;
 }
 
-.standard-btn {
-  padding: 18px 45px;
-  font-size: 20px;
-  font-weight: 600;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #1abc9c, #16a085);
-  color: white;
-  box-shadow: 0 10px 25px rgba(26, 188, 156, 0.3);
-}
-
-.standard-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(26, 188, 156, 0.45);
-}
-
-/* ================= BACK BUTTON ================= */
-
-.back-btn {
-  margin-top: 15px;
-  padding: 10px 35px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: #34495e;
-  color: white;
-  transition: 0.3s ease;
-}
-
-.back-btn:hover {
-  background: #2c3e50;
-}
-
-/* ================= CARD ================= */
-
-.contact-form-section {
+/* ================= STANDARD BUTTONS ================= */
+.standard-buttons {
   display: flex;
   justify-content: center;
-  margin-top: -120px;
-  padding-bottom: 80px;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+.standard-btn {
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #dff6f3, #c8e6ff);
+  color: #0a2540;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+.standard-btn:hover {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+  transform: scale(1.05);
+}
+.standard-btn.active {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
 }
 
+/* ================= PORTAL CARD ================= */
 .portal-card {
-  width: 65%;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-top: 20px;
+}
+.contact-card h3 {
+  font-size: 24px;
+  color: #0a2540;
+  margin-bottom: 25px;
   text-align: center;
-  padding: 60px 50px;
 }
 
-.contact-card {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  animation: fadeInUp 0.6s ease;
+/* ================= FORM ELEMENTS ================= */
+form {
+  width: 100%;
 }
-
-/* ================= FORM INPUT ================= */
-
-.form-control,
-.form-select {
+form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #0a2540;
+}
+form input[type="text"],
+form select {
+  width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 14px;
   margin-bottom: 20px;
-  font-size: 16px;
+  background: #fdfdfd;
+}
+form input[type="text"]:focus,
+form select:focus {
+  outline: none;
+  border-color: #1abc9c;
 }
 
 /* ================= BIG BUTTON ================= */
-
 .big-btn {
-  padding: 16px 50px;
-  font-size: 18px;
-  border-radius: 12px;
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 8px;
   border: none;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-weight: 600;
   background: linear-gradient(135deg, #1abc9c, #16a085);
   color: white;
-  box-shadow: 0 12px 30px rgba(26,188,156,0.3);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
 }
-
 .big-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(26,188,156,0.4);
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #16a085, #138f77);
+}
+.big-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* ================= TABLE ================= */
-
+/* ================= CUSTOM TABLE ================= */
 .custom-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
+  margin-top: 20px;
+  font-size: 14px;
 }
-
 .custom-table th,
 .custom-table td {
+  padding: 12px 15px;
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center;
+  text-align: left;
+  color: #0a2540;
 }
-
 .custom-table th {
-  background: #1abc9c;
-  color: white;
+  background: #f4f7fb;
+  font-weight: 600;
+}
+.custom-table tr:nth-child(even) {
+  background: #f9fbfd;
 }
 
+/* ================= EDIT & DELETE BUTTONS ================= */
 .edit-btn {
-  background: #3498db;
-  color: white;
+  background: #f39c12;
   border: none;
-  padding: 6px 15px;
-  margin-right: 8px;
-  border-radius: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
   cursor: pointer;
+  margin-right: 5px;
+  transition: 0.3s;
 }
-
+.edit-btn:hover {
+  background: #e08e0b;
+}
 .delete-btn {
-  background: red;
-  color: white;
+  background: #e74c3c;
   border: none;
-  padding: 6px 15px;
-  border-radius: 6px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
   cursor: pointer;
+  transition: 0.3s;
+}
+.delete-btn:hover {
+  background: #c0392b;
 }
 
-/* ================= ANIMATION ================= */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ================= BACK BUTTON ================= */
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #6c757d;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.back-btn:hover {
+  background: #5a6268;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 768px) {
-
-  .manage-title {
-    font-size: 34px;
+  .standard-buttons {
+    flex-direction: column;
+    align-items: center;
   }
-
-  .standard-btn {
-    width: 100%;
-  }
-
   .portal-card {
-    width: 90%;
+    padding: 20px;
   }
-
-  .contact-content h1 {
-    font-size: 40px;
+  .custom-table th, .custom-table td {
+    font-size: 13px;
+    padding: 10px;
   }
-
+  .big-btn, .standard-btn {
+    width: 100%;
+    text-align: center;
+  }
 }

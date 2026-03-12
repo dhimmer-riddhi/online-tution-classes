@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-teacher-dashboard',
@@ -10,7 +11,10 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./teacher-dashboard.css']
 })
 export class TeacherDashboard implements OnInit {
+@ViewChild('saveToast') saveToast!: ElementRef;
 
+  toastMessage = '';
+  
   teacherName = "Teacher";
 
   /* STATIC DATA */
@@ -33,6 +37,13 @@ export class TeacherDashboard implements OnInit {
       this.createVideoChart();
     }, 200);
 
+  }
+  showToast(message: string) {
+    this.toastMessage = message;
+    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+      delay: 3000
+    });
+    toast.show();
   }
 
   /* ASSIGNMENT CHART */

@@ -1,161 +1,163 @@
-<div class="assignment-container">
+<div class="main-container">
 
-<h1 class="page-title">Assignments</h1>
+  <div class="top-banner">
+    <h1>Teacher Assignments</h1>
+  </div>
 
-<!-- STANDARD -->
+  <!-- STANDARD -->
+  <div class="standard-section">
+    <button *ngFor="let std of standards"
+            (click)="selectStandard(std)"
+            [class.active]="selectedStandard === std">
+      Class {{ std }}
+    </button>
+  </div>
 
-<div class="standard-section">
+  <!-- CATEGORY -->
+  <div *ngIf="categories.length > 0" class="category-section">
+    <button *ngFor="let cat of categories"
+            (click)="selectCategory(cat)"
+            [class.active]="selectedCategory === cat">
+      {{ cat }}
+    </button>
+  </div>
 
-<button
-*ngFor="let std of standards"
-(click)="selectStandard(std)"
-[class.active]="selectedStandard===std">
+  <!-- SUBJECT -->
+  <div *ngIf="selectedStandard && !selectedSubject" class="subject-grid">
+    <div class="subject-card" *ngFor="let sub of subjects">
+      <h3>{{ sub.subject }}</h3>
+      <button (click)="openSubject(sub)">Manage Assignment</button>
+    </div>
+  </div>
 
-Class {{std}}
+  <!-- ASSIGNMENT SECTION -->
+  <div *ngIf="selectedSubject">
 
-</button>
+    <button class="back-btn" (click)="back()">← Back</button>
 
-</div>
+    <h2>
+      Class {{ selectedStandard }}
+      <span *ngIf="selectedCategory">- {{ selectedCategory }}</span>
+      - {{ selectedSubject.subject }}
+    </h2>
 
-<!-- CATEGORY -->
+    <!-- CHAPTER NAVIGATION -->
+    <div class="chapter-button-row">
+      <button class="add-chapter-btn" (click)="addChapter()">+ Add Chapter</button>
+      <div class="chapter-buttons">
+        <div *ngFor="let chapter of chapters; let i = index" class="chapter-button-group">
+          <button class="chapter-btn"
+                  [class.active]="activeChapter === i"
+                  (click)="openChapter(i)">
+            Chapter {{ chapter.chapterNo }}
+          </button>
+          <button class="delete-chapter-btn" (click)="deleteChapter(i)">✕</button>
+        </div>
+      </div>
+    </div>
 
-<div
-*ngIf="categories.length>0"
-class="category-section">
+    <!-- ACTIVE CHAPTER -->
+    <div *ngIf="activeChapter !== null" class="chapter-box">
 
-<button
-*ngFor="let cat of categories"
-(click)="selectCategory(cat)"
-[class.active]="selectedCategory===cat">
+      <!-- Chapter Header -->
+      <div class="chapter-header">
+        <div>
+          Chapter {{ chapters[activeChapter].chapterNo }} -
+          {{ chapters[activeChapter].chapterName || 'Untitled' }}
+        </div>
+        <div>
+          <button class="edit-btn" (click)="toggleChapterEdit(chapters[activeChapter])">
+            {{ chapters[activeChapter].editing ? 'Save' : 'Edit' }}
+          </button>
+          <button class="delete-btn" (click)="deleteChapter(activeChapter)">Delete</button>
+        </div>
+      </div>
 
-{{cat}}
+      <!-- Chapter Editor Layout -->
+      <div class="chapter-editor" *ngIf="chapters[activeChapter].editing">
 
-</button>
+        <!-- Left Panel -->
+        <div class="editor-left">
+          <label>Chapter Name</label>
+          <input type="text" placeholder="Chapter Name" [(ngModel)]="chapters[activeChapter].chapterName">
 
-</div>
+          <!-- Rich Text Toolbar -->
+          <div class="editor-toolbar">
+            <button (click)="applyFormat(chapters[activeChapter],'undo')">↶</button>
+            <select>
+              <option>Paragraph</option>
+              <option>Heading</option>
+            </select>
+            <button (click)="applyFormat(chapters[activeChapter],'b')"><b>B</b></button>
+            <button (click)="applyFormat(chapters[activeChapter],'i')"><i>I</i></button>
+            <button (click)="applyFormat(chapters[activeChapter],'link')">🔗</button>
+            <button (click)="applyFormat(chapters[activeChapter],'img')">🖼️</button>
+            <button (click)="applyFormat(chapters[activeChapter],'table')">📊</button>
+            <button (click)="applyFormat(chapters[activeChapter],'quote')">❝❞</button>
+            <button (click)="applyFormat(chapters[activeChapter],'video')">🎥</button>
+            <button (click)="applyFormat(chapters[activeChapter],'ul')">• List</button>
+            <button (click)="applyFormat(chapters[activeChapter],'ol')">1. List</button>
+          </div>
 
-<!-- SUBJECT -->
+          <!-- Rich Text Area -->
+          <textarea id="chapter-{{chapters[activeChapter].chapterNo}}" rows="6"
+                    [(ngModel)]="chapters[activeChapter].content"
+                    placeholder="Write your lesson content here..."></textarea>
+        </div>
 
-<div
-*ngIf="selectedStandard && !selectedSubject"
-class="subject-grid">
+        <!-- Right Panel -->
+        <div class="editor-right">
+          <label>Assignment Title</label>
+          <input type="text" placeholder="Assignment Title" [(ngModel)]="chapters[activeChapter].assignmentTitle">
 
-<div
-class="subject-card"
-*ngFor="let sub of subjects">
+          <label>Date</label>
+          <input type="date" [(ngModel)]="chapters[activeChapter].assignmentDate">
 
-<h3>{{sub.subject}}</h3>
+          <label>Upload File</label>
+          <input type="file" (change)="onFileUpload($event, chapters[activeChapter])">
 
-<button (click)="openSubject(sub)">
-Open
-</button>
+          <button class="save-btn" (click)="saveAssignment()">Save Lesson</button>
+        </div>
 
-</div>
+      </div>
 
-<p *ngIf="subjects.length===0">
-No subject available
-</p>
+      <!-- Assignments List -->
+      <button class="small-btn" (click)="addAssignment(chapters[activeChapter])">+ Add Assignment</button>
 
-</div>
+      <div *ngFor="let assign of chapters[activeChapter].assignments; let ai = index"
+           class="content-block"
+           [class.expired]="assign.expired">
 
-<!-- ASSIGNMENT -->
+        <div class="content-header">
+          <strong>{{ assign.title || 'Assignment' }}</strong>
+          <div>
+            <button class="edit-btn" (click)="toggleAssignmentEdit(assign)">
+              {{ assign.editing ? 'Save' : 'Edit' }}
+            </button>
+            <button class="delete-btn" (click)="deleteAssignment(chapters[activeChapter], ai)">Delete</button>
+          </div>
+        </div>
 
-<div *ngIf="selectedSubject">
+        <div *ngIf="assign.editing">
+          <input type="text" placeholder="Assignment Title" [(ngModel)]="assign.title">
+          <input type="date" [(ngModel)]="assign.dueDate">
+          <input type="file" (change)="onFileUpload($event, assign)">
+        </div>
 
-<button
-class="back-btn"
-(click)="back()">
+        <div *ngIf="assign.dueDate" class="countdown-box">
+          <span *ngIf="!assign.expired">⏳ {{ assign.countdown }}</span>
+          <span *ngIf="assign.expired" class="expired-text">❌ Expired</span>
+        </div>
 
-← Back
+        <div *ngFor="let file of assign.files; let fi = index" class="video-box">
+          <a [href]="file.fileUrl" target="_blank">{{ file.fileName }}</a>
+          <button class="delete-btn" (click)="deleteFile(assign, fi)">Delete</button>
+        </div>
 
-</button>
+      </div>
 
-<h2>
+    </div>
 
-Class {{selectedStandard}}
-
-<span *ngIf="selectedCategory">
-
-- {{selectedCategory}}
-
-</span>
-
-- {{selectedSubject.subject}}
-
-</h2>
-
-<button
-class="add-chapter-btn"
-(click)="addChapter()">
-
-+ Add Chapter
-
-</button>
-
-<div
-*ngFor="let chapter of chapters; let i=index"
-class="chapter-box">
-
-<div class="chapter-header">
-
-<strong>
-
-Chapter {{chapter.chapterNo}}
-
-</strong>
-
-<button (click)="deleteChapter(i)">
-Delete
-</button>
-
-</div>
-
-<input
-[(ngModel)]="chapter.chapterName"
-placeholder="Chapter Name">
-
-<button
-(click)="addAssignment(chapter)">
-
-Add Assignment
-
-</button>
-
-<div
-*ngFor="let a of chapter.assignments; let j=index">
-
-<input
-[(ngModel)]="a.title"
-placeholder="Assignment Title">
-
-<input
-type="date"
-[(ngModel)]="a.dueDate">
-
-<input
-type="number"
-[(ngModel)]="a.totalMarks"
-placeholder="Marks">
-
-<button
-(click)="deleteAssignment(chapter,j)">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-<button
-class="save-btn"
-(click)="saveAssignment()">
-
-Save Assignment
-
-</button>
-
-</div>
+  </div>
 
 </div>

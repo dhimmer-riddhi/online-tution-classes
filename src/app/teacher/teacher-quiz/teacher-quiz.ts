@@ -1,17 +1,17 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { Quiz } from '../../interface/quiz';
 import { ClassContent } from '../../interface/class-content';
-import { TeacherFooter } from '../teacher-footer/teacher-footer';
-import { TeacherHeader } from '../teacher-header/teacher-header';
+declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-teacher-quiz',
   standalone: true,
-  imports: [CommonModule, FormsModule,TeacherHeader,TeacherFooter],
+  imports: [CommonModule, FormsModule],
   templateUrl: './teacher-quiz.html',
   styleUrls: ['./teacher-quiz.css']
 })
@@ -24,6 +24,11 @@ export class TeacherQuiz implements OnInit {
   standards = ['9', '10', '11', '12'];
   categories: string[] = [];
   subjects: any[] = [];
+
+  @ViewChild('saveToast') saveToast!: ElementRef;
+
+  toastMessage = '';
+  
   
   // Single Quiz Object initialized using resetQuiz
   activeQuiz: Quiz = {
@@ -78,6 +83,13 @@ export class TeacherQuiz implements OnInit {
         });
       });
     });
+  }
+  showToast(message: string) {
+    this.toastMessage = message;
+    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+      delay: 3000
+    });
+    toast.show();
   }
 
   // Chapters ko Class Content ke saath align karna

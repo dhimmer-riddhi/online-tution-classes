@@ -1,96 +1,138 @@
-<app-teacher-header></app-teacher-header>
-<div class="container">
+<form [formGroup]="courseForm" (ngSubmit)="submit()">
 
-  <h2 class="manage-title">Manage Classes</h2>
+<h2>Add New Course</h2>
 
-  <!-- STANDARD BUTTONS -->
-  <div class="standard-buttons">
-    <button class="standard-btn" (click)="selectStandard('9')">Class 9</button>
-    <button class="standard-btn" (click)="selectStandard('10')">Class 10</button>
-    <button class="standard-btn" (click)="selectStandard('11')">Class 11</button>
-    <button class="standard-btn" (click)="selectStandard('12')">Class 12</button>
-  </div>
+<!-- CLASS -->
+<select formControlName="class" (change)="onClassChange()">
+  <option value="">Select Class</option>
+  <option value="9th">9th Standard</option>
+  <option value="10th">10th Standard</option>
+  <option value="11th">11th Standard</option>
+  <option value="12th">12th Standard</option>
+</select>
 
-  <!-- FORM + TABLE -->
-  <div *ngIf="selectedStandard" class="contact-form-section">
+<div *ngIf="courseForm.get('class')?.touched && courseForm.get('class')?.invalid">
+  Class is required
+</div>
 
-    <div class="portal-card contact-card">
+<!-- BOARD -->
+<div *ngIf="showBoard">
+<select formControlName="board">
+  <option value="">Select Board</option>
+  <option value="GSEB">GSEB</option>
+  <option value="CBSE">CBSE</option>
+</select>
+</div>
 
-      <h3>Add Subject - Class {{ selectedStandard }}</h3>
+<!-- STREAM -->
+<div *ngIf="showStream">
+<select formControlName="stream">
+  <option value="">Select Stream</option>
+  <option value="Commerce">Commerce</option>
+  <option value="PCM">PCM</option>
+  <option value="PCB">PCB</option>
+</select>
+</div>
 
-      <form [formGroup]="courseForm" (ngSubmit)="submitForm()">
+<br><br>
 
-        <!-- CATEGORY -->
-        <div *ngIf="categories.length > 0" style="margin-bottom:25px;">
-          <label style="font-weight:600; display:block; margin-bottom:8px;">
-            Select Category
-          </label>
+<!-- COURSE DETAILS -->
 
-          <select formControlName="category"
-                  style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
-            <option value="">Select Category</option>
-            <option *ngFor="let cat of categories" [value]="cat">
-              {{ cat }}
-            </option>
-          </select>
-        </div>
+<input formControlName="title" placeholder="Course Title">
+<div *ngIf="courseForm.get('title')?.touched && courseForm.get('title')?.invalid">
+  Title is required
+</div>
 
-        <!-- SUBJECT -->
-        <div style="margin-bottom:30px;">
-          <label style="font-weight:600; display:block; margin-bottom:8px;">
-            Subject Name
-          </label>
-          <input type="text"
-                 formControlName="subject"
-                 placeholder="Enter Subject Name"
-                 style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;" />
-        </div>
+<input formControlName="description" placeholder="Course Description">
+<div *ngIf="courseForm.get('description')?.touched && courseForm.get('description')?.invalid">
+  Description is required
+</div>
 
-        <button type="submit" class="big-btn" [disabled]="courseForm.invalid">
-          {{ editMode ? 'Update Subject' : 'Save Subject' }}
-        </button>
+<input formControlName="fees" placeholder="Course Fees">
+<div *ngIf="courseForm.get('fees')?.touched && courseForm.get('fees')?.invalid">
+  Fees is required
+</div>
 
-      </form>
+<input formControlName="duration" placeholder="Course Duration">
+<div *ngIf="courseForm.get('duration')?.touched && courseForm.get('duration')?.invalid">
+  Duration is required
+</div>
 
-      <!-- ================= TABLE ================= -->
-      <div style="margin-top:50px;" *ngIf="subjects.length > 0">
+<input formControlName="mode" placeholder="Online / Offline">
+<div *ngIf="courseForm.get('mode')?.touched && courseForm.get('mode')?.invalid">
+  Mode is required
+</div>
 
-        <h4>Added Subjects - Class {{ selectedStandard }}</h4>
+<br><br>
 
-        <table class="custom-table">
+<h3>Teacher Details</h3>
 
-          <tr>
-            <th>Subject</th>
-            <th *ngIf="categories.length > 0">Category</th>
-            <th>Actions</th>
-          </tr>
+<div formGroupName="teacher">
 
-          <tr *ngFor="let sub of subjects">
-            <td>{{ sub.subject }}</td>
-            <td *ngIf="categories.length > 0">{{ sub.category }}</td>
-            <td>
-              <button class="edit-btn" (click)="editSubject(sub)">Edit</button>
-              <button class="delete-btn" (click)="deleteSubject(sub)">Delete</button>
-            </td>
-          </tr>
+<input formControlName="name" placeholder="Teacher Name">
+<div *ngIf="courseForm.get('teacher.name')?.touched && courseForm.get('teacher.name')?.invalid">
+  Teacher name required
+</div>
 
-        </table>
+<input formControlName="details" placeholder="Teacher Details">
 
-      </div>
+<textarea formControlName="bio" placeholder="Teacher Bio"></textarea>
 
-      <p *ngIf="subjects.length === 0" style="margin-top:20px;">
-        No subjects added yet.
-      </p>
+<br><br>
 
-      <!-- BACK BUTTON -->
-      <div style="text-align:center; margin-top:40px;">
-        <button class="big-btn" (click)="backToStandards()">
-          ⬅ Back
-        </button>
-      </div>
+<!-- IMAGE UPLOAD -->
+<label>Upload Teacher Profile</label>
 
-    </div>
-  </div>
+<input 
+type="file" 
+accept="image/*"
+(change)="uploadTeacherImage($event)"
+>
+
+<!-- validation -->
+<div 
+*ngIf="courseForm.get('teacher.profile')?.invalid && courseForm.get('teacher.profile')?.touched"
+style="color:red"
+>
+Profile Image is required
+</div>
+
+<!-- IMAGE PREVIEW -->
+<div *ngIf="teacherImage">
+<img [src]="teacherImage" width="120" height="120">
+<p style="color:green">Image Uploaded Successfully</p>
+</div>
 
 </div>
-<app-teacher-footer></app-teacher-footer>
+
+<br>
+
+<!-- CHAPTERS -->
+
+<h3>Chapters</h3>
+
+<div formArrayName="chapters">
+
+<div *ngFor="let chapter of chapters.controls; let i = index" class="chapter-row">
+
+<input [formControlName]="i" placeholder="Chapter Name">
+
+<button type="button" class="remove-btn" (click)="chapters.removeAt(i)">
+Remove
+</button>
+
+</div>
+
+<button type="button" class="add-btn" (click)="addChapter()">
++ Add Chapter
+</button>
+
+</div>
+
+<br>
+
+<button type="submit" [disabled]="courseForm.invalid">
+Save Course
+</button>
+
+</form>

@@ -1,15 +1,14 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { CommonModule } from '@angular/common';
-import { TeacherHeader } from "../teacher-header/teacher-header";
-import { TeacherFooter } from '../teacher-footer/teacher-footer';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-teacher-classes',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,TeacherHeader,TeacherFooter],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './teacher-classes.html',
   styleUrl: './teacher-classes.css',
 })
@@ -22,6 +21,10 @@ selectedStandard: string | null = null;
   editId: string | null = null;
 
   courseForm: FormGroup;
+  @ViewChild('saveToast') saveToast!: ElementRef;
+
+  toastMessage = '';
+  
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +76,13 @@ selectedStandard: string | null = null;
           .map(d => ({ ...d, id: d.id }));
       });
   }
-
+showToast(message: string) {
+    this.toastMessage = message;
+    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+      delay: 3000
+    });
+    toast.show();
+  }
   // ================= SAVE / UPDATE =================
   submitForm() {
     if (this.courseForm.invalid) return;
