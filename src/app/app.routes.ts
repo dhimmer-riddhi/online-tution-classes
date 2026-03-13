@@ -114,25 +114,21 @@ children:[
   { path: 'admin/manage-application', component: ManageApplication },
   // ===== TEACHER PANEL (HEADER + SIDEBAR + CONTENT) =====
 
-  {
-    path: 'teacher',
-    component: TeacherHeader,
+  
+   { path: 'teacher/teacher-header',component: TeacherHeader},
 
-    children: [
-
-      { path: 'dashboard', component: TeacherDashboard },
-      { path: 'students', component: Student },
+      { path: 'teacher/dashboard', component: TeacherDashboard },
+      { path: 'teacher/students', component: Student },
       
       
-      { path: 'class-content', component: TeacherClassContent },
-      { path: 'courses', component: TeacherCourses },
-      // { path: 'assignment', component: TeacherAssignment },
-      { path: 'quiz', component: Quize },
+      { path: 'teacher/class-content', component: TeacherClassContent },
+      { path: 'teacher/courses', component: TeacherCourses },
+      // { path: 'teacher/assignment', component: TeacherAssignment },
+      { path: 'teacher/quiz', component: Quize },
 
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      
 
-    ]
-  },
+    
   // // Fallback
  // { path: '**', redirectTo: 'student/stud-home' },
 

@@ -1,57 +1,46 @@
-<header class="main-header" [class.scrolled]="isScrolled">
+<div class="admin-layout">
 
-  <!-- TOP HEADER (UNCHANGED) -->
-  <div class="top-header">
+  <!-- Sidebar -->
+  <div class="sidebar">
+
     <div class="logo">
-      <img src="footer-logo (1).png" alt="Bright Classes Logo">
+      <img src="header logo.png" alt="Bright Classes Logo">
     </div>
 
-    <div class="icons">
-      <button class="logout-btn" (click)="logout()">↩ Logout</button>
-    </div>
+    <ul class="menu">
+      <li routerLink="/teacher/dashboard" routerLinkActive="active">
+        <i class="fas fa-chart-line"></i> Dashboard
+      </li>
+
+      <li routerLink="/teacher/students" routerLinkActive="active">
+        <i class="fas fa-user-graduate"></i> Students
+      </li>
+
+      <li routerLink="/teacher/class-content" routerLinkActive="active">
+        <i class="fas fa-chalkboard-teacher"></i> Class Content
+      </li>
+
+      <li routerLink="/teacher/courses" routerLinkActive="active">
+        <i class="fas fa-book"></i> Courses
+      </li>
+
+      <li routerLink="/teacher/assignment" routerLinkActive="active">
+        <i class="fas fa-money-bill"></i> Assignments
+      </li>
+
+      <li routerLink="/teacher/quiz" routerLinkActive="active">
+        <i class="fas fa-chart-pie"></i> Quiz
+      </li>
+
+      <li class="logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </li>
+    </ul>
+
   </div>
 
-</header>
-
-<!-- MAIN LAYOUT -->
-<div class="teacher-layout">
-
-  <!-- SIDEBAR MENU -->
-  <div class="menu-bar">
-
-    <a routerLink="/teacher/dashboard" routerLinkActive="active">
-      🏠 Dashboard
-    </a>
-
-    <a routerLink="/teacher/students" routerLinkActive="active">
-      👩‍🎓 Students
-    </a>
-
-    
-
-    
-    
-
-    <a routerLink="/teacher/class-content" routerLinkActive="active">
-      📖 Class Content
-    </a>
-
-    <a routerLink="/teacher/assignment" routerLinkActive="active">
-      📝 Assignments
-    </a>
-
-    <a routerLink="/teacher/courses" routerLinkActive="active">
-      📚 Courses
-    </a>
-
-    <a routerLink="/teacher/quiz" routerLinkActive="active">
-      🧠 Quiz
-    </a>
-    
-  </div>
-
-  <!-- RIGHT SIDE CONTENT -->
-  <div class="page-content">
+  <!-- Right Content -->
+  <div class="content">
     <router-outlet></router-outlet>
   </div>
 

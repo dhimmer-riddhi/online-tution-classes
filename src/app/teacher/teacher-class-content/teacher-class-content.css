@@ -1,613 +1,339 @@
 /* ---------- GLOBAL ---------- */
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-font-family:'Segoe UI',Tahoma,sans-serif;
-background:#f5f7fb;
-overflow:hidden;
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #f4f7fb, #eef3f8);
+  overflow: hidden;
 }
 
 /* ---------- DASHBOARD LAYOUT ---------- */
-
-.dashboard-container{
-display:flex;
-height:100vh;
-width:100%;
-overflow:hidden;
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 /* ---------- SIDEBAR SPACE ---------- */
-
-app-teacher-header{
-width:240px;
-flex-shrink:0;
+app-teacher-header {
+  width: 260px;
+  flex-shrink: 0;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.05);
 }
 
 /* ---------- MAIN CONTENT ---------- */
-
-.main-container{
-flex:1;
-padding:25px;
-overflow-y:auto;
-height:100vh;
-}
-
-/* ---------- TOP HEADER ---------- */
-
-.top-banner{
-background:linear-gradient(135deg,#2563eb,#3b82f6);
-color:white;
-padding:30px;
-border-radius:12px;
-text-align:center;
-margin-bottom:20px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-
-.top-banner h1{
-font-size:26px;
-font-weight:700;
-}
-
-/* ---------- STANDARD BUTTONS ---------- */
-
-.standard-section{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-bottom:20px;
-}
-
-.standard-section button{
-padding:8px 18px;
-border-radius:25px;
-border:2px solid #2563eb;
-background:white;
-color:#2563eb;
-font-weight:600;
-cursor:pointer;
-}
-
-.standard-section button.active{
-background:#2563eb;
-color:white;
-}
-
-/* ---------- CATEGORY ---------- */
-
-.category-section{
-display:flex;
-gap:10px;
-margin-bottom:20px;
-}
-
-.category-section button{
-padding:8px 18px;
-border-radius:20px;
-border:2px solid #10b981;
-background:white;
-color:#10b981;
-font-weight:600;
-}
-
-.category-section button.active{
-background:#10b981;
-color:white;
-}
-
-/* ---------- SUBJECT GRID ---------- */
-
-.subject-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-.subject-card{
-background:white;
-border-radius:12px;
-padding:25px;
-text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
-
-.subject-card button{
-padding:8px 18px;
-border:none;
-background:#3b82f6;
-color:white;
-border-radius:8px;
-cursor:pointer;
-}
-
-/* ---------- CONTENT VIEW ---------- */
-
-.content-view{
-background:white;
-border-radius:12px;
-padding:25px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-
-max-height:70vh;
-overflow-y:auto;
-}
-
-/* ---------- BACK BUTTON ---------- */
-
-.back-btn{
-padding:8px 16px;
-background:#6b7280;
-border:none;
-color:white;
-border-radius:8px;
-margin-bottom:10px;
-}
-
-/* ---------- HEADER TEXT ---------- */
-
-.content-view h2{
-background:#e0f2fe;
-padding:12px;
-border-radius:10px;
-font-size:20px;
-font-weight:700;
-margin-bottom:15px;
-}
-
-/* ---------- ADD CHAPTER ---------- */
-
-.add-chapter-btn{
-padding:10px 20px;
-background:#10b981;
-color:white;
-border:none;
-border-radius:8px;
-margin-bottom:15px;
-}
-
-/* ---------- CHAPTER TABS ---------- */
-
-.chapter-tabs{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-bottom:15px;
-}
-
-.chapter-tabs button{
-padding:8px 18px;
-border-radius:25px;
-border:2px solid #3b82f6;
-background:white;
-color:#3b82f6;
-font-weight:600;
-}
-
-.chapter-tabs button.active{
-background:#3b82f6;
-color:white;
-}
-
-/* ---------- CHAPTER BOX ---------- */
-
-.chapter-box{
-background:#f3f4f6;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px;
-}
-
-/* ---------- CHAPTER HEADER ---------- */
-
-.chapter-header{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
-font-weight:600;
-}
-
-/* ---------- CONCEPT BOX ---------- */
-
-.concept-box{
-background:#e5e7eb;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
-}
-
-/* ---------- CONTENT BLOCK ---------- */
-
-.content-block{
-background:#f9fafb;
-padding:12px;
-border-radius:8px;
-margin-top:10px;
-}
-
-/* ---------- INPUTS ---------- */
-
-input,
-textarea{
-width:100%;
-padding:10px;
-border-radius:8px;
-border:1px solid #cbd5e1;
-font-size:14px;
-margin-top:6px;
-}
-
-textarea{
-min-height:80px;
-}
-
-input:focus,
-textarea:focus{
-outline:none;
-border-color:#3b82f6;
-}
-
-/* ---------- VIDEO BOX ---------- */
-
-.video-box{
-background:#dbeafe;
-padding:10px;
-border-radius:8px;
-margin-top:10px;
-}
-
-.video-box video{
-width:100%;
-border-radius:6px;
-}
-
-/* ---------- BUTTONS ---------- */
-
-.small-btn{
-padding:6px 12px;
-border:none;
-background:#3b82f6;
-color:white;
-border-radius:6px;
-cursor:pointer;
-margin-top:8px;
-}
-
-.delete-btn{
-padding:6px 12px;
-background:#ef4444;
-border:none;
-color:white;
-border-radius:6px;
-cursor:pointer;
-}
-
-.save-btn{
-margin-top:15px;
-padding:12px 25px;
-background:#10b981;
-border:none;
-color:white;
-border-radius:8px;
-font-weight:600;
-}
-
-/* ---------- TABLE ---------- */
-
-.table-section{
-margin-top:30px;
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
-
-.edit-btn{
-padding:6px 12px;
-background:#3b82f6;
-border:none;
-color:white;
-border-radius:6px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-}
-
-thead{
-background:#2563eb;
-color:white;
-}
-
-th,
-td{
-padding:12px;
-border-bottom:1px solid #e5e7eb;
-}
-
-tr:hover {
-  background: #f3f4f6;
-}
-
-.chapter-name p {
-  margin: 0;
-  font-weight: 400;
-  font-size:medium;
-}
-.chapter-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.chapter-tabs button {
-  padding: 8px 20px;
-  border-radius: 25px;
-  border: 2px solid #3b82f6;
-  background: #fff;
-  color: #3b82f6;
-  font-weight: 600;
-}
-
-.chapter-tabs button.active {
-  background: #3b82f6;
-  color: #fff;
-}
-/* ---------- CLASS / CATEGORY / SUBJECT HEADER ---------- */
-.content-view h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2937; /* dark gray */
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  background: #e0f2fe; /* light blue highlight */
-  padding: 15px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.content-view h2 span {
-  font-size: 22px;
-  font-weight: 600;
-  color: #2563eb; /* primary blue */
-  background: #dbeafe; /* lighter blue */
-  padding: 5px 12px;
-  border-radius: 8px;
-  margin-left: 5px;
-}
-
-
-
-
-/* ================= CONTAINER ================= */
-
-.dashboard-container {
-  width: 100%;
-  min-height: 100vh;
-  background: #f6f7fb;
-}
-
 .main-container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px 20px;
+  flex: 1;
+  padding: 0 30px 30px 30px; /* Top padding zero kar di taaki banner upar se start ho */
+  overflow-y: auto;
+  height: 100vh;
 }
 
-/* ================= HEADER ================= */
-
+/* ---------- TOP HEADER (Banner Style) ---------- */
 .top-banner {
+  background: white;
+  color: #0a2540;
+  padding: 25px;
+  border-radius: 0 0 15px 15px; /* Top corners sharp rakhe hain sidebar se alignment ke liye */
+  text-align: center;
   margin-bottom: 25px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  border: 1px solid #f0f0f0;
+  border-top: none; /* Top border hatayi */
 }
 
 .top-banner h1 {
   font-size: 28px;
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: #0a2540;
 }
 
-/* ================= STANDARD BUTTONS ================= */
-
-.standard-section {
+/* ---------- BUTTONS (Standard & Category) ---------- */
+.standard-section, .category-section {
   display: flex;
-  gap: 10px;
+  justify-content: center;
   flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.standard-section button, .category-section button {
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  background: white;
+  color: #0a2540;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.standard-section button.active, .category-section button.active {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+}
+.back-btn{
+  color: #1abc9c;
+  background: none;
+  border: 1px solid #1abc9c;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
   margin-bottom: 20px;
 }
-
-.standard-section button {
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-  font-weight: 500;
-}
-
-.standard-section button:hover {
-  background: #f1f5f9;
-}
-
-.standard-section button.active {
-  background: #3b82f6;
+.back-btn:hover {
+  background: #13826c;
   color: white;
-  border-color: #3b82f6;
 }
 
-/* ================= CATEGORY ================= */
-
-.category-section {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-}
-
-.category-section button {
-  padding: 7px 16px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  background: white;
-  cursor: pointer;
-}
-
-.category-section button.active {
-  background: #10b981;
-  color: white;
-  border-color: #10b981;
-}
-
-/* ================= SUBJECT GRID ================= */
-
+/* ---------- SUBJECT GRID & CARDS ---------- */
 .subject-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
-/* ================= SUBJECT CARD ================= */
-
 .subject-card {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
+  border-radius: 15px;
+  padding: 30px 20px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: 0.2s;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
 }
 
-.subject-card:hover {
-  transform: translateY(-4px);
-}
-
-.subject-card h3 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #1e293b;
-}
+.subject-card h3 { color: #0a2540; margin-bottom: 15px; }
 
 .subject-card button {
-  background: #3b82f6;
+  padding: 8px 18px;
+  border: none;
+  background: #3498db;
   color: white;
-  border: none;
-  padding: 7px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* ================= VIDEO FORM ================= */
-
-.content-view {
-  margin-top: 25px;
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.content-view h2 {
-  margin-bottom: 20px;
-  font-size: 22px;
-  color: #1e293b;
-}
-
-/* ================= BACK BUTTON ================= */
-
-.back-btn {
-  margin-bottom: 15px;
-  background: transparent;
-  border: none;
-  color: #3b82f6;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-/* ================= FORM FIELDS ================= */
-
-.video-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.video-form input,
-.video-form textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-}
-
-.video-form textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-/* ================= FILE INPUT ================= */
-
-.video-form input[type="file"] {
-  border: none;
-}
-
-/* ================= VIDEO PREVIEW ================= */
-
-.video-preview {
-  margin-top: 15px;
-}
-
-.video-preview video {
   border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ---------- NEW TWO-COLUMN FORM LAYOUT (Upload Video click ke baad) ---------- */
+.content-view {
+  margin-top: 0; /* Top margin zero */
+}
+.content-view h2 {
+  color: #0a2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.video-form-container {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* Left Section: Main Details */
+.form-left {
+  flex: 1.8;
+  background: white;
+  border: 1px solid #1abc9c;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+/* Right Section: Upload & Settings */
+.form-right {
+  flex: 1;
+  background: white;
+    border:1px solid #1abc9c;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #475569;
   margin-bottom: 8px;
 }
 
-.video-preview p {
-  font-size: 13px;
-  color: #555;
+/* Specific Blue Label as per your image */
+.label-blue { color: #1abc9c !important; }
+
+input, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fdfdfd;
 }
 
-/* ================= SAVE BUTTON ================= */
+textarea { min-height: 180px; resize: vertical; }
 
+/* ---------- BLUE PILL SAVE BUTTON ---------- */
 .save-btn {
-  margin-top: 10px;
-  background: #22c55e;
-  border: none;
+  width: 100%;
+  padding: 15px;
+  /* Blue color matching image_113efa.png */
+  background: linear-gradient(135deg, #1abc9c, #1d7564); 
   color: white;
-  padding: 10px;
-  border-radius: 6px;
+  border: none;
+  border-radius: 40px; /* Full pill shape */
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
+  margin-top: 15px;
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
+  transition: 0.3s ease;
 }
 
 .save-btn:hover {
-  background: #16a34a;
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 768px) {
-
-  .subject-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
+/* ---------- PREVIEWS ---------- */
+.video-preview, .image-preview {
+  margin-top: 15px;
+  border: 1px dashed #cbd5e1;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-@media (max-width: 500px) {
+.back-btn {
+  color: #1abc9c;
+  background: none;
+  border: 1px solid #1abc9c;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+/* ---------- CKEDITOR CUSTOM STYLING ---------- */
+::ng-deep .ck-editor__editable {
+  min-height: 250px !important; /* Editor ki height image ke hisaab se */
+  border-radius: 0 0 10px 10px !important;
+}
 
-  .subject-grid {
-    grid-template-columns: 1fr;
-  }
+::ng-deep .ck-toolbar {
+  border-radius: 10px 10px 0 0 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+/* 1. Bullet aur Number Lists fix karne ke liye */
+::ng-deep .ck-content ul {
+  display: block !important;
+  list-style-type: disc !important; /* Dots dikhane ke liye */
+  margin: 1em 0 1em 40px !important;
+  padding-left: 20px !important;
+}
 
+::ng-deep .ck-content ol {
+  display: block !important;
+  list-style-type: decimal !important; /* Numbers dikhane ke liye */
+  margin: 1em 0 1em 40px !important;
+  padding-left: 20px !important;
+}
+
+::ng-deep .ck-content li {
+  display: list-item !important; /* List structure maintain karne ke liye */
+  margin-bottom: 5px;
+}
+
+/* 2. Heading aur Paragraph styling fix */
+::ng-deep .ck-content p {
+  display: block !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  line-height: 1.6;
+  /* Tab space ke liye niche wali line add ki hai */
+  text-indent: 40px !important; 
+}
+
+::ng-deep .ck-content h1, 
+::ng-deep .ck-content h2, 
+::ng-deep .ck-content h3 {
+  display: block !important;
+  font-weight: bold !important;
+  color: #0a2540 !important;
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
+}
+
+::ng-deep .ck-content h1 { font-size: 2em !important; }
+::ng-deep .ck-content h2 { font-size: 1.5em !important; }
+::ng-deep .ck-content h3 { font-size: 1.17em !important; }
+
+/* 3. Indent aur Alignment icons ke liye padding */
+::ng-deep .ck-content .ck-list-restarted {
+  margin-left: 40px !important;
+}
+/* ---------- PREVIEWS (Video & Image Size Fix) ---------- */
+
+/* Video preview container fix */
+.video-preview {
+  margin-top: 15px;
+  border: 1px dashed #1abc9c;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  width: 100%;
+  max-width: 400px; /* Video ki maximum width fix kar di */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-preview video {
+  width: 100%;
+  height: 300px; /* Fixed height */
+  border-radius: 8px;
+  object-fit: cover; /* Video container mein properly fit ho jaye */
+  display: block;
+}
+
+/* Image preview container fix */
+.image-preview {
+  margin-top: 15px;
+  border: 1px dashed #1abc9c;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  width: 100%;
+  max-width: 300px; /* Thumbnail ki maximum width fix kar di */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 180px; /* Fixed height */
+  border-radius: 8px;
+  object-fit: contain; /* Image ratio kharab nahi hoga */
+  background: #eee;
+  display: block;
+}
+
+/* File name text fix */
+.video-preview p {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 8px;
+  word-break: break-all;
+  text-align: center;
 }
