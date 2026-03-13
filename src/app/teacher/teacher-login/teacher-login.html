@@ -1,0 +1,64 @@
+<section class="contact-header">
+  <div class="contact-content">
+    <h1>Teacher Login</h1>
+
+    <div class="breadcrumb">
+      <a routerLink="/teacher/teacher-portal">🏠 Home</a> >
+      <span>Login</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact-form-section">
+  <div class="contact-card">
+
+    <form [formGroup]="loginForm" (ngSubmit)="loginTeacher()">
+
+      <div class="form-step">
+
+        <h2>Login Details</h2>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password">
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Login 
+        </button>
+
+      </div>
+
+    </form>
+    <img src="book.png" alt="Teacher Registration" class="form-image">
+
+  </div>
+</section>
+<!-- Toast Message -->
+<!-- Toast Top Center -->
+<div class="toast-container">
+
+  <div #saveToast class="toast align-items-center border-0" role="alert">
+
+    <div class="d-flex">
+
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+
+      <button
+        type="button"
+        class="btn-close me-2 m-auto"
+        data-bs-dismiss="toast">
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,89 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<div class="manage-container">
+
+  <!-- 🔵 PENDING SECTION -->
+  <h2>Pending Teacher Registrations</h2>
+
+  @if (pendingTeachers.length === 0) {
+    <p class="no-data">No pending teachers found</p>
+  }
+
+  @if (pendingTeachers.length > 0) {
+    <table class="teacher-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Experience</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (teacher of pendingTeachers; track teacher.id) {
+          <tr>
+            <td>{{teacher.teacherName}}</td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.subjects}}</td>
+            <td>{{teacher.experience}}</td>
+            <td>
+              <button class="approve-btn"
+                      (click)="approveTeacher(teacher)">
+                Approve
+              </button>
+
+              <button class="reject-btn"
+                      (click)="rejectTeacher(teacher)">
+                Reject
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <!-- 🔵 PROCESSED SECTION -->
+  <h2 style="margin-top:50px;">Approved / Rejected Teachers</h2>
+
+  @if (processedTeachers.length === 0) {
+    <p class="no-data">No processed teachers yet</p>
+  }
+
+  @if (processedTeachers.length > 0) {
+    <table class="teacher-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Experience</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (teacher of processedTeachers; track teacher.id) {
+          <tr>
+            <td>{{teacher.teacherName}}</td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.subjects}}</td>
+            <td>{{teacher.experience}}</td>
+            <td>
+              <span 
+                [ngClass]="{
+                  'approved': teacher.status === 'approved',
+                  'rejected': teacher.status === 'rejected'
+                }">
+                {{teacher.status}}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+</div>

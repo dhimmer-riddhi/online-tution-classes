@@ -1,0 +1,162 @@
+/* ================= GLOBAL & LAYOUT FIX ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f4f7fb;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Sidebar aur Content ko side-by-side rakhne ke liye */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+  margin-left: 260px; /* Sidebar ki exact width yahan set karein */
+  padding: 0 40px 40px 40px; /* Top padding 0 kar di taaki gap na rahe */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header gap fix: Isse wo invisible gap khatam ho jayega */
+app-teacher-header {
+  display: block;
+  height: 0; 
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ================= FORM STYLING ================= */
+form {
+  max-width: 850px;
+  width: 100%;
+  margin: 30px auto; /* Form ko page ke beech mein lane ke liye */
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.form-title {
+  color: #0a2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+h3 {
+  color: #0a2540; /* Aapke image ke hisab se dark blue color */
+  font-size: 18px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+/* ================= INPUTS & GRID ================= */
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fdfdfd;
+  transition: 0.3s;
+  margin-bottom: 5px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #1abc9c;
+  background: #fff;
+}
+
+/* Multiple fields in one row */
+.flex-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.flex-col {
+  flex: 1;
+}
+
+/* ================= CHAPTERS SECTION ================= */
+.chapter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chapter-row input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* ================= BUTTONS ================= */
+.add-btn {
+  background: #f0fdf4;
+  color: #1abc9c;
+  padding: 10px 15px;
+  border: 1px dashed #1abc9c;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.remove-btn {
+  background: #fee2e2;
+  color: #ef4444;
+  width: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: #0a2540; /* Dark blue submit button */
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .content-area {
+    margin-left: 0;
+  }
+  .flex-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

@@ -1,0 +1,94 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f7fc;
+}
+
+.content-area {
+  flex: 1;
+  padding: 30px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.custom-table th {
+  background: #2c3e50;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.custom-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.custom-table tr:hover {
+  background: #f9f9f9;
+}
+
+.approve-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+
+.approve-btn:hover {
+  background: #219150;
+}
+
+.reject-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reject-btn:hover {
+  background: #c0392b;
+}
+
+.status-approved {
+  background: #d4edda;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-rejected {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mt-5 {
+  margin-top: 40px;
+}

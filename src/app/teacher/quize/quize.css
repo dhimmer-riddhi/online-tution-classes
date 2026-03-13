@@ -1,0 +1,113 @@
+/* Layout */
+
+.teacher-layout{
+display:flex;
+min-height:100vh;
+background:#f4f6f9;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Sidebar */
+
+app-teacher-header{
+width:250px;
+background:#2c3e50;
+color:white;
+min-height:100vh;
+}
+
+/* Right Content */
+
+.content{
+flex:1;
+padding:40px;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+}
+
+/* Quiz Container */
+
+.quiz-container{
+width:700px;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Title */
+
+.quiz-container h2{
+margin-bottom:20px;
+color:#333;
+}
+
+/* Labels */
+
+.quiz-container label{
+font-weight:600;
+display:block;
+margin-top:15px;
+margin-bottom:6px;
+color:#444;
+}
+
+/* Inputs & Select */
+
+.quiz-container input,
+.quiz-container select{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:14px;
+margin-bottom:10px;
+}
+
+/* Question Box */
+
+.quiz-container h3{
+margin-top:20px;
+margin-bottom:10px;
+color:#555;
+}
+
+/* Button */
+
+.quiz-container button{
+margin-top:20px;
+padding:12px;
+width:100%;
+background:#1abc9c;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.quiz-container button:hover{
+background:#0f8d74;
+}
+.title  {
+color: #0a2540;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.button create-quiz {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  background: #1abc9c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}

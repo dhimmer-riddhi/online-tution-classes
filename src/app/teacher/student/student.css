@@ -1,0 +1,125 @@
+/* ===== STUDENT PAGE LAYOUT ===== */
+.teacher-layout {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #f4f7fb, #eef3f8);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* MAIN CONTENT AREA */
+.content {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Heading aur Table ko horizontal center karne ke liye */
+}
+
+.content h2 {
+  font-size: 32px;
+  color: #0a2540;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center; /* Heading center */
+  width: 100%;
+}
+
+/* ===== CENTERED TABLE DESIGN ===== */
+table {
+  width: 95%; /* Thoda margin side mein chhodne ke liye */
+  max-width: 1100px;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  background: transparent;
+  margin: 0 auto; /* Table container mein center rahegi */
+}
+
+/* Headers Alignment */
+th {
+  padding: 15px 20px;
+  text-align: center; /* Header text center */
+  color: #0a2540;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+}
+
+/* Table Data Cells Alignment */
+td {
+  padding: 18px 20px;
+  text-align: center; /* Cells ka saara content center */
+  vertical-align: middle;
+  color: #2c3e50;
+  font-size: 15px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Rows Styling */
+tr {
+  background: white;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+tr:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Rounded Corners */
+td:first-child {
+  border-left: 1px solid #f0f0f0;
+  border-radius: 12px 0 0 12px;
+}
+
+td:last-child {
+  border-right: 1px solid #f0f0f0;
+  border-radius: 0 12px 12px 0;
+}
+
+/* ===== BADGES & BUTTONS CENTERED ===== */
+.subjects-container {
+  display: flex;
+  justify-content: center; /* Badges ko cell ke andar center karega */
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+span {
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #dff6f3, #c8e6ff);
+  color: #0a2540;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Action Buttons Center */
+.actions-cell {
+  display: flex;
+  justify-content: center; /* Buttons cell mein center rahenge */
+  gap: 10px;
+}
+
+.approve, .reject {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.approve {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+}
+
+.reject {
+  background: #e74c3c;
+  color: white;
+}

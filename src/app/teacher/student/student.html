@@ -1,0 +1,49 @@
+<div class="teacher-layout">
+
+  <!-- Sidebar -->
+   <app-teacher-header></app-teacher-header>
+
+  <!-- Right Content -->
+  <div class="content">
+
+    <h2>My Students</h2>
+
+    <table>
+
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Standard</th>
+        <th>Subjects</th>
+      </tr>
+
+      <tr *ngFor="let student of students">
+
+        <td>{{student.fullName}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.standard}}</td>
+
+        <td>
+          <span *ngFor="let sub of student.subjects">
+            {{sub}}
+          </span>
+        </td>
+        <td>
+
+          <button class="approve" (click)="approveStudent(student)">
+            Approve
+          </button>
+
+          <button class="reject" (click)="rejectStudent(student)">
+            Reject
+          </button>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>

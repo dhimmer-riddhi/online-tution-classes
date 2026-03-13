@@ -1,0 +1,282 @@
+/* ================= HEADER ================= */
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #e6dada, #274046);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  padding-top: 80px;
+  position: relative;
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #000;
+  transition: 0.3s;
+}
+
+.breadcrumb a:hover {
+  color: #1abc9c;
+}
+
+.breadcrumb span {
+  color: #000;
+}
+
+/* ================= FORM SECTION ================= */
+.contact-form-section {
+  display: flex;
+  justify-content: center;
+  margin-top: -100px;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+.contact-card {
+  width: 70%;
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.6s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-card h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* ================= FORM STYLE ================= */
+.form-step {
+  animation: slideFade 0.5s ease;
+}
+
+@keyframes slideFade {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1abc9c;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,188,156,0.15);
+}
+
+/* ================= NEW: PREVIEW & VIEW STYLE ================= */
+.preview-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-view {
+  background: #f0f0f0;
+  color: #333;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+}
+
+.btn-view:hover {
+  background: #e0e0e0;
+  color: #000;
+}
+
+.preview-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #1abc9c;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.preview-img:hover {
+  transform: scale(1.1);
+}
+
+/* ================= BUTTONS ================= */
+.btn-next,
+.btn-back,
+.btn-submit {
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-next {
+  background: #28a745;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-next:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(40,167,69,0.3);
+}
+
+.btn-back {
+  background: #ddd;
+  margin-right: 10px;
+}
+
+.btn-back:hover {
+  background: #ccc;
+}
+
+.btn-submit {
+  background: #1abc9c;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+.btn-submit:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ================= CARD ANIMATION ================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= FORM IMAGE ================= */
+.contact-form-section img:not(.preview-img) {
+  position: absolute;
+  left: -150px;
+  top: 690px;
+  width: 280px;
+  bottom: -5000px;
+  transform: rotate(-30deg) skewX(-0.91deg) translateY(0px);
+  z-index: 0;
+}
+
+img {
+  border: none;
+  outline: none;
+  max-width: 100%;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .contact-card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .contact-header h1 {
+    font-size: 32px;
+  }
+
+  .breadcrumb {
+    padding-left: 20px;
+  }
+
+  .contact-form-section img:not(.preview-img) {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin: 20px auto 0;
+    display: block;
+    transform: none;
+  }
+}
+
+/* ================= TOAST STYLE ================= */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.toast {
+  min-width: 320px;
+  background: #28a745;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  font-size: 15px;
+}
+
+.toast-body {
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-close {
+  filter: invert(1);
+}

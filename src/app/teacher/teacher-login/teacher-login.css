@@ -1,0 +1,187 @@
+/* ================= HEADER ================= */
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #e6dada, #274046);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  padding-top: 90px;
+  color: #000;
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* ================= BREADCRUMB ================= */
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #000;
+  transition: 0.3s;
+}
+
+.breadcrumb a:hover {
+  color: #1abc9c;
+}
+
+.breadcrumb span {
+  color: #000;
+}
+
+/* ================= FORM SECTION ================= */
+.contact-form-section {
+  display: flex;
+  justify-content: center;
+  margin-top: -100px;   /* card overlap */
+  padding-bottom: 80px;
+}
+
+.contact-card {
+  width: 50%;
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.6s ease;
+  position: relative;   /* important for absolute image positioning */
+}
+
+.contact-card h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+/* ================= FORM STYLE ================= */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus {
+  border-color: #1abc9c;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,188,156,0.15);
+}
+
+/* ================= BUTTON ================= */
+.btn-submit {
+  padding: 12px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 15px;
+  background: #1abc9c;
+  color: white;
+}
+
+.btn-submit:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(26,188,156,0.3);
+}
+
+/* ================= IMAGE ================= */
+.contact-form-section img {
+  position: absolute;
+  left: -180px;   /* slightly inside */
+  top: 220px;     /* near button level */
+  width: 280px;   /* size adjust */
+  transform: rotate(-0.9deg) skewX(-0.91deg) translateY(0px);
+  /* cross angle effect */
+  z-index: 0;     /* behind button overlap */
+  border: none;
+  outline: none;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .contact-header {
+    height: 280px;
+    padding-top: 70px;
+  }
+
+  .contact-content h1 {
+    font-size: 32px;
+  }
+
+  .contact-card {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .contact-form-section img {
+    display: none; /* hide decorative image on mobile */
+  }
+  
+}
+/* Toast Container Top Center */
+
+.toast-container{
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 9999;
+}
+
+/* Toast Style */
+
+.toast{
+min-width: 300px;
+background: #0bc558;
+color: white;
+border-radius: 8px;
+box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+font-size: 14px;
+}
+
+/* Toast Body */
+
+.toast-body{
+padding: 12px 15px;
+text-align: center;
+}
