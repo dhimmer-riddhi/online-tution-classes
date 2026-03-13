@@ -35,13 +35,8 @@ export const routes: Routes = [
   // ================= STUDENT =================
 
   { path: 'student/student-header', component: StudentHeader },
-<<<<<<< HEAD
-  { path: 'student/stud-registration', component: StudRegistration},
-  { path: 'student/stud-sign-in', component: StudSignIn},
-=======
   { path: 'student/stud-registration', component: StudRegistration },
   { path: 'student/stud-sign-in', component: StudSignIn },
->>>>>>> 737a5ab05aaa51f0911fa7d0e772004038eec193
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
   { path: 'student/slider', component: Slider },
@@ -92,9 +87,6 @@ export const routes: Routes = [
   { path: 'admin/admin-sidebar', component: AdminSidebar },
   { path: 'admin/manage-teacher', component: ManageTeacher },
 
-<<<<<<< HEAD
-
-=======
   { path: 'teacher/teacher-portal', component: TeacherPortal },
   { path: 'teacher/teacher-login', component: TeacherLogin },
   { path: 'teacher/teacher-registration', component: TeacherRegistration },
@@ -113,32 +105,5 @@ export const routes: Routes = [
       // { path: 'teacher/assignment', component: TeacherAssignment },
       { path: 'teacher/quiz', component: Quize },
 
-      
-
     
-  // // Fallback
- // { path: '**', redirectTo: 'student/stud-home' },
-
-  {
-    path: 'student/student-header',
-    component: StudentHeader
-  },
-  {
-    path: 'student/stud-registration',
-    component: StudRegistration
-  },
-  {
-    path: 'student/stud-sign-in',
-    component: StudSignIn
-  },
-  {
-    path: 'student/stud-home',
-    component: StudHome
-  },
-  {
-    path: 'student/about',
-    component: About
-  },
-    
->>>>>>> 737a5ab05aaa51f0911fa7d0e772004038eec193
 ];
