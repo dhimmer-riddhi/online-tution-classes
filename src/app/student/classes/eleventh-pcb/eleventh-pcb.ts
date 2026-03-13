@@ -4,10 +4,11 @@ import { StudFooter } from "../../stud-footer/stud-footer";
 import { FirebaseCollections } from '../../../firebase-service/firebase-enum';
 import { FirebaseService } from '../../../firebase-service/firebase-service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-eleventh-pcb',
-  imports: [StudentHeader, StudFooter,CommonModule],
+  imports: [StudentHeader, StudFooter,CommonModule,RouterLink],
   templateUrl: './eleventh-pcb.html',
   styleUrl: './eleventh-pcb.css',
 })

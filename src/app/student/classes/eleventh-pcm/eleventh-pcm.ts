@@ -4,16 +4,17 @@ import { StudFooter } from "../../stud-footer/stud-footer";
 import { FirebaseCollections } from '../../../firebase-service/firebase-enum';
 import { FirebaseService } from '../../../firebase-service/firebase-service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-eleventh-pcm',
-  imports: [StudentHeader, StudFooter,CommonModule],
+  imports: [StudentHeader, StudFooter,CommonModule,RouterLink],
   templateUrl: './eleventh-pcm.html',
   styleUrl: './eleventh-pcm.css',
 })
 export class EleventhPcm {
 
-                  cards: any[] = [];
+  cards: any[] = [];
   videos: any[] = [];
 
   studentData:any = null

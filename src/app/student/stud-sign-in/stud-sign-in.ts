@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { StudentHeader } from "../student-header/student-header";
 import { StudFooter } from "../stud-footer/stud-footer";
 import { FirebaseService } from '../../firebase-service/firebase-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-stud-sign-in',
-  imports: [ReactiveFormsModule, StudentHeader, StudFooter],
+  imports: [ReactiveFormsModule, StudentHeader, StudFooter,RouterLink],
   templateUrl: './stud-sign-in.html',
   styleUrl: './stud-sign-in.css',
 })
@@ -44,28 +44,35 @@ export class StudSignIn implements OnInit{
   const email = this.loginForm.value.email.trim().toLowerCase();
   const password = this.loginForm.value.password.trim();
 
-  const student = this.students.find(
-    s =>
-      s.email?.trim().toLowerCase() === email &&
-      s.password?.trim() === password
-  );
+  // 🔥 Firebase thi fresh data lo
+  this.firebaseService.getStudents().subscribe(data => {
 
-  console.log("Matched Student:", student);
+    const student = data.find(
+      (s: any) =>
+        s.email?.trim().toLowerCase() === email &&
+        s.password?.trim() === password
+    );
 
-  if (!student) {
-    alert("❌ Invalid Email or Password");
-    return;
-  }
+    console.log("Matched Student:", student);
 
-  if (student.status !== 'approved') {
-    alert("⏳ Your account is not approved yet.");
-    return;
-  }
+    if (!student) {
+      alert("❌ Invalid Email or Password");
+      return;
+    }
 
-  alert("Login Successful ✅");
+    if (student.status !== 'approved') {
+      alert("⏳ Your account is not approved yet.");
+      return;
+    }
 
-  localStorage.setItem("student", JSON.stringify(student));
+    alert("Login Successful ✅");
 
-  this.router.navigate(['/student/stud-dashboard']);
+    localStorage.setItem("student", JSON.stringify(student));
+
+    this.router.navigate(['/student/stud-dashboard']);
+
+  });
+
 }
+
 }

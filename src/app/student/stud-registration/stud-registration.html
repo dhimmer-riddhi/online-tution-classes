@@ -14,6 +14,8 @@
 
 <!-- Contact Form Section -->
 <section class="contact-form-section">
+  <!-- Decorative Background Image -->
+  <img src="contact form img.png" class="contact-bg-img" alt="Image Not Found">
   <div class="contact-card">
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -55,13 +57,44 @@
         </div>
 
         <div class="form-group">
+
           <label>City</label>
-          <input type="text" formControlName="city">
+
+          <input type="text" formControlName="city" list="cityList" placeholder="Select or type city">
+
+          <datalist id="cityList">
+
+            <option value="Valsad">
+            <option value="Vapi">
+            <option value="Surat">
+            <option value="Navsari">
+            <option value="Ahmedabad">
+            <option value="Vadodara">
+            <option value="Mumbai">
+            <option value="Pune">
+
+          </datalist>
+
         </div>
 
         <div class="form-group">
+
           <label>State</label>
-          <input type="text" formControlName="state">
+
+          <input type="text" formControlName="state" list="stateList" placeholder="Select or type state">
+
+          <datalist id="stateList">
+
+            <option value="Gujarat">
+            <option value="Maharashtra">
+            <option value="Rajasthan">
+            <option value="Madhya Pradesh">
+            <option value="Delhi">
+            <option value="Karnataka">
+            <option value="Tamil Nadu">
+
+          </datalist>
+
         </div>
 
         <button type="button" (click)="nextStep()" class="btn-next">Next</button>
@@ -120,39 +153,107 @@
         </div>
         }
 
-        @if (availableSubjects.length) {
-        <div class="form-group">
+        <div class="subject-item" *ngFor="let subject of availableSubjects">
 
-          <label>Select Subjects</label>
+          <label>
 
-          <div class="subject-list">
+            <input type="checkbox" (change)="toggleSubject($event, subject.title)">
 
-            @for (subject of availableSubjects; track subject) {
-            <label class="subject-item">
+            <span class="subject-name">
+              {{subject.title}}
+            </span>
 
-              <input type="checkbox" (change)="toggleSubject($event, subject)" />
+            <span class="subject-fees">
+              ₹{{subject.fees}}
+            </span>
 
-              {{subject}}
-
-            </label>
-            }
-
-          </div>
+          </label>
 
         </div>
-        }
 
+        <!-- ⭐ Profile Image Upload -->
+        <div class="form-group">
+
+          <label>Upload Profile Image</label>
+
+          <input type="file" accept="image/*" (change)="onFileSelected($event)">
+
+        </div>
+
+        <div class="image-preview" *ngIf="imagePreview">
+          <img [src]="imagePreview">
+        </div>
         <button type="button" (click)="previousStep()" class="btn-back">Back</button>
-        <button type="submit" class="btn-submit">Submit</button>
+        <button type="button" (click)="goToPayment()" class="btn-next">Next</button>
 
       </div>
+      }
+      <!-- STEP 3 PAYMENT -->
+      @if (step === 3) {
+
+      <div class="form-step payment-step">
+
+        <h2>Tuition Fees Payment</h2>
+
+        <p>Please scan the QR code and pay fees</p>
+
+        <div class="qr-container">
+
+          <img src="qr-code.png" class="qr-image" alt="UPI QR Code">
+
+        </div>
+
+        <h3>Total Fees : ₹{{ getTotalFees() }}</h3>
+
+        <div class="form-group">
+
+          <label>Transaction ID</label>
+
+          <input type="text" name="transactionId" [(ngModel)]="transactionId" [ngModelOptions]="{standalone:true}"
+            placeholder="Enter UPI Transaction ID" required>
+
+        </div>
+
+        <div class="payment-buttons">
+
+          <button type="button" (click)="previousStep()" class="btn-back">
+            Back
+          </button>
+
+          <button type="submit" class="btn-submit" [disabled]="!transactionId">
+            Complete Registration
+          </button>
+
+        </div>
+
+      </div>
+
       }
 
     </form>
 
-    <img src="contact form img.png" alt="Image Not Found">
+  </div>
+<!-- Toast Container -->
+<div class="toast-container custom-toast-container">
+
+  <div #toastRef class="toast custom-toast border-0" role="alert">
+
+    <div class="d-flex">
+
+      <div class="toast-body">
+        {{toastMessage}}
+      </div>
+
+      <button type="button"
+              class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast">
+      </button>
+
+    </div>
 
   </div>
+
+</div>
 </section>
 
 <app-stud-footer></app-stud-footer>

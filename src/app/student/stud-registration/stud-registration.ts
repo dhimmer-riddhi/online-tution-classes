@@ -13,13 +13,14 @@ import { StudentRegistration } from '../../interface/student-registration.interf
 import { StudentHeader } from "../student-header/student-header";
 import { StudFooter } from "../stud-footer/stud-footer";
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
-import { Router } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
+import { ViewChild, ElementRef } from '@angular/core';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-stud-registration',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter,RouterLink],
   templateUrl: './stud-registration.html',
   styleUrl: './stud-registration.css',
 })
@@ -36,9 +37,19 @@ export class StudRegistration implements OnInit {
 
   // 🔥 Courses & Subjects
   courses: any[] = [];
-  availableSubjects: string[] = [];
+  transactionId = "";   // payment system
+  availableSubjects: any[] = [];
   selectedSubjects: string[] = [];
+   selectedFile: File | null = null;
+imagePreview: string | null = null;
+base64Image: string | null = null;
+toastMessage = "";
+@ViewChild('toastRef') toastRef!: ElementRef;
+
+
   private router = inject(Router);
+  
+  
 
   constructor() {
 
@@ -125,7 +136,7 @@ this.registerForm.get('board')?.valueChanges.subscribe(board => {
       course => course.class === '10th' && course.board === board
     );
 
-    this.availableSubjects = filteredCourses.map(course => course.title);
+    this.availableSubjects = filteredCourses;
 
   }
 
@@ -145,7 +156,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
           (course.stream === 'PCM' || course.stream === 'PCB')
       );
 
-      this.availableSubjects = filteredCourses.map(course => course.title);
+      this.availableSubjects = filteredCourses;
 
     } else {
 
@@ -154,7 +165,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
         course => course.class === std && course.stream === stream
       );
 
-      this.availableSubjects = filteredCourses.map(course => course.title);
+      this.availableSubjects = filteredCourses;
 
     }
 
@@ -218,8 +229,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
       } else {
-
-        alert("Please fill all required personal details properly.");
+        this.showToast("Please fill all required personal details properly.");
         this.registerForm.markAllAsTouched();
 
       }
@@ -247,7 +257,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
 
     if (this.registerForm.invalid) {
 
-      alert("Please fill all required fields.");
+      this.showToast("Please fill all required fields");
       this.registerForm.markAllAsTouched();
       return;
 
@@ -259,6 +269,9 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
 
       ...this.registerForm.value,
       subjects: this.selectedSubjects,
+      profileImage: this.base64Image, 
+      transactionId: this.transactionId,   //  payment field
+      paymentStatus: "pending",            //  payment status
       status: 'pending',
       createdAt: new Date()
 
@@ -268,7 +281,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
 
       await this.firebaseService.addStudent(formData);
 
-      alert("🎉 Registration Successful!");
+      this.showToast(" Registration Successful!");
 
       this.registerForm.reset();
       this.selectedSubjects = [];
@@ -280,8 +293,7 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
     } catch (error) {
 
       console.error("Firebase Error:", error);
-      alert("❌ Error saving data. Try again.");
-
+      this.showToast("Error saving data. Try again.");
 
     } finally {
 
@@ -290,5 +302,70 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
     }
 
   }
+ 
+  onFileSelected(event: any) {
 
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+
+    this.imagePreview = reader.result as string;
+    this.base64Image = reader.result as string;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+                                                      // payment system
+
+goToPayment(){
+
+if(this.selectedSubjects.length === 0){
+
+this.showToast("Please select subjects");
+
+return;
+
+}
+
+this.step = 3;
+
+window.scrollTo({ top: 0, behavior: 'smooth' });
+
+}
+
+
+//  totalFees 
+
+getTotalFees(){
+
+let total = 0;
+
+this.availableSubjects.forEach(sub => {
+
+if(this.selectedSubjects.includes(sub.title)){
+total += Number(sub.fees);   // convert to number
+}
+
+});
+
+return total;
+
+}
+showToast(message: string) {
+
+  this.toastMessage = message;
+
+  if (!this.toastRef) return;
+
+  const toast = new bootstrap.Toast(this.toastRef.nativeElement);
+
+  toast.show();
+
+}
 }

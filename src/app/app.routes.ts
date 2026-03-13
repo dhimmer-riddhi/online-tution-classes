@@ -16,11 +16,8 @@ import { ManageTeacher } from './admin/manage-teacher/manage-teacher';
 import { TeacherClassContent } from './teacher/teacher-class-content/teacher-class-content';
 import { StudFooter } from './student/stud-footer/stud-footer';
 import { StudStandard } from './student/stud-standard/stud-standard';
-import { Slider } from './student/slider/slider';
-
 import { TeacherRegistration } from './teacher/teacher-registration/teacher-registration';
 import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
-// import { TeacherAssignment } from './teacher/teacher-assignment/teacher-assignment';
 import { Quize } from './teacher/quize/quize';
 import { Student } from './teacher/student/student';
 import { StudDashboard } from './student/stud-dashboard/stud-dashboard';
@@ -29,6 +26,8 @@ import { Banner } from './student/stud-dashboard/banner/banner';
 import { Profile } from './student/stud-dashboard/profile/profile';
 import { Standard } from './student/stud-dashboard/standard/standard';
 import { Sidebar } from './student/stud-dashboard/sidebar/sidebar';
+
+
 
 
 
@@ -44,7 +43,8 @@ export const routes: Routes = [
   { path: 'student/stud-sign-in', component: StudSignIn },
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
-  { path: 'student/slider', component: Slider },
+  { path: 'student/stud-footer', component: StudFooter },
+
 
 
   // ================= STUDENT DASHBOARD LOAD COMPONENT =================
@@ -58,7 +58,7 @@ children:[
 { path:'profile', component:Profile },
 { path:'standard', component:Standard },
 { path:'sidebar', component:Sidebar },
-
+  { path: '', redirectTo: 'profile', pathMatch: 'full' },
 ]
 
 },
@@ -98,8 +98,8 @@ children:[
     loadComponent: () => import('./student/classes/twelv-pcm/twelv-pcm').then(m => m.TwelvPcm)
   },
 
-  { path: 'student/stud-standard', component: StudStandard },
-  { path: 'student/stud-footer', component: StudFooter },
+ 
+  
 
 
   // ================= ADMIN ROUTES =================
@@ -111,7 +111,7 @@ children:[
   { path: 'teacher/teacher-portal', component: TeacherPortal },
   { path: 'teacher/teacher-login', component: TeacherLogin },
   { path: 'teacher/teacher-registration', component: TeacherRegistration },
-
+  { path: 'admin/manage-application', component: ManageApplication },
   // ===== TEACHER PANEL (HEADER + SIDEBAR + CONTENT) =====
 
   {

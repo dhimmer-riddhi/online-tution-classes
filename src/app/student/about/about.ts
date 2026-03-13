@@ -1,12 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { StudentHeader } from "../student-header/student-header";
 import { StudFooter } from "../stud-footer/stud-footer";
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-about',
-  imports: [StudentHeader, StudFooter,CommonModule],
+  imports: [StudentHeader, StudFooter,CommonModule,RouterLink],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })

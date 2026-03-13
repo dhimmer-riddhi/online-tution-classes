@@ -19,6 +19,8 @@ export interface StudentRegistration {
   assignedTeacherId?: string;
   assignedTeacherName?: string;
   status: 'pending' | 'approved' | 'rejected';
-
+  profileImage?: string;
+  transactionId?: string;
+paymentStatus?: string;
   createdAt: Date;
 }

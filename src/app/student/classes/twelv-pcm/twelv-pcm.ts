@@ -4,10 +4,11 @@ import { StudentHeader } from "../../student-header/student-header";
 import { FirebaseCollections } from '../../../firebase-service/firebase-enum';
 import { FirebaseService } from '../../../firebase-service/firebase-service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-twelv-pcm',
-  imports: [StudFooter, StudentHeader,CommonModule],
+  imports: [StudFooter, StudentHeader,CommonModule,RouterLink],
   templateUrl: './twelv-pcm.html',
   styleUrl: './twelv-pcm.css',
 })
