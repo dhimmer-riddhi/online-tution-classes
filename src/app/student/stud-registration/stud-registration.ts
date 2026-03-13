@@ -105,26 +105,24 @@ toastMessage = "";
       });
 
     // 🔥 STANDARD CHANGE → SUBJECT FILTER
-    this.registerForm.get('standard')?.valueChanges.subscribe(std => {
-
+  this.registerForm.get('standard')?.valueChanges.subscribe(std => {
   this.availableSubjects = [];
   this.selectedSubjects = [];
 
-  if (std === '10th') {
-    this.registerForm.get('board')?.setValidators([Validators.required]);
-    this.registerForm.get('stream')?.clearValidators();
-  }
-
-  if (std === '11th' || std === '12th') {
-    this.registerForm.get('stream')?.setValidators([Validators.required]);
+  if (std === '9th') {
+    // hide board & stream validators
     this.registerForm.get('board')?.clearValidators();
+    this.registerForm.get('board')?.setValue('');
+    this.registerForm.get('board')?.updateValueAndValidity();
+
+    this.registerForm.get('stream')?.clearValidators();
+    this.registerForm.get('stream')?.setValue('');
+    this.registerForm.get('stream')?.updateValueAndValidity();
+
+    // 9th subjects fetch
+    const filteredCourses = this.courses.filter(course => course.class === '9th');
+    this.availableSubjects = filteredCourses;
   }
-
-  this.registerForm.get('board')?.updateValueAndValidity();
-  this.registerForm.get('stream')?.updateValueAndValidity();
-
-
-
 });
 this.registerForm.get('board')?.valueChanges.subscribe(board => {
 
@@ -206,37 +204,35 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
   // ===============================
 
   nextStep() {
+  if (this.step === 1) {
+    const personalFields = ['fullName', 'email', 'mobile', 'dob', 'gender', 'city', 'state'];
 
-    if (this.step === 1) {
-
-      const personalFields = [
-        'fullName',
-        'email',
-        'mobile',
-        'dob',
-        'gender',
-        'city',
-        'state'
-      ];
-
-      const isStepOneValid = personalFields.every(field =>
-        this.registerForm.get(field)?.valid
-      );
-
-      if (isStepOneValid) {
-
-        this.step = 2;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      } else {
-        this.showToast("Please fill all required personal details properly.");
-        this.registerForm.markAllAsTouched();
-
+    for (let field of personalFields) {
+      if (!this.registerForm.get(field)?.valid) {
+        let fieldName = this.getFieldLabel(field);
+        this.showToast(`Please fill your ${fieldName}`);
+        return;
       }
-
     }
 
+    this.step = 2;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+}
+
+// Add helper function
+getFieldLabel(field: string) {
+  const map: any = {
+    fullName: "full name",
+    email: "email",
+    mobile: "mobile number",
+    dob: "date of birth",
+    gender: "gender",
+    city: "city",
+    state: "state"
+  };
+  return map[field] || field;
+}
 
   // ===============================
   // 🔹 BACK BUTTON

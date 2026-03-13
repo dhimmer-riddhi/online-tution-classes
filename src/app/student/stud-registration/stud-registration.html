@@ -27,22 +27,22 @@
         <h2>Personal Details</h2>
 
         <div class="form-group">
-          <label>Full Name</label>
+          <label>Full Name <span class="text-danger">*</span></label>
           <input type="text" formControlName="fullName" placeholder="Enter full name">
         </div>
 
         <div class="form-group">
-          <label>Email</label>
+          <label>Email<span class="text-danger">*</span></label>
           <input type="email" formControlName="email" placeholder="Enter email">
         </div>
 
         <div class="form-group">
-          <label>Mobile Number</label>
+          <label>Mobile Number<span class="text-danger">*</span></label>
           <input type="text" formControlName="mobile" placeholder="Enter mobile number">
         </div>
 
         <div class="form-group">
-          <label>Date of Birth</label>
+          <label>Date of Birth<span class="text-danger">*</span></label>
           <input type="date" formControlName="dob">
         </div>
 
@@ -109,7 +109,13 @@
         <h2>Educational Details</h2>
 
         <div class="form-group">
-          <label>Standard</label>
+          <label>Standard <span class="text-danger">*</span></label>
+<!-- Board & Stream only for 10th / 11th / 12th -->
+<label *ngIf="registerForm.get('standard')?.value !== '9th'">Board <span class="text-danger">*</span></label>
+<label *ngIf="registerForm.get('standard')?.value !== '9th'">Stream <span class="text-danger">*</span></label>
+
+<!-- Science Group -->
+<label *ngIf="registerForm.get('stream')?.value==='Science'">Science Group <span class="text-danger">*</span></label>
           <select formControlName="standard">
             <option value="">Select Standard</option>
             <option>9th</option>
@@ -220,9 +226,9 @@
             Back
           </button>
 
-          <button type="submit" class="btn-submit" [disabled]="!transactionId">
-            Complete Registration
-          </button>
+          <button type="submit" class="btn-submit">
+  Complete Registration
+</button>
 
         </div>
 
