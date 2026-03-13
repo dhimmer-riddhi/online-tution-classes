@@ -9,6 +9,7 @@
 
 /* ===== SIDEBAR ===== */
 .sidebar {
+  
   width: 260px;
   background: #001e3c; /* Dark Blue from your image */
   box-shadow: 5px 0 25px rgba(0,0,0,0.1);
@@ -28,7 +29,7 @@
 }
 
 .logo img {
-  width: 160px;
+  width: 140px;
   filter: brightness(0) invert(1); /* Logo white karne ke liye agar black hai */
 }
 
@@ -77,4 +78,46 @@
   width: calc(100% - 260px);
   min-height: 100vh;
   overflow-y: auto;
+}
+/* Logout list container */
+.menu.logout {
+  margin-top: auto; /* Agar sidebar flexbox hai to ye logout ko niche bhej dega */
+  padding: 0;
+  list-style: none;
+}
+
+/* ===== LOGOUT SECTION (REPLACED CODE) ===== */
+
+.logout-section {
+  margin-top: auto; 
+  padding-bottom: 20px;
+  list-style: none; /* Dots hatane ke liye */
+}
+
+/* Logout item normal state */
+.logout-item {
+  background-color: #ff4d4d !important; /* Forcefully red background */
+  color: white !important;
+  margin: 10px 15px;
+  padding: 12px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* Specific Hover for Logout (Purane teal hover ko overwrite karega) */
+.sidebar .menu .logout-item:hover {
+  background-color: #b30000 !important; /* Deep Dark Red */
+  color: #ffffff !important; /* Text white hi rahega, teal nahi hoga */
+  transform: translateX(5px);
+  padding-left: 20px;
+}
+
+/* Logout icon fix */
+.logout-item i {
+  font-size: 1.1rem;
 }

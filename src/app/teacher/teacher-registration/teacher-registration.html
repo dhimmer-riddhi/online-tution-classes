@@ -4,10 +4,8 @@
     <h1>Teacher Registration</h1>
 
     <div class="breadcrumb">
-      <a routerLink="/teacher/teacher-portal"> 
-        🏠 Home 
-      </a>
-      <span class="separator"> &gt; </span>
+      <a routerLink="/teacher/teacher-portal">🏠 Home</a>
+      <span class="separator"> > </span>
       <span class="active">Register</span>
     </div>
   </div>
@@ -19,8 +17,9 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="registerTeacher()">
 
-      <!-- STEP 1: Personal Details -->
+      <!-- STEP 1 -->
       <div *ngIf="step === 1" class="form-step">
+
         <h2>Personal Details</h2>
 
         <div class="form-group">
@@ -39,11 +38,6 @@
         </div>
 
         <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date" formControlName="dob">
-        </div>
-
-        <div class="form-group">
           <label>Gender</label>
           <select formControlName="gender">
             <option value="">Select</option>
@@ -53,21 +47,15 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label>City</label>
-          <input type="text" formControlName="city" placeholder="Enter city">
-        </div>
+        <button type="button" (click)="nextStep()" class="btn-next">
+          Next
+        </button>
 
-        <div class="form-group">
-          <label>State</label>
-          <input type="text" formControlName="state" placeholder="Enter state">
-        </div>
-
-        <button type="button" (click)="nextStep()" class="btn-next">Next</button>
       </div>
 
-      <!-- STEP 2: Professional Details -->
+      <!-- STEP 2 -->
       <div *ngIf="step === 2" class="form-step">
+
         <h2>Professional Details</h2>
 
         <div class="form-group">
@@ -81,7 +69,7 @@
         </div>
 
         <div class="form-group">
-          <label>Upload CV (PDF/DOC)</label>
+          <label>Upload CV</label>
           <input type="file" (change)="onCvSelected($event)" accept=".pdf,.doc,.docx">
         </div>
 
@@ -90,14 +78,39 @@
           <input type="file" (change)="onPhotoSelected($event)" accept="image/*">
         </div>
 
-        <button type="button" (click)="previousStep()" class="btn-back">Back</button>
-        <button type="submit" class="btn-submit">Register ✅</button>
+        <button type="button" (click)="previousStep()" class="btn-back">
+          Back
+        </button>
+
+        <button type="submit" class="btn-submit">
+          Register
+        </button>
+
       </div>
 
     </form>
 
-    <!-- Decorative image -->
-    <img src="leaves.png" alt="Teacher Registration" class="form-image">
-
   </div>
 </section>
+
+<!-- Toast -->
+<div class="toast-container">
+
+  <div #saveToast class="toast align-items-center border-0">
+
+    <div class="d-flex">
+
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+
+      <button type="button"
+        class="btn-close me-2 m-auto"
+        data-bs-dismiss="toast">
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

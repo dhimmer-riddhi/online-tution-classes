@@ -115,7 +115,7 @@
 /* ================= IMAGE ================= */
 .contact-form-section img {
   position: absolute;
-  left: -170px;   /* slightly inside */
+  left: -180px;   /* slightly inside */
   top: 220px;     /* near button level */
   width: 280px;   /* size adjust */
   transform: rotate(-0.9deg) skewX(-0.91deg) translateY(0px);
@@ -156,4 +156,32 @@
   .contact-form-section img {
     display: none; /* hide decorative image on mobile */
   }
+  
+}
+/* Toast Container Top Center */
+
+.toast-container{
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 9999;
+}
+
+/* Toast Style */
+
+.toast{
+min-width: 300px;
+background: #0bc558;
+color: white;
+border-radius: 8px;
+box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+font-size: 14px;
+}
+
+/* Toast Body */
+
+.toast-body{
+padding: 12px 15px;
+text-align: center;
 }

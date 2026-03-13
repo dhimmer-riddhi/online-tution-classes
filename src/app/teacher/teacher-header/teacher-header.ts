@@ -31,8 +31,17 @@ export class TeacherHeader implements OnInit {
     }
   }
 
-  logout() {
-    localStorage.removeItem('teacherId');
-    this.router.navigate(['/teacher/login']);
+
+
+  onLogout() {
+    // 1. Agar aapne Token ya User data save kiya hai to use clear karein
+    localStorage.removeItem('token'); 
+    sessionStorage.clear();
+
+    // 2. Login page par redirect karein
+    // Maan lijiye aapka login route '/login' hai
+    this.router.navigate(['teacher/teacher-login']);
+    
+    console.log("User Logged Out");
   }
 }

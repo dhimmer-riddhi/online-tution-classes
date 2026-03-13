@@ -165,11 +165,11 @@
 /* ================= FORM IMAGE ================= */
 .contact-form-section img {
   position: absolute;
-  left: -190px;   /* thoda aur andar */
-  top: 520px;     /* button ke level ke paas */
+  left: -150px;   /* thoda aur andar */
+  top: 690px;     /* button ke level ke paas */
   width: 280px;   /* size adjust */
   bottom: -5000px;
-   transform: rotate(-20deg) skewX(-0.91deg) translateY(0px);
+   transform: rotate(-30deg) skewX(-0.91deg) translateY(0px);
  /* daali ko thoda cross angle dena */
   z-index: 0;     /* button ke peeche overlap */
 }
@@ -207,4 +207,34 @@ img {
     display: block;
     transform: none; /* mobile pe straight */
   }
+}
+/* Toast Container Top Center */
+.toast-container{
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 9999;
+}
+
+/* Green Success Toast */
+.toast{
+min-width: 320px;
+background: #28a745;   /* Green Color */
+color: white;
+border-radius: 10px;
+box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+font-size: 15px;
+}
+
+/* Toast Body */
+.toast-body{
+padding: 12px 16px;
+text-align: center;
+font-weight: 500;
+}
+
+/* Close Button */
+.btn-close{
+filter: invert(1);
 }

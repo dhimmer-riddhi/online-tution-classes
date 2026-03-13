@@ -1,81 +1,123 @@
+/* ===== MAIN LAYOUT ===== */
 .admin-layout {
   display: flex;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
-  background: #f9fafc;
+  background: #f4f7f9; /* Light background for content contrast */
+  margin: 0;
 }
 
-/* Sidebar */
+/* ===== SIDEBAR ===== */
 .sidebar {
+  
   width: 260px;
-  background: #ffffff;
-  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.05);
-  padding: 25px 40px;
-  border-radius: 0 25px 25px 0;
-  transition: all 0.3s ease;
+  background: #001e3c; /* Dark Blue from your image */
+  box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+  padding: 25px 0; /* Padding adjust for full-width active state */
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 0; /* Removing radius for a cleaner professional look */
 }
 
-/* Logo */
+/* LOGO */
 .logo {
   text-align: center;
   margin-bottom: 40px;
+  padding: 0 20px;
 }
 
-.logo h2 {
-  font-weight: 700;
-  font-size: 22px;
-  color: #ff4b6e;   /* Pink accent like homepage */
+.logo img {
+  width: 140px;
+  filter: brightness(0) invert(1); /* Logo white karne ke liye agar black hai */
 }
 
-/* Menu */
+/* MENU */
 .menu {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .menu li {
-  padding: 14px 30px;
-  margin: 48px 15px;
-  border-radius: 12px;
+  padding: 16px 25px;
+  margin: 4px 0;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   display: flex;
   align-items: center;
   gap: 12px;
   font-weight: 500;
-  color: #444;
+  color: #ffffff; /* White text for dark sidebar */
 }
 
-/* Hover Effect */
+/* Hover */
 .menu li:hover {
-  background: linear-gradient(90deg, #ff4b6e, #ff758c);
-  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  color: #1abc9c; /* Teal color on hover */
   transform: translateX(5px);
 }
 
-/* Active Menu */
+/* Active State (Greenish-Teal from image) */
 .menu li.active {
-  background: linear-gradient(90deg, #ff4b6e, #ff758c);
+  background: #1abc9c; 
   color: white;
-  box-shadow: 0 8px 20px rgba(255, 75, 110, 0.3);
+  box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
 }
 
-/* Logout Special Style */
-.logout {
-  margin-top: 40px;
-  background: #fff0f3;
-  color: #ff4b6e;
+/* Icons styling */
+.menu li i, .menu li span {
+  font-size: 1.1rem;
 }
 
-.logout:hover {
-  background: #ff4b6e;
-  color: white;
-}
-
-/* Content Area */
+/* ===== CONTENT AREA ===== */
 .content {
-  flex: 1;
+  margin-left: 260px;
   padding: 40px;
-  background: #f9fafc;
+  width: calc(100% - 260px);
+  min-height: 100vh;
   overflow-y: auto;
+}
+/* Logout list container */
+.menu.logout {
+  margin-top: auto; /* Agar sidebar flexbox hai to ye logout ko niche bhej dega */
+  padding: 0;
+  list-style: none;
+}
+
+/* ===== LOGOUT SECTION (REPLACED CODE) ===== */
+
+.logout-section {
+  margin-top: auto; 
+  padding-bottom: 20px;
+  list-style: none; /* Dots hatane ke liye */
+}
+
+/* Logout item normal state */
+.logout-item {
+  background-color: #ff4d4d !important; /* Forcefully red background */
+  color: white !important;
+  margin: 10px 15px;
+  padding: 12px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* Specific Hover for Logout (Purane teal hover ko overwrite karega) */
+.sidebar .menu .logout-item:hover {
+  background-color: #b30000 !important; /* Deep Dark Red */
+  color: #ffffff !important; /* Text white hi rahega, teal nahi hoga */
+  transform: translateX(5px);
+  padding-left: 20px;
+}
+
+/* Logout icon fix */
+.logout-item i {
+  font-size: 1.1rem;
 }
