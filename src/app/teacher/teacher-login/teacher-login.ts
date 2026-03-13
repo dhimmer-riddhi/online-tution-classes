@@ -5,7 +5,9 @@ import { FirebaseService } from '../../firebase-service/firebase-service';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
-declare var bootstrap: any
+
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-teacher-login',
   standalone: true,
@@ -14,10 +16,9 @@ declare var bootstrap: any
   styleUrl: './teacher-login.css',
 })
 export class TeacherLogin {
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
 
   @ViewChild('saveToast') saveToast!: ElementRef;
-
   toastMessage = '';
   
   constructor(
@@ -31,14 +32,15 @@ export class TeacherLogin {
     });
   }
 
-    showToast(message: string) {
+  showToast(message: string) {
     this.toastMessage = message;
-
     setTimeout(() => {
-      const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
-        delay: 3000
-      });
-      toast.show();
+      if (this.saveToast) {
+        const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
+          delay: 3000
+        });
+        toast.show();
+      }
     }, 100);
   }
 
@@ -49,32 +51,48 @@ export class TeacherLogin {
     }
 
     try {
-      const teachers = await firstValueFrom(
-        this.firebaseService.getCollection<any>(FirebaseCollections.Teachers)
-      );
-
       const email = this.loginForm.value.email.trim().toLowerCase();
       const password = this.loginForm.value.password.trim();
 
-      const teacher = teachers.find(t =>
-        t.email?.toLowerCase() === email &&
-        t.password === password &&
-        t.status === "approved"
+      // ✅ Using your existing service method: getDocumentsByField
+      // Isse "Property does not exist" wala error nahi aayega
+      const teachers = await firstValueFrom(
+        this.firebaseService.getDocumentsByField<any>(
+          FirebaseCollections.Teachers, 
+          'email', 
+          email
+        )
       );
 
+      // Check if teacher exists
+      const teacher = teachers && teachers.length > 0 ? teachers[0] : null;
+
       if (!teacher) {
-        this.showToast('Invalid login or account not approved yet.');
+        this.showToast('Account not found.');
         return;
       }
 
-      // ✅ FIXED: Aapke Firebase mein field 'teacherName' hai
+      // Password and Status Check
+      if (teacher.password !== password) {
+        this.showToast('Invalid password.');
+        return;
+      }
+
+      if (teacher.status !== "approved") {
+        this.showToast('Your account is pending approval.');
+        return;
+      }
+
+      // Success Logic
       const nameToSave = teacher.teacherName || "Teacher";
-      
       sessionStorage.setItem("teacherName", nameToSave); 
       localStorage.setItem("teacherId", teacher.id);
 
-      this.showToast('Login Success! Welcome'  + nameToSave);
-      this.router.navigate(['/teacher/dashboard']);
+      this.showToast('Login Success! Welcome ' + nameToSave);
+
+      setTimeout(() => {
+        this.router.navigate(['/teacher/dashboard']);
+      }, 1000);
 
     } catch (error) {
       console.error("Login Error:", error);
