@@ -126,12 +126,5 @@ children:[
       // { path: 'teacher/assignment', component: TeacherAssignment },
       { path: 'teacher/quiz', component: Quize },
 
-      
-
-    
-  // // Fallback
- // { path: '**', redirectTo: 'student/stud-home' },
-
-
     
 ];

@@ -19,8 +19,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-stud-registration',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter,RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, StudentHeader, StudFooter],
   templateUrl: './stud-registration.html',
   styleUrl: './stud-registration.css',
 })
