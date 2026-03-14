@@ -24,6 +24,7 @@ import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
 // import { TeacherAssignment } from './teacher/teacher-assignment/teacher-assignment';
 import { Quize } from './teacher/quize/quize';
 import { Student } from './teacher/student/student';
+import { Notes } from './teacher/notes/notes';
 
 
 
@@ -102,7 +103,7 @@ export const routes: Routes = [
       
       { path: 'teacher/class-content', component: TeacherClassContent },
       { path: 'teacher/courses', component: TeacherCourses },
-      // { path: 'teacher/assignment', component: TeacherAssignment },
+       { path: 'teacher/notes', component: Notes},
       { path: 'teacher/quiz', component: Quize },
 
       

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StudentRegistration } from '../../interface/student-registration.interface';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
@@ -6,6 +6,7 @@ import { TeacherHeader } from "../teacher-header/teacher-header";
 import { Quiz } from '../../interface/quiz';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-student',
@@ -17,8 +18,28 @@ export class Student implements OnInit {
   students: StudentRegistration[] = [];
 
   teacherId = '';
+  
+  @ViewChild('saveToast') saveToast!: ElementRef;
 
-  constructor(private firebaseService: FirebaseService) { }
+  toastMessage = '';
+
+
+  constructor(private firebaseService: FirebaseService
+    , private cd: ChangeDetectorRef
+  ) { }
+
+  showToast(message: string) {
+    this.toastMessage = message;
+    this.cd.detectChanges();
+    setTimeout(() => {
+      const toastElement = this.saveToast.nativeElement;
+      const existingToast = bootstrap.Toast.getInstance(toastElement);
+      if (existingToast) existingToast.dispose();
+      const toast = new bootstrap.Toast(toastElement, { delay: 4000, autohide: true });
+      toast.show();
+    }, 100);
+  }
+
   ngOnInit() {
 
     this.teacherId = localStorage.getItem("teacherId") || '';
@@ -65,7 +86,7 @@ export class Student implements OnInit {
       }
     );
 
-    alert("Student Approved");
+    this.showToast('Student Approved');
 
   }
 
@@ -79,7 +100,7 @@ export class Student implements OnInit {
       }
     );
 
-    alert("Student Rejected");
+    this.showToast('Student Rejected');
 
   }
 

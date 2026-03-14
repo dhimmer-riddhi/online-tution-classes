@@ -1,4 +1,4 @@
-export interface Assignment {
+export interface  Notes{
 
   id?: string;
 

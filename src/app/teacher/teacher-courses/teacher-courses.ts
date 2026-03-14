@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
@@ -30,7 +30,8 @@ uploading = false;   // image uploading loader
 
 constructor(
 private fb: FormBuilder,
-private firebaseService: FirebaseService
+private firebaseService: FirebaseService,
+private cd: ChangeDetectorRef
 ) {
 
 this.courseForm = this.fb.group({
@@ -60,6 +61,17 @@ this.fb.control('', Validators.required)
 
 });
 }
+showToast(message: string) {
+    this.toastMessage = message;
+    this.cd.detectChanges();
+    setTimeout(() => {
+      const toastElement = this.saveToast.nativeElement;
+      const existingToast = bootstrap.Toast.getInstance(toastElement);
+      if (existingToast) existingToast.dispose();
+      const toast = new bootstrap.Toast(toastElement, { delay: 4000, autohide: true });
+      toast.show();
+    }, 100);
+  }
 
 get chapters() {
 return this.courseForm.get('chapters') as FormArray;
@@ -121,13 +133,7 @@ uploadTeacherImage(event: any) {
   reader.readAsDataURL(file);
 }
 
-showToast(message: string) {
-    this.toastMessage = message;
-    const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
-      delay: 3000
-    });
-    toast.show();
-  }
+
 // SAVE COURSE
 
 async submit() {
@@ -138,7 +144,7 @@ if (this.courseForm.invalid) {
 
 this.courseForm.markAllAsTouched();
 
-alert("Please fill all required fields");
+this.showToast('Please fill all required fields');
 
 return;
 
@@ -153,7 +159,7 @@ FirebaseCollections.Courses,
 formData
 );
 
-alert('Course Added Successfully');
+this.showToast('Course Added Successfully');
 
 this.courseForm.reset();
 this.teacherImage = null;
@@ -163,7 +169,7 @@ this.showStream = false;
 } catch (error) {
 
 console.error(error);
-alert("Error saving course");
+this.showToast('Error saving course');
 
 }
 

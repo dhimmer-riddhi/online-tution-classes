@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 // import { Quiz, QuizQuestion } from '../../interface/quiz';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { Teacher } from '../../interface/teacher';
@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { TeacherHeader } from "../teacher-header/teacher-header";
 import { Quiz } from '../../interface/quiz';
 import { ClassContent } from '../../interface/class-content';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-quize',
@@ -27,7 +28,13 @@ export class Quize implements OnInit {
 
   questions: any[] = [];
 
-  constructor(private firebaseService: FirebaseService) { }
+  @ViewChild('saveToast') saveToast!: ElementRef;
+
+  toastMessage = '';
+
+  constructor(private firebaseService: FirebaseService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
 
@@ -38,6 +45,19 @@ export class Quize implements OnInit {
     this.initQuestions();
 
   }
+
+  showToast(message: string) {
+      this.toastMessage = message;
+      this.cd.detectChanges();
+      setTimeout(() => {
+        const toastElement = this.saveToast.nativeElement;
+        const existingToast = bootstrap.Toast.getInstance(toastElement);
+        if (existingToast) existingToast.dispose();
+        const toast = new bootstrap.Toast(toastElement, { delay: 4000, autohide: true });
+        toast.show();
+      }, 100);
+    }
+
 
   initQuestions() {
 
@@ -94,7 +114,7 @@ export class Quize implements OnInit {
       quiz
     );
 
-    alert("Quiz Created Successfully");
+    this.showToast('Quiz Created Successfully');
 
   }
 

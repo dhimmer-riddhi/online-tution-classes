@@ -3,7 +3,7 @@
 
   <div class="main-container">
     <div class="top-banner">
-      <h1>Upload Subject Videos</h1>
+      <h1>Upload Subject Notes</h1>
     </div>
 
     <div class="standard-section">
@@ -29,7 +29,7 @@
       @for (sub of subjects; track sub.id) {
       <div class="subject-card">
         <h3>{{ sub.title }}</h3>
-        <button (click)="openSubject(sub)">Upload Video</button>
+        <button (click)="openSubject(sub)">Upload Notes</button>
       </div>
       }
     </div>
@@ -50,21 +50,24 @@
       <div class="video-form-container">
         <div class="form-left">
           <div class="input-group">
-            <label>Video Title</label>
-            <input type="text" placeholder="Video Title" [(ngModel)]="video.title" />
+            <label>Notes Title</label>
+            <input type="text" placeholder="Title of the notes" [(ngModel)]="notes.title" />
           </div>
 
           <div class="input-group">
-            <label>Video Description</label>
-            <ckeditor [editor]="Editor" [(ngModel)]="video.description"></ckeditor>
+            <label>Notes Description</label>
+            <ckeditor [editor]="Editor" [(ngModel)]="notes.description"></ckeditor>
           </div>
 
-          @if (video.url) {
+          @if (notes.url) {
           <div class="video-preview">
-            <video width="100%" controls>
-              <source [src]="video.url">
-            </video>
-            <p>{{ video.fileName }}</p>
+            <div class="d-flex align-items-center gap-2 p-3 border rounded bg-light">
+              <span style="font-size: 24px;">📄</span>
+              <div>
+                <p class="mb-0 text-primary fw-bold">{{ notes.fileName }}</p>
+                <small class="text-muted">File uploaded successfully</small>
+              </div>
+            </div>
           </div>
           }
         </div>
@@ -72,32 +75,18 @@
         <div class="form-right">
           <div class="input-group">
             <label class="label-blue">Date</label>
-            <input type="date" [(ngModel)]="video.date" />
+            <input type="date" [(ngModel)]="notes.date" />
           </div>
 
           <div class="input-group">
-            <label class="label-blue">Video Duration (Minutes)</label>
-            <input type="number" placeholder="0" [(ngModel)]="video.time" />
+            <label>Choose Notes File (PDF, PPT, Word, Excel, Text)</label>
+            <input type="file" 
+                   accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt" 
+                   (change)="onNotesUpload($event)" />
           </div>
 
-          <div class="input-group">
-            <label>Choose Video File</label>
-            <input type="file" [accept]="videoAccept" (change)="onVideoUpload($event)" />
-          </div>
-
-          <div class="input-group">
-            <label>Choose Image File</label>
-            <input type="file" accept="image/*" (change)="onImageUpload($event)" />
-          </div>
-
-          @if (video.image) {
-          <div class="image-preview">
-            <img [src]="video.image" width="100%" style="border-radius: 8px; margin-top: 10px;" />
-          </div>
-          }
-
-          <button class="save-btn" (click)="saveVideo()">
-            Save Lesson
+          <button class="save-btn" (click)="saveNotes()">
+            Save Notes
           </button>
         </div>
       </div>
@@ -105,6 +94,7 @@
     }
   </div>
 </div>
+
 <div class="toast-container">
   <div #saveToast class="toast align-items-center border-0">
     <div class="d-flex">

@@ -5,19 +5,20 @@ import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
 import { TeacherHeader } from "../teacher-header/teacher-header";
 declare var bootstrap: any;
+
 // CKEditor Imports
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
-  selector: 'app-teacher-class-content',
+  selector: 'app-notes',
   standalone: true,
-  imports: [CommonModule, FormsModule, TeacherHeader, CKEditorModule], // CKEditorModule added
-  templateUrl: './teacher-class-content.html',
-  styleUrls: ['./teacher-class-content.css']
+  imports: [CommonModule, FormsModule, TeacherHeader, CKEditorModule],
+  templateUrl: './notes.html',
+  styleUrls: ['./notes.css']
 })
-export class TeacherClassContent implements OnInit {
-  public Editor = ClassicEditor; // Editor Instance
+export class Notes implements OnInit {
+  public Editor = ClassicEditor;
 
   selectedStandard: string | null = null;
   selectedCategory: string | null = null;
@@ -27,24 +28,23 @@ export class TeacherClassContent implements OnInit {
   categories: string[] = [];
   subjects: any[] = [];
 
-  video: any = {
+  // Updated variables for Notes
+  notes: any = {
     title: '',
-    description: '', // This will hold Rich Text data
+    description: '',
     date: '',
-    time: '',
     url: '',
-    fileName: '',
-    image: ''
+    fileName: ''
   };
 
   @ViewChild('saveToast') saveToast!: ElementRef;
-
   toastMessage = '';
 
-  videoAccept = '.mp4,.avi,.mkv,.mov,.wmv,.flv,.webm';
-  
-
-  constructor(private firebaseService: FirebaseService, private ngZone: NgZone,private cd: ChangeDetectorRef) {}
+  constructor(
+    private firebaseService: FirebaseService, 
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {}
 
@@ -90,53 +90,41 @@ export class TeacherClassContent implements OnInit {
     });
   }
 
-  onVideoUpload(event: any) {
+  onNotesUpload(event: any) {
     const file = event.target.files[0];
     if (!file) return;
+
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'Tution_videos');
-    fetch('https://api.cloudinary.com/v1_1/dovmj5mds/upload', { method: 'POST', body: formData })
+    formData.append('upload_preset', 'Tution_videos'); // Apne Cloudinary preset ka use karein
+    
+    // Using 'auto' upload for documents like PDF, DOCX, etc.
+    fetch('https://api.cloudinary.com/v1_1/dovmj5mds/auto/upload', { 
+      method: 'POST', 
+      body: formData 
+    })
       .then(res => res.json())
       .then(data => {
         this.ngZone.run(() => {
-          this.video.url = data.secure_url;
-          this.video.fileName = file.name;
-          this.showToast('Video Uploaded');
+          this.notes.url = data.secure_url;
+          this.notes.fileName = file.name;
+          this.showToast('Notes File Uploaded');
         });
+      })
+      .catch(err => {
+        this.showToast('Upload Failed');
+        console.error(err);
       });
   }
 
-  onImageUpload(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64Image = reader.result;
-      const formData = new FormData();
-      formData.append('file', base64Image as string);
-      formData.append('upload_preset', 'Tution_videos');
-      fetch('https://api.cloudinary.com/v1_1/dovmj5mds/image/upload', { method: 'POST', body: formData })
-        .then(res => res.json())
-        .then(data => {
-          this.ngZone.run(() => {
-            this.video.image = data.secure_url;
-            this.showToast('Image Uploaded');
-          });
-        });
-    };
-  }
-
-  async saveVideo() {
+  async saveNotes() {
     if (!this.selectedStandard || !this.selectedSubject) { this.showToast('Select Subject'); return; }
-    if (!this.video.date) { this.showToast('Select Date'); return; }
-    if (!this.video.url) { this.showToast('Upload Video First'); return; }
+    if (!this.notes.date) { this.showToast('Select Date'); return; }
+    if (!this.notes.url) { this.showToast('Upload Notes File First'); return; }
 
-    const inputDate = new Date(this.video.date);
+    const inputDate = new Date(this.notes.date);
     const day = inputDate.toLocaleDateString('en-GB', { day: '2-digit' });
     const month = inputDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    const duration = this.video.time + ' Minutes';
 
     const data = {
       standard: this.selectedStandard,
@@ -144,19 +132,20 @@ export class TeacherClassContent implements OnInit {
       subjectName: this.selectedSubject.title,
       board: this.selectedSubject.board || null,
       stream: this.selectedSubject.stream || null,
-      video: {
-        title: this.video.title,
-        description: this.video.description, // HTML content from CKEditor
-        url: this.video.url,
-        fileName: this.video.fileName,
-        image: this.video.image,
-        time: duration,
+      notes: {
+        title: this.notes.title,
+        description: this.notes.description,
+        url: this.notes.url,
+        fileName: this.notes.fileName,
         date: { day: day, month: month }
-      }
+      },
+      createdAt: new Date().toISOString()
     };
 
-    await this.firebaseService.addDocument(FirebaseCollections.ClassContent, data);
-    this.showToast('Video Saved');
-    this.video = { title: '', description: '', date: '', time: '', url: '', fileName: '', image: '' };
+    await this.firebaseService.addDocument(FirebaseCollections.Notes, data);
+    this.showToast('Notes Saved Successfully');
+    
+    // Reset Form
+    this.notes = { title: '', description: '', date: '', url: '', fileName: '' };
   }
-}   
+}
