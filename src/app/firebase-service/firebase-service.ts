@@ -177,8 +177,10 @@ export class FirebaseService {
 
     return { downloadURL };
 
-  }
-
+}
+getStudents(){
+  return this.getCollection<any>(FirebaseCollections.StudentRegistrations);
+}
 
 
 }

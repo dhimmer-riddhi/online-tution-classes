@@ -12,144 +12,183 @@ import { FirebaseCollections } from '../../../firebase-service/firebase-enum';
   styleUrl: './eleventh-commerce.css',
 })
 export class EleventhCommerce {
-handleButtonClick(_t72: any) {
-throw new Error('Method not implemented.');
-}
-  
+cards: any[] = [];
+  videos: any[] = [];
 
- // 🔹 SUBJECT TOGGLES – Open Down Videos
+  studentData:any = null
+isLoggedIn = false
 
-openAccountVideos() {
-  this.showAccountVideos = true;
-  this.showStatsVideos = false;
-  this.showEnglishVideos = false;
-}
+  currentCard = 1;
 
-openStatsVideos() {
-  this.showStatsVideos = true;
-  this.showAccountVideos = false;
-  this.showEnglishVideos = false;
-}
+  showVideo = false;
+  selectedVideo: any = null;
 
-openEnglishVideos() {
-  this.showEnglishVideos = true;
-  this.showAccountVideos = false;
-  this.showStatsVideos = false;
-}
-
-// subject section
-
-
-cards:any[] = [];
-
-currentCard = 1;
-
-constructor(private firebaseService: FirebaseService) {}
-
+  constructor(private firebaseService: FirebaseService) {}
 ngOnInit(){
+
+const student = localStorage.getItem('student')
+
+if(student){
+this.studentData = JSON.parse(student)
+this.isLoggedIn = true
+}
 
 this.firebaseService
 .getCollection(FirebaseCollections.Courses)
 .subscribe((data:any)=>{
 
-this.cards = data;
+this.cards = data.filter((course:any)=>{
 
+return course.class === '11th'
+&& course.stream === 'Commerce'
+
+})
+
+})
+
+}
+
+  // ==========================
+  // CARD SLIDER
+  // ==========================
+
+  nextCard(){
+
+    if(this.currentCard < this.cards.length){
+      this.currentCard++;
+    }
+
+  }
+
+  prevCard(){
+
+    if(this.currentCard > 1){
+      this.currentCard--;
+    }
+
+  }
+
+  // ==========================
+  // VIEW VIDEOS BUTTON
+  // ==========================
+
+  handleButtonClick(btn:any, card:any){
+
+    if(btn.text === 'View Videos'){
+
+      this.getVideosBySubject(card.title);
+
+    }
+
+  }
+
+  // ==========================
+  // FETCH VIDEOS FROM FIREBASE
+  // ==========================
+
+ getVideosBySubject(subject:string){
+
+this.firebaseService
+.getCollection(FirebaseCollections.ClassContent)
+.subscribe((data:any)=>{
+
+let videos:any[] = [];
+
+data.forEach((doc:any)=>{
+
+const item = doc.data ? doc.data : doc;
+
+console.log("Firestore item:",item);
+
+if(
+item.standard === '11th' &&
+item.subjectName === subject &&
+item.video
+){
+
+const video = item.video;
+
+videos.push({
+title: video.title,
+desc: video.description,
+duration: video.time,
+date: video.date,
+videoUrl: video.url,
+thumb: video.image
 });
 
 }
 
-nextCard() {
+});
 
-if (this.currentCard < this.cards.length) {
-this.currentCard++;
-}
+console.log("Videos fetched:",videos);
 
-}
-
-prevCard() {
-
-if (this.currentCard > 1) {
-this.currentCard--;
-}
+this.videos = videos;
+setTimeout(()=>{
+document.querySelector('.event-section')?.scrollIntoView({behavior:'smooth'});
+},100);
+});
 
 }
+  // ==========================
+  // DATE FORMAT
+  // ==========================
 
+  formatDate(dateStr:string){
 
+    if(!dateStr) return {day:'',month:''};
 
+    const d = new Date(dateStr);
 
-  showAccountVideos = false;
-showStatsVideos = false;
-showEnglishVideos = false;
+    const day = d.getDate();
 
-showVideo = false;
-selectedVideo: any = null;
+    const month = d.toLocaleString('default',{month:'short'});
 
-  // 🔹 MATHEMATICS VIDEOS (8 hoy to 8 mukjo)
-  accountVideos = [
-  {
-    title: 'Introduction to Accounting',
-    desc: 'Basic concepts and objectives of accounting explained clearly.',
-    duration: '20 Minutes',
-    date: { day: '05', month: 'Oct, 2025' },
-    thumb: 'assets/images/account-video1.jpg',
-    videoUrl: 'assets/videos/account1.mp4'
-  },
-  {
-    title: 'Journal Entries – Step by Step',
-    desc: 'Learn how to record transactions in journal properly.',
-    duration: '25 Minutes',
-    date: { day: '07', month: 'Oct, 2025' },
-    thumb: 'assets/images/account-video2.jpg',
-    videoUrl: 'assets/videos/account2.mp4'
+    const year = d.getFullYear();
+
+    return {
+      day: day,
+      month: month + ', ' + year
+    };
+
   }
-];
-statsVideos = [
-  {
-    title: 'Introduction to Statistics',
-    desc: 'Understand meaning, scope and importance of statistics.',
-    duration: '18 Minutes',
-    date: { day: '06', month: 'Oct, 2025' },
-    thumb: 'assets/images/stats-video1.jpg',
-    videoUrl: 'assets/videos/stats1.mp4'
-  },
-  {
-    title: 'Collection of Data',
-    desc: 'Primary and secondary data collection methods explained.',
-    duration: '22 Minutes',
-    date: { day: '09', month: 'Oct, 2025' },
-    thumb: 'assets/images/stats-video2.jpg',
-    videoUrl: 'assets/videos/stats2.mp4'
-  }
-];
 
-englishVideos = [
-  {
-    title: 'Prose – Explanation & Summary',
-    desc: 'Detailed explanation of prose chapter with examples.',
-    duration: '21 Minutes',
-    date: { day: '04', month: 'Oct, 2025' },
-    thumb: 'assets/images/english-video1.jpg',
-    videoUrl: 'assets/videos/english1.mp4'
-  },
-  {
-    title: 'Grammar – Tenses Made Easy',
-    desc: 'Understand all types of tenses with simple rules.',
-    duration: '23 Minutes',
-    date: { day: '10', month: 'Oct, 2025' },
-    thumb: 'assets/images/english-video2.jpg',
-    videoUrl: 'assets/videos/english2.mp4'
-  }
-];
+  // ==========================
+  // VIDEO MODAL
+  // ==========================
 
-  openVideo(video: any) {
+  openVideo(video:any){
+
     this.selectedVideo = video;
     this.showVideo = true;
+
   }
 
-  closeVideo() {
+  closeVideo(){
+
     this.showVideo = false;
     this.selectedVideo = null;
-  }
 
-  
+  }
+  // ==========================
+// SUBJECT ACCESS CHECK
+// ==========================
+
+canAccessSubject(subject:string){
+
+// login check
+if(!this.isLoggedIn) return false
+
+// class check
+if(this.studentData.standard !== '11th') return false
+
+// stream check
+if(this.studentData.stream !== 'Commerce') return false
+
+// subject check
+return this.studentData.subjects.includes(subject)
+
+}
+
+
 }

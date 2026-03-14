@@ -33,8 +33,9 @@
       </ul>
 
       <div class="hero-buttons">
-        <a href="#" class="btn primary">Book Free Demo</a>
-        <a href="#" class="btn secondary">Enroll Now</a>
+        <a routerLink="/student/stud-registration" class="btn primary">
+          Enroll Now
+        </a>
       </div>
     </div>
 
@@ -55,7 +56,7 @@
 
   <!-- LEFT CONTENT -->
   <div class="event-header-left-one">
-    <h2>Comprehensive Learning Programs for Class 9
+    <h2>Comprehensive Learning Programs for Class 9th 
 </h2>
   </div>
 
@@ -63,7 +64,6 @@
   
   
 </div>
-
 
 <div class="carousel">
   <!-- Fixed orange navigation box -->
@@ -91,14 +91,14 @@
         </div>
 
         <div class="teacher">
-          <img [src]="card.teacher.profile" />
+          <img [src]="card.teacher?.profile" />
           <div>
-            <h4>{{card.teacher.name}}</h4>
-            <small>{{card.teacher.details}}</small>
-            <p>{{card.teacher.bio}}</p>
+            <h4>{{card.teacher?.name}}</h4>
+<small>{{card.teacher?.details}}</small>
+<p>{{card.teacher?.bio}}</p>
           </div>
         </div>
-
+          
         <div class="chapters">
           <h4>Major Chapters Covered</h4>
           <ul>
@@ -107,45 +107,48 @@
         </div>
 
         <div class="btn-group">
-          <div class="btn-group">
-          <button *ngFor="let btn of card.buttons"
-                [ngClass]="['btn', btn.type]"
-                (click)="handleButtonClick(btn)">
-                 {{btn.text}}
-                    </button>
-          </div>
+
+        <button
+              class="btn primary"
+              (click)="getVideosBySubject(card.title)"
+              [disabled]="!canAccessSubject(card.title)">
+              View Videos
+        </button>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 </div>  
-<!-- ================= VIDEO SECTIONS ================= -->
 
-                                                                                            <!-- MATHEMATICS VIDEOS -->
-<div class="event-section" *ngIf="showMathVideos">
-  <!-- event header scetion -->
-   <!-- SECTION HEADER -->
-<div class="event-header">
 
-  <!-- LEFT CONTENT -->
-  <div class="event-header-left">
-    <span class="tag">Videos Heare</span>
-    <h2>Join Our Upcoming <br> Monthly Teaching Events</h2>
+                                                                                 
+<!-- ================= VIDEO SECTION ================= -->
+
+<div class="event-section" *ngIf="videos && videos.length > 0">
+
+  <!-- SECTION HEADER -->
+  <div class="event-header">
+
+    <div class="event-header-left">
+      <span class="tag">Videos Here</span>
+      <h2>Join Our Upcoming <br> Monthly Teaching Events</h2>
+    </div>
+
+    <div class="event-header-right">
+      <p>
+        There are many variations of passages of Lorem Ipsum available,
+        but the majority have suffered alteration in some form,
+        by injected humour, words which don't look even slightly believable.
+      </p>
+    </div>
+
   </div>
 
-  <!-- RIGHT CONTENT -->
-  <div class="event-header-right">
-    <p>
-      There are many variations of passages of Lorem Ipsum available,
-      but the majority have suffered alteration in some form,
-      by injected humour, words which don't look even slightly believable.
-      If you are going to use the same condition.
-    </p>
-  </div>
 
-</div>
-  <div class="event-card" *ngFor="let video of mathVideos">
+  <!-- VIDEO CARDS -->
+  <div class="event-card" *ngFor="let video of videos">
 
     <!-- LEFT IMAGE -->
     <div class="event-image" (click)="openVideo(video)">
@@ -156,96 +159,47 @@
     <!-- RIGHT CONTENT -->
     <div class="event-content">
 
-      <!-- DATE (as it is rehse) -->
+      <!-- DATE -->
       <div class="event-date">
-        <span class="day">{{ video.date.day }}</span>
-        <span class="month">{{ video.date.month }}</span>
+        <span class="day">{{ video.date?.day }}</span>
+        <span class="month">{{ video.date?.month }}</span>
       </div>
 
       <div class="event-details">
+
         <h3>{{ video.title }}</h3>
+
         <p>{{ video.desc }}</p>
+
         <span>⏱ {{ video.duration }}</span>
 
         <button class="btn primary" (click)="openVideo(video)">
           Watch Video
         </button>
+
       </div>
 
     </div>
 
   </div>
-</div>
-
-
-
-                                                                                          <!-- SCIENCE VIDEOS -->
-
-<div class="event-section" *ngIf="showScienceVideos">
-  <!-- event header scetion -->
-   <!-- SECTION HEADER -->
-<div class="event-header">
-
-  <!-- LEFT CONTENT -->
-  <div class="event-header-left">
-    <span class="tag">Videos Heare</span>
-    <h2>Join Our Upcoming <br> Monthly Teaching Events</h2>
-  </div>
-
-  <!-- RIGHT CONTENT -->
-  <div class="event-header-right">
-    <p>
-      There are many variations of passages of Lorem Ipsum available,
-      but the majority have suffered alteration in some form,
-      by injected humour, words which don't look even slightly believable.
-      If you are going to use the same condition.
-    </p>
-  </div>
 
 </div>
- <div class="event-card" *ngFor="let video of scienceVideos">
 
-    <!-- LEFT IMAGE -->
-    <div class="event-image" (click)="openVideo(video)">
-      <img [src]="video.thumb">
-      <span class="play-btn">▶</span>
-    </div>
 
-    <!-- RIGHT CONTENT -->
-    <div class="event-content">
+<!-- ================= VIDEO MODAL ================= -->
 
-      <!-- DATE (as it is rehse) -->
-      <div class="event-date">
-        <span class="day">{{ video.date.day }}</span>
-        <span class="month">{{ video.date.month }}</span>
-      </div>
-
-      <div class="event-details">
-        <h3>{{ video.title }}</h3>
-        <p>{{ video.desc }}</p>
-        <span>⏱ {{ video.duration }}</span>
-
-        <button class="btn primary" (click)="openVideo(video)">
-          Watch Video
-        </button>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-<!-- common model -->
-
-<!-- VIDEO MODAL -->
 <div class="video-modal" *ngIf="showVideo">
 
   <div class="video-content">
+
     <span class="close-btn" (click)="closeVideo()">✖</span>
 
     <video width="100%" controls autoplay *ngIf="selectedVideo">
+
       <source [src]="selectedVideo.videoUrl" type="video/mp4">
+
     </video>
+
   </div>
 
 </div>
