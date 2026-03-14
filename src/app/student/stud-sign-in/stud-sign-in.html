@@ -54,5 +54,24 @@
 
   
 </section>
+<!-- Toast -->
+<div class="custom-toast-container">
 
+  <div #toastRef class="toast custom-toast" role="alert">
+
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast">
+      </button>
+    </div>
+
+  </div>
+
+</div>
 <app-stud-footer>  </app-stud-footer>

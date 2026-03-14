@@ -398,6 +398,10 @@ color:#fff;
 min-width:360px;
 border-radius:10px;
 box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+/* animation */
+transform:translateX(120%);
+animation:slideInRight 0.5s ease forwards;
 }
 
 /* message spacing */
@@ -410,4 +414,16 @@ font-weight:500;
 /* close button color */
 .custom-toast .btn-close{
 filter:invert(1);
+}
+
+/* Slide animation */
+@keyframes slideInRight{
+0%{
+transform:translateX(120%);
+opacity:0;
+}
+100%{
+transform:translateX(0);
+opacity:1;
+}
 }

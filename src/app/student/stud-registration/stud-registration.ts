@@ -108,6 +108,7 @@ toastMessage = "";
   this.registerForm.get('standard')?.valueChanges.subscribe(std => {
   this.availableSubjects = [];
   this.selectedSubjects = [];
+  this.registerForm.patchValue({ subjects: [] });
 
   if (std === '9th') {
     // hide board & stream validators
@@ -180,24 +181,25 @@ this.registerForm.get('stream')?.valueChanges.subscribe(stream => {
 
   toggleSubject(event: any, subject: string) {
 
-    if (event.target.checked) {
+  if (event.target.checked) {
 
+    if (!this.selectedSubjects.includes(subject)) {
       this.selectedSubjects.push(subject);
-
-    } else {
-
-      this.selectedSubjects = this.selectedSubjects.filter(
-        s => s !== subject
-      );
-
     }
 
-    // 🔥 Form control update
-    this.registerForm.patchValue({
-      subjects: this.selectedSubjects
-    });
+  } else {
+
+    this.selectedSubjects = this.selectedSubjects.filter(
+      s => s !== subject
+    );
 
   }
+
+  this.registerForm.patchValue({
+    subjects: [...this.selectedSubjects]
+  });
+
+}
 
   // ===============================
   // 🔹 STEP 1 → STEP 2 VALIDATION
@@ -275,21 +277,26 @@ getFieldLabel(field: string) {
 
     try {
 
-      await this.firebaseService.addStudent(formData);
+  await this.firebaseService.addStudent(formData);
 
-      this.showToast(" Registration Successful!");
+  this.showToast("Registration Successful!");
 
-      this.registerForm.reset();
-      this.selectedSubjects = [];
-      this.step = 1;
+  setTimeout(() => {
 
-      // 🔥 Redirect
-      this.router.navigate(['/student/stud-sign-in']);
+    this.registerForm.reset();
+    this.selectedSubjects = [];
+    this.step = 1;
 
-    } catch (error) {
+    this.router.navigate(['/student/stud-sign-in']);
 
-      console.error("Firebase Error:", error);
-      this.showToast("Error saving data. Try again.");
+  }, 4000);
+
+} catch (error) {
+
+  // console.error("Firebase Error:", error);
+  this.showToast("Error saving data. Try again.");
+
+
 
     } finally {
 

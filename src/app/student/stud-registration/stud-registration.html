@@ -104,60 +104,52 @@
 
       <!-- 🔵 STEP 2 - Educational Details -->
       @if (step === 2) {
-      <div class="form-step">
+<div class="form-step">
 
-        <h2>Educational Details</h2>
+  <h2>Educational Details</h2>
 
-        <div class="form-group">
-          <label>Standard <span class="text-danger">*</span></label>
-<!-- Board & Stream only for 10th / 11th / 12th -->
-<label *ngIf="registerForm.get('standard')?.value !== '9th'">Board <span class="text-danger">*</span></label>
-<label *ngIf="registerForm.get('standard')?.value !== '9th'">Stream <span class="text-danger">*</span></label>
+  <!-- Standard -->
+  <div class="form-group">
+    <label>Standard <span class="text-danger">*</span></label>
+    <select formControlName="standard">
+      <option value="">Select Standard</option>
+      <option value="9th">9th</option>
+      <option value="10th">10th</option>
+      <option value="11th">11th</option>
+      <option value="12th">12th</option>
+    </select>
+  </div>
 
-<!-- Science Group -->
-<label *ngIf="registerForm.get('stream')?.value==='Science'">Science Group <span class="text-danger">*</span></label>
-          <select formControlName="standard">
-            <option value="">Select Standard</option>
-            <option>9th</option>
-            <option>10th</option>
-            <option>11th</option>
-            <option>12th</option>
-          </select>
-        </div>
+  <!-- Board (Hide for 9th) -->
+  <div class="form-group" *ngIf="registerForm.get('standard')?.value !== '9th'">
+    <label>Board <span class="text-danger">*</span></label>
+    <select formControlName="board">
+      <option value="">Select Board</option>
+      <option value="GSEB">GSEB</option>
+      <option value="CBSE">CBSE</option>
+    </select>
+  </div>
 
-        <div class="form-group">
-          <label>Board</label>
-          <select formControlName="board">
-            <option value="">Select Board</option>
-            <option>GSEB</option>
-            <option>CBSE</option>
-            <option>ICSE</option>
-            <option>Other</option>
-          </select>
-        </div>
+  <!-- Stream (Hide for 9th) -->
+  <div class="form-group" *ngIf="registerForm.get('standard')?.value !== '9th'">
+    <label>Stream <span class="text-danger">*</span></label>
+    <select formControlName="stream">
+      <option value="">Select Stream</option>
+      <option value="Science">Science</option>
+      <option value="Commerce">Commerce</option>
+    </select>
+  </div>
 
-        <div class="form-group">
-          <label>Stream</label>
-          <select formControlName="stream">
-            <option value="">Select Stream</option>
-            <option>Science</option>
-            <option>Commerce</option>
-            <option>Arts</option>
-          </select>
-        </div>
-
-        <!-- Science Group Only -->
-        @if (registerForm.get('stream')?.value === 'Science') {
-        <div class="form-group">
-          <label>Science Group</label>
-          <select formControlName="scienceGroup">
-            <option value="">Select Group</option>
-            <option>PCM</option>
-            <option>PCB</option>
-            <option>PCMB</option>
-          </select>
-        </div>
-        }
+  <!-- Science Group -->
+  <div class="form-group" *ngIf="registerForm.get('stream')?.value === 'Science'">
+    <label>Science Group <span class="text-danger">*</span></label>
+    <select formControlName="scienceGroup">
+      <option value="">Select Group</option>
+      <option value="PCM">PCM</option>
+      <option value="PCB">PCB</option>
+    </select>
+  </div>
+        
 
         <div class="subject-item" *ngFor="let subject of availableSubjects">
 
@@ -227,8 +219,8 @@
           </button>
 
           <button type="submit" class="btn-submit">
-  Complete Registration
-</button>
+            Complete Registration
+          </button>
 
         </div>
 
@@ -239,27 +231,25 @@
     </form>
 
   </div>
-<!-- Toast Container -->
-<div class="toast-container custom-toast-container">
+  <!-- Toast Container -->
+  <div class="toast-container custom-toast-container">
 
-  <div #toastRef class="toast custom-toast border-0" role="alert">
+    <div #toastRef class="toast custom-toast border-0" role="alert">
 
-    <div class="d-flex">
+      <div class="d-flex">
 
-      <div class="toast-body">
-        {{toastMessage}}
+        <div class="toast-body">
+          {{toastMessage}}
+        </div>
+
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+        </button>
+
       </div>
-
-      <button type="button"
-              class="btn-close btn-close-white me-2 m-auto"
-              data-bs-dismiss="toast">
-      </button>
 
     </div>
 
   </div>
-
-</div>
 </section>
 
 <app-stud-footer></app-stud-footer>
