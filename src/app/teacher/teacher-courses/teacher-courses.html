@@ -20,25 +20,38 @@
       </div>
 
       <div class="flex-row">
-        <div class="flex-col" *ngIf="showBoard">
-          <label>Board</label>
-          <select formControlName="board">
-            <option value="">Select Board</option>
-            <option value="GSEB">GSEB</option>
-            <option value="CBSE">CBSE</option>
-          </select>
-        </div>
 
-        <div class="flex-col" *ngIf="showStream">
-          <label>Stream</label>
-          <select formControlName="stream">
-            <option value="">Select Stream</option>
-            <option value="Commerce">Commerce</option>
-            <option value="PCM">PCM</option>
-            <option value="PCB">PCB</option>
-          </select>
-        </div>
-      </div>
+  <!-- Board -->
+  <div class="flex-col" *ngIf="showBoard">
+    <label>Board</label>
+    <select formControlName="board">
+      <option value="">Select Board</option>
+      <option value="GSEB">GSEB</option>
+      <option value="CBSE">CBSE</option>
+    </select>
+  </div>
+
+  <!-- Stream -->
+  <div class="flex-col" *ngIf="showStream">
+    <label>Stream</label>
+    <select formControlName="stream" (change)="onStreamChange()">
+      <option value="">Select Stream</option>
+      <option value="Commerce">Commerce</option>
+      <option value="Science">Science</option>
+    </select>
+  </div>
+
+  <!-- Science Group -->
+  <div class="flex-col" *ngIf="showScienceGroup">
+    <label>Science Group</label>
+    <select formControlName="scienceGroup">
+      <option value="">Select Group</option>
+      <option value="PCM">PCM</option>
+      <option value="PCB">PCB</option>
+    </select>
+  </div>
+
+</div>
 
       <div class="form-section">
         <h3>Course Details</h3>

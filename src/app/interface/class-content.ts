@@ -1,38 +1,47 @@
 export interface ClassContent {
-  id?: string;
-  standard: string;
-  category?: string;
-  subjectId: string;
-  subjectName: string;
+
+  standard: string
+  subjectId: string
+  title: string
+
+  category?: string
 
   contents: {
-    editing: boolean;      // chapter level
-    chapterNo: number;
-    chapterName: string;
-    expanded?: boolean;
+
+    chapterNo: number
+    chapterName: string
 
     content?: string;      // <-- ADD THIS
 
     concepts: {
-      id?: string;
-      title: string;
-      definition?: string;
-      example?: string;
+
+      title: string
 
       contents: {
-        contentTitle: string;
-        contentDefinition?: string;
-        editing?: boolean;   // content level
-        videos: {
-          url: string;
-          duration: number;
-          fileName?: string;
-          progress?: number;
-          uploading?: boolean;
-        }[];
-      }[];
 
-      status?: 'pending' | 'completed' | 'locked';
-    }[];
-  }[];
+        contentTitle: string
+        contentDefinition: string
+
+        videos: {
+
+          url: string
+          fileName: string
+          duration: number
+
+          // 🔹 NEW FIELDS
+          title?: string
+          description?: string
+          date?: string
+          time?: string
+
+          image?: string   // 🔹 Thumbnail Image
+
+        }[]
+
+      }[]
+
+    }[]
+
+  }[]
+
 }

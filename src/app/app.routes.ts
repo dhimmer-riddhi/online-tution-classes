@@ -13,17 +13,21 @@ import { TeacherHeader } from './teacher/teacher-header/teacher-header';
 import { TeacherDashboard } from './teacher/teacher-dashboard/teacher-dashboard';
 import { TeacherLogin } from './teacher/teacher-login/teacher-login';
 import { ManageTeacher } from './admin/manage-teacher/manage-teacher';
-
 import { TeacherClassContent } from './teacher/teacher-class-content/teacher-class-content';
 import { StudFooter } from './student/stud-footer/stud-footer';
 import { StudStandard } from './student/stud-standard/stud-standard';
-import { Slider } from './student/slider/slider';
-
 import { TeacherRegistration } from './teacher/teacher-registration/teacher-registration';
 import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
-// import { TeacherAssignment } from './teacher/teacher-assignment/teacher-assignment';
 import { Quize } from './teacher/quize/quize';
 import { Student } from './teacher/student/student';
+import { StudDashboard } from './student/stud-dashboard/stud-dashboard';
+import { studentAuthGuard } from './student/student-auth.guard.ts/student-auth.guard';
+import { Banner } from './student/stud-dashboard/banner/banner';
+import { Profile } from './student/stud-dashboard/profile/profile';
+import { Standard } from './student/stud-dashboard/standard/standard';
+import { Sidebar } from './student/stud-dashboard/sidebar/sidebar';
+
+
 
 
 
@@ -39,8 +43,25 @@ export const routes: Routes = [
   { path: 'student/stud-sign-in', component: StudSignIn },
   { path: 'student/about', component: About },
   { path: 'student/stud-home', component: StudHome },
-  { path: 'student/slider', component: Slider },
+  { path: 'student/stud-footer', component: StudFooter },
 
+
+
+  // ================= STUDENT DASHBOARD LOAD COMPONENT =================
+  {
+path:'student/stud-dashboard',
+component:StudDashboard,
+ canActivate:[studentAuthGuard],   // 👈 add this
+children:[
+
+{ path:'banner', component:Banner },
+{ path:'profile', component:Profile },
+{ path:'standard', component:Standard },
+{ path:'sidebar', component:Sidebar },
+  { path: '', redirectTo: 'profile', pathMatch: 'full' },
+]
+
+},
   // ================= STUDENT CLASSES LOAD COMPONENT =================
 
 
@@ -77,8 +98,8 @@ export const routes: Routes = [
     loadComponent: () => import('./student/classes/twelv-pcm/twelv-pcm').then(m => m.TwelvPcm)
   },
 
-  { path: 'student/stud-standard', component: StudStandard },
-  { path: 'student/stud-footer', component: StudFooter },
+ 
+  
 
 
   // ================= ADMIN ROUTES =================
@@ -90,7 +111,7 @@ export const routes: Routes = [
   { path: 'teacher/teacher-portal', component: TeacherPortal },
   { path: 'teacher/teacher-login', component: TeacherLogin },
   { path: 'teacher/teacher-registration', component: TeacherRegistration },
-
+  { path: 'admin/manage-application', component: ManageApplication },
   // ===== TEACHER PANEL (HEADER + SIDEBAR + CONTENT) =====
 
   

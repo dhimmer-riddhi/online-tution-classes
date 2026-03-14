@@ -5,11 +5,11 @@ export interface Course {
   board?: string;    // GSEB / CBSE
   stream?: string;   // Commerce / PCM / PCB
 
-  title: string;
-  description: string;
+  title: string;    //subject name
+  description: string;   
   fees: string;
   duration: string;
-  mode?: string;
+  mode?: string;  //offline / online
 
   teacher: {
     name: string;

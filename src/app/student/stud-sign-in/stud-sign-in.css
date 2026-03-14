@@ -197,3 +197,56 @@ img {
     flex-direction: column;
   }
 }
+
+.profile-img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #3ba7d7;
+}
+
+/* Toast container position */
+.custom-toast-container{
+position:fixed;
+top:90px;
+right:20px;
+z-index:9999;
+}
+
+/* Toast box design */
+.custom-toast{
+background:#8f642c;
+color:#fff;
+min-width:360px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+/* animation */
+transform:translateX(120%);
+animation:slideInRight 0.5s ease forwards;
+}
+
+/* message spacing */
+.custom-toast .toast-body{
+padding:16px 20px;
+font-size:15px;
+font-weight:500;
+}
+
+/* close button color */
+.custom-toast .btn-close{
+filter:invert(1);
+}
+
+/* Slide animation */
+@keyframes slideInRight{
+0%{
+transform:translateX(120%);
+opacity:0;
+}
+100%{
+transform:translateX(0);
+opacity:1;
+}
+}

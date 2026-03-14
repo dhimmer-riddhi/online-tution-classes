@@ -42,7 +42,7 @@
 }
 
 .contact-card {
-  width: 70%;
+  width: 55%;
   background: #fff;
   padding: 40px;
   border-radius: 15px;
@@ -221,14 +221,14 @@ h2 {
   }
 }
 
-.contact-form-section img {
+/* .contact-form-section img {
     position: absolute;
     right: 100%;
     bottom: -525px;
     margin-right: -240px;
     z-index: -1;
     width: 150px;
-}
+} */
 
 .subject-list{
 display:flex;
@@ -266,4 +266,164 @@ img {
   .contact-header h1 {
     font-size: 32px;
   }
+}
+.profile-img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #3ba7d7;
+}
+
+/* PAYMENT STEP */
+
+.payment-step{
+text-align:center;
+}
+
+.payment-text{
+margin-bottom:20px;
+color:#555;
+}
+
+.qr-container{
+display:flex;
+justify-content:center;
+margin:20px 0;
+}
+
+.qr-image{
+width:220px;
+height:220px;
+border:3px solid #eee;
+padding:10px;
+background:#fff;
+}
+
+.total-fees{
+margin-top:10px;
+color:#2c7be5;
+}
+
+.payment-buttons{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:20px;
+}
+
+.contact-form-section{
+position:relative;
+padding:80px 0;
+}
+
+.contact-bg-img{
+position:absolute;
+bottom:43px;
+left:207px;
+width:148px;
+/* opacity:0.3; */
+z-index:0;
+}
+
+.contact-card{
+position:relative;
+z-index:2;
+background:white;
+padding:40px;
+border-radius:10px;
+margin-top: -84px;
+}
+
+/* fees structure */
+/* SUBJECT LIST */
+
+.subject-item{
+margin-bottom:10px;
+}
+
+.subject-item label{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+padding:10px 14px;
+background:#f8f9fa;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+border:1px solid #eee;
+}
+
+.subject-item label:hover{
+background:#f1f9f8;
+border-color:#1abc9c;
+}
+
+/* Checkbox */
+
+.subject-item input{
+width:16px;
+height:16px;
+cursor:pointer;
+}
+
+/* Subject name */
+
+.subject-name{
+flex:1;
+font-weight:500;
+color:#333;
+}
+
+/* Fees */
+
+.subject-fees{
+color:#16a085;
+font-weight:600;
+}
+
+/* Toast container position */
+.custom-toast-container{
+position:fixed;
+top:90px;
+right:20px;
+z-index:9999;
+}
+
+/* Toast box design */
+.custom-toast{
+background:#8f642c;
+color:#fff;
+min-width:360px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+/* animation */
+transform:translateX(120%);
+animation:slideInRight 0.5s ease forwards;
+}
+
+/* message spacing */
+.custom-toast .toast-body{
+padding:16px 20px;
+font-size:15px;
+font-weight:500;
+}
+
+/* close button color */
+.custom-toast .btn-close{
+filter:invert(1);
+}
+
+/* Slide animation */
+@keyframes slideInRight{
+0%{
+transform:translateX(120%);
+opacity:0;
+}
+100%{
+transform:translateX(0);
+opacity:1;
+}
 }
