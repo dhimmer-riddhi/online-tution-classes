@@ -20,6 +20,7 @@ import { TeacherRegistration } from './teacher/teacher-registration/teacher-regi
 import { TeacherCourses } from './teacher/teacher-courses/teacher-courses';
 import { Quize } from './teacher/quize/quize';
 import { Student } from './teacher/student/student';
+import { Notes } from './teacher/notes/notes';
 import { StudDashboard } from './student/stud-dashboard/stud-dashboard';
 import { studentAuthGuard } from './student/student-auth.guard.ts/student-auth.guard';
 import { Banner } from './student/stud-dashboard/banner/banner';
@@ -123,7 +124,7 @@ children:[
       
       { path: 'teacher/class-content', component: TeacherClassContent },
       { path: 'teacher/courses', component: TeacherCourses },
-      // { path: 'teacher/assignment', component: TeacherAssignment },
+       { path: 'teacher/notes', component: Notes},
       { path: 'teacher/quiz', component: Quize },
 
     

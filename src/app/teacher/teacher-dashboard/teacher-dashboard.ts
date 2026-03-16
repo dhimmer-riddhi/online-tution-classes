@@ -24,11 +24,11 @@ export class TeacherDashboard implements OnInit {
   totalStudents = 0;
   totalClasses = 0;
   totalSubjects = 0;
-  totalAssignments = 0;
+  totalNotes = 0;
   totalVideos = 0;
 
   // Chart Instances
-  private assignmentChartInstance: any;
+  private noteChartInstance: any;
   private videoChartInstance: any;
 
   constructor(private firebaseService: FirebaseService) {}
@@ -49,10 +49,10 @@ export class TeacherDashboard implements OnInit {
       this.totalStudents = data.length;
     });
 
-    // 2. Assignments Count & Bar Chart (TeacherAssignment collection)
-    this.firebaseService.getCollection(FirebaseCollections.TeacherAssignment).subscribe(data => {
-      this.totalAssignments = data.length;
-      this.createAssignmentChart(data);
+    // 2. Notes Count & Bar Chart (Notes collection)
+    this.firebaseService.getCollection(FirebaseCollections.Notes).subscribe(data => {
+      this.totalNotes = data.length;
+      this.createNotesChart(data);
     });
 
     // 3. Videos & Subjects Data (ClassContent collection)
@@ -79,22 +79,22 @@ export class TeacherDashboard implements OnInit {
     toast.show();
   }
 
-  /* DYNAMIC ASSIGNMENT CHART */
-  createAssignmentChart(data: any[]) {
+  /* DYNAMIC NOTES CHART */
+  createNotesChart(data: any[]) {
     const grouping: any = {};
     data.forEach(item => {
       const label = item.standard || 'General';
       grouping[label] = (grouping[label] || 0) + 1;
     });
 
-    if (this.assignmentChartInstance) this.assignmentChartInstance.destroy();
+    if (this.noteChartInstance) this.noteChartInstance.destroy();
 
-    this.assignmentChartInstance = new Chart("assignmentChart", {
+    this.noteChartInstance = new Chart("noteChart", {
       type: 'bar',
       data: {
         labels: Object.keys(grouping),
         datasets: [{
-          label: 'Assignments',
+          label: 'Notes',
           data: Object.values(grouping),
           backgroundColor: ['#1abc9c', '#3498db', '#9b59b6', '#f39c12']
         }]

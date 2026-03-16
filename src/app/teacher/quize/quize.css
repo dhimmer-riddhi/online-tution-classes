@@ -111,3 +111,30 @@ color: #0a2540;
   cursor: pointer;
   transition: 0.3s;
 }
+/* ================= TOAST STYLE ================= */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.toast {
+  min-width: 320px;
+  background: #28a745;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  font-size: 15px;
+}
+
+.toast-body {
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-close {
+  filter: invert(1);
+}
