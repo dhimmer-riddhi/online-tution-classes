@@ -3,7 +3,7 @@
 
 <section class="class-hero">
   <div class="hero-container">
-    
+
     <!-- LEFT CONTENT -->
     <div class="hero-content">
       <h1>
@@ -49,81 +49,77 @@
 
 
 <!-- -------------//second subject section//------------- -->
-<div class="event-section-alt" >
+<div class="event-section-alt">
   <!-- event header scetion -->
-   <!-- SECTION HEADER -->
-<div class="event-header-one">
+  <!-- SECTION HEADER -->
+  <div class="event-header-one">
 
-  <!-- LEFT CONTENT -->
-  <div class="event-header-left-one">
-    <h2>Comprehensive Learning Programs for Class 9th 
-</h2>
+    <!-- LEFT CONTENT -->
+    <div class="event-header-left-one">
+      <h2>Strong Foundation Learning Programs for Class 9th</h2>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+
+
   </div>
 
-  <!-- RIGHT CONTENT -->
-  
-  
-</div>
+  <div class="carousel">
+    <!-- Fixed orange navigation box -->
+    <div class="simple-nav">
+      <button (click)="prevCard()" [disabled]="currentCard === 1">‹</button>
+      <span>{{currentCard}} / {{cards.length}}</span>
+      <button (click)="nextCard()" [disabled]="currentCard === cards.length">›</button>
+    </div>
 
-<div class="carousel">
-  <!-- Fixed orange navigation box -->
-  <div class="simple-nav">
-    <button (click)="prevCard()" [disabled]="currentCard === 1">‹</button>
-    <span>{{currentCard}} / {{cards.length}}</span>
-    <button (click)="nextCard()" [disabled]="currentCard === cards.length">›</button>
-  </div>
-
-  <!-- Dynamic course cards -->
-  <div class="swipe-area">
-    <div class="course-card" *ngFor="let card of cards; let i = index"
-         [class.active]="i+1 === currentCard">
-      <div class="card-overlay"></div>
-      <div class="card-content">
-        <div class="card-header">
-          <h2>{{card.title}}</h2>
-          <p class="subtitle">{{card.description}}</p>
-        </div>
-
-        <div class="card-info">
-          <div><b>Fees:</b> {{card.fees}}</div>
-          <div><b>Duration:</b> {{card.duration}}</div>
-          <div *ngIf="card.mode"><b>Mode:</b> {{card.mode}}</div>
-        </div>
-
-        <div class="teacher">
-          <img [src]="card.teacher?.profile" />
-          <div>
-            <h4>{{card.teacher?.name}}</h4>
-<small>{{card.teacher?.details}}</small>
-<p>{{card.teacher?.bio}}</p>
+    <!-- Dynamic course cards -->
+    <div class="swipe-area">
+      <div class="course-card" *ngFor="let card of cards; let i = index" [class.active]="i+1 === currentCard">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>{{card.title}}</h2>
+            <p class="subtitle">{{card.description}}</p>
           </div>
-        </div>
-          
-        <div class="chapters">
-          <h4>Major Chapters Covered</h4>
-          <ul>
-            <li *ngFor="let chapter of card.chapters">{{chapter}}</li>
-          </ul>
-        </div>
 
-        <div class="btn-group">
+          <div class="card-info">
+            <div><b>Fees:</b> {{card.fees}}</div>
+            <div><b>Duration:</b> {{card.duration}}</div>
+            <div *ngIf="card.mode"><b>Mode:</b> {{card.mode}}</div>
+          </div>
 
-        <button
-              class="btn primary"
-              (click)="getVideosBySubject(card.title)"
+          <div class="teacher">
+            <img [src]="card.teacher?.profile" />
+            <div>
+              <h4>{{card.teacher?.name}}</h4>
+              <small>{{card.teacher?.details}}</small>
+              <p>{{card.teacher?.bio}}</p>
+            </div>
+          </div>
+
+          <div class="chapters">
+            <h4>Major Chapters Covered</h4>
+            <ul>
+              <li *ngFor="let chapter of card.chapters">{{chapter}}</li>
+            </ul>
+          </div>
+
+          <div class="btn-group">
+
+            <button class="btn primary" (click)="getVideosBySubject(card.title)"
               [disabled]="!canAccessSubject(card.title)">
               View Videos
-        </button>
+            </button>
 
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>  
 
 
-                                                                                 
+
 <!-- ================= VIDEO SECTION ================= -->
 
 <div class="event-section" *ngIf="videos && videos.length > 0">
@@ -132,15 +128,16 @@
   <div class="event-header">
 
     <div class="event-header-left">
-      <span class="tag">Videos Here</span>
-      <h2>Join Our Upcoming <br> Monthly Teaching Events</h2>
+      <span class="tag">9th Standard</span>
+      <h2>Learn 9th Class Subjects <br> with Video Lectures</h2>
     </div>
 
     <div class="event-header-right">
       <p>
-        There are many variations of passages of Lorem Ipsum available,
-        but the majority have suffered alteration in some form,
-        by injected humour, words which don't look even slightly believable.
+        Access complete video lectures for 9th standard covering all major subjects
+        like Mathematics, Science, English, and Social Science. These videos are
+        specially designed to build strong fundamentals and help students understand
+        each concept step-by-step.
       </p>
     </div>
 
@@ -182,8 +179,105 @@
     </div>
 
   </div>
+</div>
+  <!-- ================= QUIZ SECTION ================= -->
+
+  <div class="quiz-section" *ngIf="videos && videos.length > 0">
+
+    <h2>Test Your Knowledge</h2>
+
+    <!-- 🔥 MESSAGE -->
+    <p *ngIf="quizUnlocked" class="success-msg">
+      Quiz unlocked! Try now
+    </p>
+
+    <p *ngIf="!quizUnlocked" class="lock-msg">
+      🔒 Watch at least 2 videos to unlock quiz
+    </p>
+
+    <!-- BUTTON -->
+    <button *ngIf="quizUnlocked" class="btn primary" (click)="startQuiz()">
+      Start Quiz
+    </button>
+
+    <button *ngIf="!quizUnlocked" class="btn disabled">
+      Quiz Locked
+    </button>
+
+  
+  <!-- ================= QUIZ QUESTIONS ================= -->
+
+  <div class="quiz-box" *ngIf="quizStarted && quizData">
+    <!-- ================= PROGRESS BAR ================= -->
+
+    <div class="progress-container">
+
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getProgress()">
+        </div>
+      </div>
+
+      <p class="progress-text">
+        {{getAnsweredCount()}} / {{quizData?.questions?.length}} Answered
+      </p>
+
+    </div>
+
+    <div class="question-block" *ngFor="let q of quizData.questions; let i = index">
+
+      <h3>Q{{i+1}}. {{q.question}}</h3>
+
+      <div class="options">
+
+        <div class="option" *ngFor="let opt of q.options" (click)="!quizSubmitted && selectAnswer(i, opt)"
+          [class.selected]="userAnswers[i] === opt" [class.correct]="showAnswers && opt === q.correct"
+          [class.wrong]="showAnswers && userAnswers[i] === opt && opt !== q.correct">
+          {{opt}}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SUBMIT -->
+    <button class="btn primary submit-btn" (click)="submitQuiz()">
+      Submit Quiz
+    </button>
+
+  </div>
+  </div>
+  <!-- ================= RESULT ================= -->
+
+  <!-- ================= RESULT POPUP ================= -->
+
+<div class="result-overlay" *ngIf="quizSubmitted">
+
+  <div class="result-modal">
+
+    <!-- CLOSE -->
+    <span class="close-btn" (click)="closeResult()">✖</span>
+
+    <h2>🎯 Your Score</h2>
+
+    <p class="score">{{score}} / {{quizData.questions.length}}</p>
+
+    <!-- Performance -->
+    <p *ngIf="score === quizData.questions.length">🔥 Perfect Score!</p>
+    <p *ngIf="score >= quizData.questions.length/2">👍 Good Job!</p>
+    <p *ngIf="score < quizData.questions.length/2">📘 Keep Practicing!</p>
+
+    <!-- Retry -->
+    <button 
+      *ngIf="attemptCount < maxAttempts"
+      class="btn retry-btn"
+      (click)="retryQuiz()">
+      🔄 Try Again ({{maxAttempts - attemptCount}} left)
+    </button>
+
+  </div>
 
 </div>
+
 
 
 <!-- ================= VIDEO MODAL ================= -->
@@ -206,4 +300,4 @@
 
 
 
-<app-stud-footer>  </app-stud-footer>
+<app-stud-footer> </app-stud-footer>

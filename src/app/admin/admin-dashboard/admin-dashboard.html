@@ -4,23 +4,20 @@
   <app-admin-sidebar></app-admin-sidebar>
 
   <div class="main-panel">
-
-    <!-- <app-admin-topnav></app-admin-topnav> -->
-
     <div class="content">
 
       <!-- Header -->
       <div class="header">
         <div>
-          <h1>Tuition Admin Dashboard</h1>
-          <p>Manage students, teachers and courses efficiently.</p>
+          <h1>Dashboard</h1>
+          <p>Welcome back 👋 Manage everything easily</p>
         </div>
 
         <div class="status-card">
           <div class="status-dot"></div>
           <div>
-            <small>SYSTEM STATUS</small>
-            <p>ONLINE - {{ today | date: 'fullDate' }}</p>
+            <small>Status</small>
+            <p>{{ today | date:'fullDate' }}</p>
           </div>
         </div>
       </div>
@@ -29,41 +26,38 @@
       <div class="cards">
 
         <div class="card blue">
-          <h3>Total Students</h3>
+          <h4>Total Students</h4>
           <h2>{{ (totalStudents$ | async) || 0 }}</h2>
         </div>
 
         <div class="card green">
-          <h3>Total Teachers</h3>
+          <h4>Total Teachers</h4>
           <h2>{{ (totalTeachers$ | async) || 0 }}</h2>
         </div>
 
-
-        <!-- <div class="card purple">
-          <h3>Active Courses</h3>
-          <h2>{{ (activeCourses$ | async) || 0 }}</h2>
-        </div> -->
+        <div class="card orange">
+          <h4>Pending Admissions</h4>
+          <h2>{{ (pendingAdmissions$ | async) || 0 }}</h2>
+        </div>
 
       </div>
 
-      <!-- Action Section -->
-      <div class="action-section">
-        <div>
-          <h3>Administrative Actions</h3>
-          <p>Create new courses or export reports.</p>
+      <!-- Charts -->
+      <div class="charts-container">
+
+        <div class="chart-card">
+          <h3>Students Growth</h3>
+          <canvas id="barChart"></canvas>
         </div>
 
-        <div class="action-buttons">
-          <button routerLink="/admin/manage-courses" class="primary-btn">
-            + New Course
-          </button>
-
-          <button class="outline-btn">
-            Export Report
-          </button>
+        <div class="chart-card">
+          <h3>Distribution</h3>
+          <canvas id="pieChart"></canvas>
         </div>
+
       </div>
 
     </div>
   </div>
+
 </div>

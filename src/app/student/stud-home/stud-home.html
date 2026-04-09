@@ -16,18 +16,27 @@
       </p>
 
       <!-- Search Bar -->
-      <div class="search-box">
-        <input type="text" placeholder="Search School, Online educational centers, etc">
-        
-        <select>
-          <option>Category</option>
-          <option>Development</option>
-          <option>Design</option>
-          <option>Business</option>
-        </select>
+     <div class="search-box">
+  <input 
+    type="text" 
+    placeholder="Search School, Online educational centers, etc"
+    [(ngModel)]="searchText"
+    (input)="onSearch()"
+  >
 
-        <button>➜</button>
-      </div>
+  <button (click)="onButtonClick()">➜</button>
+</div>
+
+<!-- Dropdown Results -->
+<div class="search-results" *ngIf="filteredItems.length > 0">
+  <div 
+    class="result-item" 
+    *ngFor="let item of filteredItems"
+    (click)="goToPage(item.route)"
+  >
+    {{ item.name }}
+  </div>
+</div>
 
       <!-- Rating -->
       <div class="rating">

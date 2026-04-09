@@ -1,0 +1,47 @@
+<div class="sidebar">
+
+  <!-- Logo -->
+  <div class="logo">
+    <h2>🎓 Teacher Panel</h2>
+  </div>
+
+  <!-- MAIN MENU -->
+  <div class="menu-title">MAIN MENU</div>
+  <ul>
+    <li routerLink="/teacher/dashboard" routerLinkActive="active">
+      <i class="fas fa-home"></i>
+      <span>Dashboard</span>
+    </li>
+
+    <li routerLink="/teacher/quiz" routerLinkActive="active">
+      <i class="fas fa-question-circle"></i>
+      <span>Quiz</span>
+    </li>
+
+    <li routerLink="/teacher/students" routerLinkActive="active">
+      <i class="fas fa-users"></i>
+      <span>Students</span>
+    </li>
+  </ul>
+
+  <!-- TEACHER MENU -->
+  <div class="menu-title">TEACHER MENU</div>
+  <ul>
+    <li routerLink="/teacher/teacher-class-content" routerLinkActive="active">
+      <i class="fas fa-video"></i>
+      <span>Class Content</span>
+    </li>
+
+    <li routerLink="/teacher/teacher-courses" routerLinkActive="active">
+      <i class="fas fa-book"></i>
+      <span>Manage Subjects</span>
+    </li>
+  </ul>
+
+  <!-- Logout -->
+  <div class="logout" (click)="onLogout()">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+  </div>
+
+</div>

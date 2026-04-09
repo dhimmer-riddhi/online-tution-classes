@@ -1,0 +1,296 @@
+.contact-header {
+  text-align: center;
+  padding: 215px 20px;
+  background: linear-gradient(to right, #ebdfe8, #dbecf1);
+  color: #000000;
+}
+
+/* Gradient Header */
+.contact-header {
+  height: 350px;
+  background: linear-gradient(to right, #e6dada, #274046);
+  display: flex;
+  align-items: flex-start;   /* upar thi lavva mate */
+  justify-content: center;
+  text-align: center;
+  padding-top: 80px;         /* get in touch upar */
+}
+
+.contact-content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.breadcrumb {
+  font-size: 1rem;
+  font-weight: bold;
+  padding-left: 81px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: rgb(2, 2, 2);
+}
+
+.contact-container {
+  display: flex;
+  gap: 20px;
+  padding: 40px;
+}
+
+.contact-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+}
+
+/* Icon box */
+.icon-box {
+  width: 60px;
+  height: 60px;
+  background: #392C7D;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+}
+
+/* 🔥 Image fit */
+.icon-box img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* 👈 white icon */
+}
+
+/* Text */
+.contact-text h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contact-text p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+
+/* form section */
+/* Section Layout */
+.contact-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+  background: #f9f9f9;
+  gap: 40px;
+}
+
+/* LEFT */
+.contact-left {
+  flex: 1;
+}
+
+.contact-left .tag {
+  background: #ffe5ea;
+  color: #ff4b6e;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.contact-left h2 {
+  font-size: 40px;
+  margin: 20px 0;
+}
+
+.contact-left p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* RIGHT FORM */
+.contact-form-box {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.contact-form-box h3 {
+  margin-bottom: 20px;
+}
+
+/* FORM */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+.form-group.full {
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-group span {
+  color: red;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+/* Button */
+.submit-btn {
+  width: 100%;
+  background: #ff4b6e;
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: #e63b5c;
+}
+
+
+/* 🔥 OUTER BIG BOX */
+.contact-wrapper {
+  background: #f5f5f5;   /* light grey like screenshot */
+  padding: 40px;
+  border-radius: 20px;
+  margin: 40px;
+}
+
+/* CARDS */
+.contact-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+      margin-top: 74px;
+      padding-right: 40px;
+    padding-left: 40px;
+}
+
+.contact-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+/* ICON */
+.icon-box {
+  width: 60px;
+  height: 60px;
+  background: #4b3bbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.icon-box img {
+  width: 25px;
+  filter: brightness(0) invert(1);
+}
+
+/* MAIN SECTION */
+.contact-main {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+/* LEFT */
+.contact-left {
+  flex: 1;
+}
+
+.contact-left .tag {
+  background: #ffe5ea;
+  color: #ff4b6e;
+  padding: 6px 15px;
+  border-radius: 20px;
+}
+
+.contact-left h2 {
+  font-size: 36px;
+  margin: 15px 0;
+}
+
+/* FORM */
+.contact-form-box {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #ff4b6e;
+  color: white;
+  border: none;
+  border-radius: 25px;
+}

@@ -1,13 +1,15 @@
+<!-- Teacher Login Header -->
 <section class="contact-header">
   <div class="contact-content">
     <h1>Teacher Login</h1>
 
     <div class="breadcrumb">
-      <a routerLink="/teacher/teacher-portal">🏠 Home</a> >
+      <a routerLink="/teacher/teacher-portal">🏠 Home</a> &gt;
       <span>Login</span>
     </div>
   </div>
 </section>
+
 
 <section class="contact-form-section">
   <div class="contact-card">
@@ -18,41 +20,70 @@
 
         <h2>Login Details</h2>
 
+        <!-- Email -->
         <div class="form-group">
           <label>Email</label>
-          <input type="email" formControlName="email">
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email"
+          />
+
+          @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
+            <small class="error">Valid Email Required</small>
+          }
+
         </div>
 
+
+        <!-- Password -->
         <div class="form-group">
           <label>Password</label>
-          <input type="password" formControlName="password">
+
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter password"
+          />
+
+          @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched){
+            <small class="error">Password Required</small>
+          }
+
         </div>
 
+
         <button type="submit" class="btn-submit">
-          Login 
+          Login
         </button>
 
       </div>
 
     </form>
-    <img src="book.png" alt="Teacher Registration" class="form-image">
+
+    <img src="book.png" class="form-image">
 
   </div>
 </section>
-<!-- Toast Message -->
-<!-- Toast Top Center -->
-<div class="toast-container">
 
-  <div #saveToast class="toast align-items-center border-0" role="alert">
+
+
+<!-- Toast -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+  <div
+    #saveToast
+    class="toast align-items-center border-0"
+  >
 
     <div class="d-flex">
 
       <div class="toast-body">
-        {{ toastMessage }}
+        {{toastMessage}}
       </div>
 
       <button
-        type="button"
         class="btn-close me-2 m-auto"
         data-bs-dismiss="toast">
       </button>

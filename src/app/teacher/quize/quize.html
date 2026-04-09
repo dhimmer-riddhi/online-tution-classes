@@ -1,58 +1,105 @@
-<div class="teacher-layout">
 
 
-<app-teacher-header></app-teacher-header>
-<div class="content">
+<div class="quiz-form">
 
-<div class="quiz-container">
+  <h2>
+  <i class="bi bi-journal-text me-2"></i> <!-- Bootstrap icon -->
+  Create Quiz
+</h2>
 
-<div class="title">
-  <h2>Create Quiz</h2>
-</div>
+  <!-- Standard -->
+  <select [(ngModel)]="selectedStandard" (change)="getSubjectsByStandard()">
+    <option value="">Select Standard</option>
+    <option *ngFor="let std of standards" [value]="std">{{std}}</option>
+  </select>
 
-<label>Standard</label>
+  <!-- Subject -->
+  <select [(ngModel)]="selectedSubject">
+    <option value="">Select Subject</option>
+    <option *ngFor="let sub of subjects" [value]="sub">{{sub}}</option>
+  </select>
 
-<select [(ngModel)]="standard">
+  <!-- Video Set -->
+  <input type="number" [(ngModel)]="quiz.videoSet" placeholder="Video Set">
 
-<option value="9">9</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
+  <hr>
 
+  <button class="btn btn-primary" (click)="openQuestionModal()">
+     Add / Edit Question
+  </button>
 
-</select>
+  <hr>
 
-<label>Subject</label>
+  <!-- Show Questions -->
+  <div *ngFor="let q of quiz.questions; let i = index" class="question-box">
+    <strong>Q{{i + 1}}:</strong> {{q.question}} <br>
+    Options: {{q.options.join(', ')}} <br>
+    Correct: {{q.correct}} <br>
+    <button class="btn btn-sm btn-warning" (click)="openQuestionModal(q, i)"> Edit</button>
+    <button class="btn btn-sm btn-danger" (click)="removeQuestion(i)"> Remove</button>
+  </div>
 
-<select [(ngModel)]="subject">
+  <br>
 
-<option *ngFor="let sub of subjects">
-
-{{sub}}
-
-</option>
-
-</select>
-
-<div *ngFor="let q of questions; let i=index">
-
-<h3>Question {{i+1}}</h3>
-
-<input [(ngModel)]="q.question" placeholder="Question">
-
-<input [(ngModel)]="q.options[0]" placeholder="Option 1">
-<input [(ngModel)]="q.options[1]" placeholder="Option 2">
-<input [(ngModel)]="q.options[2]" placeholder="Option 3">
-<input [(ngModel)]="q.options[3]" placeholder="Option 4">
-
-<input [(ngModel)]="q.answer" placeholder="Correct Answer">
+  <button class="save-btn" (click)="saveQuiz()">
+     {{ editingId ? 'Update Quiz' : 'Save Quiz' }}
+  </button>
 
 </div>
-<button (click)="createQuiz()">
-Send Quiz
-</button>
+<img src="undraw_questions_52ic.png" class="contact-bg-img" alt="Image Not Found">
+
+<!-- Question Modal -->
+<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="questionModalLabel">{{ editingQuestionIndex !== null ? 'Edit Question' : 'Add Question' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="Question" [(ngModel)]="newQuestion.question" class="form-control mb-2">
+        <input type="text" placeholder="Option 1" [(ngModel)]="newQuestion.options[0]" class="form-control mb-2">
+        <input type="text" placeholder="Option 2" [(ngModel)]="newQuestion.options[1]" class="form-control mb-2">
+        <input type="text" placeholder="Option 3" [(ngModel)]="newQuestion.options[2]" class="form-control mb-2">
+        <input type="text" placeholder="Option 4" [(ngModel)]="newQuestion.options[3]" class="form-control mb-2">
+        <input type="text" placeholder="Correct Answer" [(ngModel)]="newQuestion.correct" class="form-control mb-2">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" (click)="addQuestion(); hideModal()"> 
+          {{ editingQuestionIndex !== null ? ' Update Question' : 'Add Question' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
-</div>
+<div class="quiz-table-wrapper">
+
+  <table class="quiz-table" *ngIf="allQuizzes && allQuizzes.length">
+
+    <thead>
+      <tr>
+        <th>Standard</th>
+        <th>Subject</th>
+        <th>Questions</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let q of allQuizzes">
+        <td>{{q.standard}}</td>
+        <td>{{q.subject}}</td>
+        <td>{{q.questions?.length}}</td>
+
+        <td>
+          <button (click)="editQuiz(q)"> Edit</button>
+          <button (click)="deleteQuiz(q.id)"> Delete</button>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
 
 </div>

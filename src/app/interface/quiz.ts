@@ -1,15 +1,14 @@
-export interface Quiz{
+export interface Quiz {
+  id?: string;
+  standard: string;
+  subject: string;
+  videoSet: number;
+  questions: Question[];
+  createdAt?: any;
+}
 
-id?:string;
-
-teacherId:string;
-
-standard:string;
-
-subject:string;
-
-questions:any[];
-
-createdAt:any;
-
+export interface Question {
+  question: string;
+  options: string[];
+  correct: string;
 }

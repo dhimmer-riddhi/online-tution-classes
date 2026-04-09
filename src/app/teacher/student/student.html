@@ -1,49 +1,63 @@
-<div class="teacher-layout">
+<div class="dashboard-container">
+  <div class="teacher-layout">
+    <div class="content">
 
-  <!-- Sidebar -->
-   <app-teacher-header></app-teacher-header>
+      <h2>My Students</h2>
 
-  <!-- Right Content -->
-  <div class="content">
+      <table>
 
-    <h2>My Students</h2>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Standard</th>
+          <th>Subjects</th>
+          <th>Action</th>
+        </tr>
 
-    <table>
+        @for (student of students; track $index) {
 
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Standard</th>
-        <th>Subjects</th>
-      </tr>
+        <tr>
 
-      <tr *ngFor="let student of students">
+          <td>{{ student.fullName }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.standard }}</td>
 
-        <td>{{student.fullName}}</td>
-        <td>{{student.email}}</td>
-        <td>{{student.standard}}</td>
+          <td>
 
-        <td>
-          <span *ngFor="let sub of student.subjects">
-            {{sub}}
-          </span>
-        </td>
-        <td>
+            @if (student.subjects.length) {
 
-          <button class="approve" (click)="approveStudent(student)">
-            Approve
-          </button>
+            @for (sub of student.subjects; track $index) {
 
-          <button class="reject" (click)="rejectStudent(student)">
-            Reject
-          </button>
+            <span>{{ sub }}</span>
 
-        </td>
+            }
 
-      </tr>
+            } @else {
 
-    </table>
+            <span>No Subjects</span>
+
+            }
+
+          </td>
+
+          <td>
+
+            <button class="approve" (click)="approveStudent(student)">
+              Approve
+            </button>
+
+            <button class="reject" (click)="rejectStudent(student)">
+              Reject
+            </button>
+
+          </td>
+
+        </tr>
+
+        }
+
+      </table>
+
+    </div>
 
   </div>
-
-</div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../firebase-service/firebase-enum';
-import { TeacherHeader } from "../teacher-header/teacher-header";
+
 
 // CKEditor Imports
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -12,7 +12,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-teacher-class-content',
   standalone: true,
-  imports: [CommonModule, FormsModule, TeacherHeader, CKEditorModule], // CKEditorModule added
+  imports: [CommonModule, FormsModule,  CKEditorModule], // CKEditorModule added
   templateUrl: './teacher-class-content.html',
   styleUrls: ['./teacher-class-content.css']
 })

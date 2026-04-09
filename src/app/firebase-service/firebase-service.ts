@@ -24,10 +24,14 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 // import { Applications } from '../admin/manage-application/manage-application';
 import { StudentRegistration } from '../interface/student-registration.interface';
 import { Application } from '../interface/application';
+import { Quiz } from '../interface/quiz';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
+ addData(collectionName: FirebaseCollections, data: any) {
+  return this.addDocument(collectionName, data);
+}
   constructor(private firestore: Firestore) { }
 
   public getDocumentsByField<T extends DocumentData>(

@@ -16,87 +16,92 @@ declare var bootstrap: any;
   styleUrl: './teacher-login.css',
 })
 export class TeacherLogin {
-  loginForm: FormGroup;
-
+   loginForm: FormGroup;
   @ViewChild('saveToast') saveToast!: ElementRef;
   toastMessage = '';
-  
+
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
     private router: Router
   ) {
+
     this.loginForm = this.fb.group({
+
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
+
     });
-  }
 
+  }
   showToast(message: string) {
+
     this.toastMessage = message;
+
     setTimeout(() => {
-      if (this.saveToast) {
-        const toast = new bootstrap.Toast(this.saveToast.nativeElement, {
-          delay: 3000
-        });
-        toast.show();
-      }
-    }, 100);
-  }
 
-  async loginTeacher() {
-    if (this.loginForm.invalid) {
-      this.showToast('Please fill all fields correctly');
-      return;
-    }
-
-    try {
-      const email = this.loginForm.value.email.trim().toLowerCase();
-      const password = this.loginForm.value.password.trim();
-
-      // ✅ Using your existing service method: getDocumentsByField
-      // Isse "Property does not exist" wala error nahi aayega
-      const teachers = await firstValueFrom(
-        this.firebaseService.getDocumentsByField<any>(
-          FirebaseCollections.Teachers, 
-          'email', 
-          email
-        )
+      const toast = new bootstrap.Toast(
+        this.saveToast.nativeElement,
+        { delay: 3000 }
       );
 
-      // Check if teacher exists
-      const teacher = teachers && teachers.length > 0 ? teachers[0] : null;
+      toast.show();
 
-      if (!teacher) {
-        this.showToast('Account not found.');
-        return;
-      }
+    }, 100);
 
-      // Password and Status Check
-      if (teacher.password !== password) {
-        this.showToast('Invalid password.');
-        return;
-      }
-
-      if (teacher.status !== "approved") {
-        this.showToast('Your account is pending approval.');
-        return;
-      }
-
-      // Success Logic
-      const nameToSave = teacher.teacherName || "Teacher";
-      sessionStorage.setItem("teacherName", nameToSave); 
-      localStorage.setItem("teacherId", teacher.id);
-
-      this.showToast('Login Success! Welcome ' + nameToSave);
-
-      setTimeout(() => {
-        this.router.navigate(['/teacher/dashboard']);
-      }, 1000);
-
-    } catch (error) {
-      console.error("Login Error:", error);
-      this.showToast('Technical error. Please try again later.');
-    }
   }
+  loginTeacher() {
+    if (this.loginForm.invalid) {
+      this.showToast("Please fill all fields");
+      return;
+    }
+    const email = this.loginForm.value.email.trim().toLowerCase();
+    const password = this.loginForm.value.password.trim();
+
+    this.firebaseService
+      .getDocumentsByField<any>(
+        FirebaseCollections.Teachers,
+        'email',
+        email
+      )
+      .subscribe({
+
+        next: (teachers) => {
+
+          if (!teachers || teachers.length === 0) {
+            this.showToast("Account not found");
+            return;
+          }
+
+          // ⭐ latest teacher record
+          const teacher = teachers[teachers.length - 1];
+
+          const firebasePassword =
+            (teacher.password ?? '').toString().trim();
+
+          if (firebasePassword !== password) {
+            this.showToast("Invalid password");
+            return;
+          }
+          if (teacher.status !== 'approved') {
+            this.showToast("Account not approved yet");
+            return;
+          }
+          sessionStorage.setItem("teacherName", teacher.teacherName);
+          sessionStorage.setItem("teacherSubject", teacher.subjects);
+          localStorage.setItem("teacherId", teacher.id);
+          this.showToast("Login successful");
+          setTimeout(() => {
+            this.router.navigate(['/teacher/dashboard']);
+          }, 1000);
+
+        },
+        error: (err) => {
+          console.error(err);
+          this.showToast("Technical error");
+        }
+
+      });
+  }
+
 }

@@ -8,7 +8,7 @@
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: linear-gradient(135deg, #f4f7fb, #eef3f8);
-  overflow: hidden;
+ 
 }
 
 /* ---------- DASHBOARD LAYOUT ---------- */
@@ -20,20 +20,23 @@ body {
 }
 
 /* ---------- SIDEBAR SPACE ---------- */
-app-teacher-header {
+/* app-teacher-header {
   width: 260px;
   flex-shrink: 0;
   box-shadow: 4px 0 15px rgba(0,0,0,0.05);
-}
+} */
 
 /* ---------- MAIN CONTENT ---------- */
 .main-container {
   flex: 1;
   padding: 0 30px 30px 30px; /* Top padding zero kar di taaki banner upar se start ho */
-  overflow-y: auto;
-  height: 100vh;
+  
 }
-
+.page-content {
+ margin-top: 60px; /* navbar height */
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+}
 /* ---------- TOP HEADER (Banner Style) ---------- */
 .top-banner {
   background: white;

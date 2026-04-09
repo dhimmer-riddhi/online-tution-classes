@@ -4,10 +4,11 @@ import { StudentHeader } from "../../student-header/student-header";
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../../../firebase-service/firebase-service';
 import { FirebaseCollections } from '../../../firebase-service/firebase-enum';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-eleventh-commerce',
-  imports: [StudFooter, StudentHeader,CommonModule],
+  imports: [StudFooter, StudentHeader,CommonModule,RouterLink],
   templateUrl: './eleventh-commerce.html',
   styleUrl: './eleventh-commerce.css',
 })

@@ -111,3 +111,354 @@ color: #0a2540;
   cursor: pointer;
   transition: 0.3s;
 }
+
+
+
+
+
+
+
+
+
+
+/* ================= MAIN FORM ================= */
+
+.quiz-form {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Heading */
+.quiz-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #222;
+  font-size: 28px;
+  font-family: sans-serif;
+}
+
+/* Sub heading */
+.quiz-form h3 {
+  margin: 15px 0;
+  color: #444;
+}
+
+/* ================= INPUT & SELECT ================= */
+
+.quiz-form input,
+.quiz-form select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  outline: none;
+  transition: 0.3s;
+}
+
+/* Focus effect */
+.quiz-form input:focus,
+.quiz-form select:focus {
+  border-color: #ff7a18;
+  box-shadow: 0 0 0 3px rgba(255,122,24,0.2);
+}
+
+/* Dropdown custom arrow */
+.quiz-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='20' viewBox='0 0 20 20' width='20'><path d='M5 7l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  cursor: pointer;
+}
+
+/* ================= BUTTONS ================= */
+
+.quiz-form button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+/* Add Question Button */
+.quiz-form button:first-of-type {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.quiz-form button:first-of-type:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* Save Button */
+.save-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #28a745, #5dd67b);
+  color: white;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Remove Button */
+.quiz-form div button {
+  background: #ff4d4f;
+  color: white;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.quiz-form div button:hover {
+  background: #d9363e;
+}
+
+/* ================= QUESTION LIST ================= */
+
+.quiz-form div p {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 8px 0 4px;
+  font-size: 14px;
+}
+
+/* Divider */
+.quiz-form hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+/* ================= QUESTION save table ================= */
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  border-radius: 12px;
+ 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.quiz-table thead {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+}
+
+.quiz-table th {
+  padding: 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* BODY */
+.quiz-table td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+/* ROW HOVER */
+.quiz-table tbody tr {
+  transition: 0.3s;
+}
+
+.quiz-table tbody tr:hover {
+  background: #f9fafb;
+  transform: scale(1.01);
+}
+
+/* ZEBRA STRIPES */
+.quiz-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* BUTTONS */
+.quiz-table button {
+  padding: 6px 14px;
+  
+}
+
+/* EDIT BUTTON */
+.quiz-table button:first-child {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: white;
+}
+
+.quiz-table button:first-child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+}
+
+/* DELETE BUTTON */
+.quiz-table button:last-child {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: white;
+}
+
+.quiz-table button:last-child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(239,68,68,0.4);
+}
+
+/* ---------------- Table Styling ---------------- */
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.quiz-table th, .quiz-table td {
+  padding: 17px 16px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.quiz-table th {
+  background-color: #ccd6e5;
+  color: #000000;
+  font-weight: 600;
+}
+
+.quiz-table tr:hover {
+  background-color: #fff0f5; /* light pink hover */
+}
+
+/* ---------------- Buttons Styling ---------------- */
+.quiz-table button,
+.question-box button,
+.save-btn {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Table buttons */
+.quiz-table button.edit-btn {
+  background-color: #ff4081;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.quiz-table button.edit-btn:hover {
+  background-color: #e73370;
+}
+
+.quiz-table button.delete-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.quiz-table button.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Question Box buttons */
+.question-box button.edit-btn {
+  background-color: #4caf50;
+  color: #fff;
+  margin-right: 6px;
+}
+
+.question-box button.edit-btn:hover {
+  background-color: #43a047;
+}
+
+.question-box button.remove-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.question-box button.remove-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Save Quiz button */
+.save-btn {
+  background-color: #ff4081;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  margin-top: 15px;
+}
+
+.save-btn:hover {
+  background-color: #e73370;
+}
+
+/* ---------------- Question Box Styling ---------------- */
+.question-box {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.question-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.question-box input,
+.question-box select {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.question-box input:focus,
+.question-box select:focus {
+  outline: none;
+  border-color: #ff4081;
+  box-shadow: 0 0 5px rgba(255,64,129,0.3);
+}
+
+/* Options container (two columns) */
+.question-box .options-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+
+.contact-bg-img{
+position: absolute;
+    bottom: 123px;
+    left: 276px;
+    width: 252px;
+    z-index: 0;
+}

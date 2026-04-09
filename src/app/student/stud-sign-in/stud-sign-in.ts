@@ -39,46 +39,45 @@ export class StudSignIn implements OnInit {
 
   onLogin() {
 
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
+  }
+
+  const email = this.loginForm.value.email.trim().toLowerCase();
+  const password = this.loginForm.value.password.trim();
+
+  this.firebaseService.getStudents().subscribe(data => {
+
+    const student = data.find(
+      (s: any) =>
+        s.email?.trim().toLowerCase() === email &&
+        s.password?.trim() === password
+    );
+
+    console.log("Matched Student:", student);
+
+    if (!student) {
+      this.showToast("Invalid Email or Password");
       return;
     }
 
-    const email = this.loginForm.value.email.trim().toLowerCase();
-    const password = this.loginForm.value.password.trim();
+    if (student.status !== 'approved') {
+      this.showToast("Your account is not approved yet.");
+      return;
+    }
 
-    // 🔥 Firebase thi fresh data lo
-    this.firebaseService.getStudents().subscribe(data => {
-const student = this.students.find(
-  (s: any) =>
-    s.email?.trim().toLowerCase() === email &&
-    s.password?.trim() === password
-);
+    this.showToast("Login Successful");
 
-console.log("Matched Student:", student);
+    localStorage.setItem("student", JSON.stringify(student));
 
-if (!student) {
-  this.showToast("Invalid Email or Password");
-  return;
+    setTimeout(() => {
+      this.router.navigate(['/student/stud-dashboard']);
+    }, 2000);
+
+  });
 }
-
-if (student.status !== 'approved') {
-  this.showToast("Your account is not approved yet.");
-  return;
-}
-
-this.showToast("Login Successful");
-
-localStorage.setItem("student", JSON.stringify(student));
-
-setTimeout(() => {
-  this.router.navigate(['/student/stud-dashboard']);
-}, 4000);
-
-    });
-
-  }
-showToast(message: string) {
+ showToast(message: string) {
 
   this.toastMessage = message;
 
@@ -89,5 +88,6 @@ showToast(message: string) {
   });
 
   toast.show();
+
 }
 }
